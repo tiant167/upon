@@ -1,0 +1,12 @@
+#leftcolumn{
+	display:none;
+	width:240px;
+
+}
+article{
+	display:table-cell;
+}
+aside{
+	width:300px;
+	display:table-cell;
+}

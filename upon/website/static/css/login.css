@@ -1,0 +1,52 @@
+body{
+	width:1024px;
+	margin:0 auto;
+	background: url('../image/back.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.form-signin {
+	max-width: 330px;
+	margin:150px auto 0 auto;
+}
+
+.form-register input ,.form-signin input{
+	height : 40px;
+	margin: 10px 0;
+}
+.form-register span {
+	color:#666;
+	font-weight: bold;
+
+	margin:-2px 8px 5px 0;
+}
+.form-signin span{
+	color:#666;
+	font-weight: bold;
+	float:right;
+	margin:-2px 8px 5px 0;
+}
+.form-register button ,.form-signin button{
+	margin-top: 10px;
+}
+hr{
+	width:300px;
+}
+
+.form-register {
+	max-width: 330px;
+	margin:50px auto 0 auto;
+}
+
+
+
+.bigphoto{
+	width:150px;
+	margin-bottom: 5px;
+}
+#username{
+	width:50%;
+	display:inline;
+}

@@ -1,0 +1,217 @@
+body{
+	/*background-color: #f2f2f2;*/
+	background: url('../image/back.jpg') no-repeat center center fixed;
+	font-family: "Open Sans",sans-serif;
+	font-size: 13px;
+	width:1024px;
+	margin:0 auto;
+}
+nav#leftcolumn{
+	display:table-cell;
+	width:240px;
+}
+article{
+	width:350px;
+	display:table-cell;
+	padding: 0 10px;
+}
+aside{
+	width:480px;
+	display:table-cell;
+}
+
+.bigphoto{
+	width:50px;
+}
+.smallphoto{
+	width:25px;
+}
+.username{
+	font-size: 20px;
+	color:#444;
+}
+.priorty , .deadline{
+	float: right;
+	margin-top: 3px;
+}
+
+#confirm-task-panel,#personal-task-panel,#accordion,#rubbishaccordion{
+	width:350px;
+}
+.task{
+	width:320px;
+	margin:2px 0;
+	padding: 5px 3px 0 3px;
+	border-top: 2px  #f2f2f2;
+	cursor: pointer;
+}
+
+.task .glyphicon{
+	display:none;
+}
+.task:hover .glyphicon{
+	display:inline;
+}
+/*.task:first-child{
+	border-top: none;
+}*/
+/*.task input{
+	display:table-cell;
+	margin-right: 5px;
+}
+.task .tasktitle{
+	display:table-cell;
+	margin-left-top: 3px;
+	width:250px;
+	margin-right: 5px;
+}
+.task .deadline{
+	display:table-cell;
+	width:60px;
+}*/
+#middlecolumn ul{
+	margin-bottom: 5px;
+}
+.addtask{
+	display:inline;
+	width:80%;
+	margin-right: 5px;
+}
+
+.icheckbox_square-blue,.icheckbox_square-yellow{
+	/*top:10px;*/
+	-webkit-background-size: 200px 20px;
+	background-size: 200px 20px;
+	width:20px;
+	height: 20px;
+}
+.icheckbox_square-blue:hover,.icheckbox_square-yellow:hover{
+	-webkit-background-size: 200px 20px;
+	background-size: 200px 20px;
+	width:20px;
+	height:20px;
+	background-position: -20px 0;
+}
+.icheckbox_square-blue.checked , .icheckbox_square-yellow.checked {
+	background-position: -40px 0;
+}
+.panel-collapse{
+	max-height: 380px;
+	overflow-y: scroll ;
+}
+#project-list{
+	max-height: 200px;
+	overflow-y: scroll ;
+}
+#project-list a:last-child span{
+	font-size:15px;
+	margin-right: 3px;
+}
+#addteam{
+	float:left;
+	margin-top: -32px;
+	margin-left: 100px;
+	padding:2px 20px;
+}
+#teamselect{
+	margin: 10px 0;
+	width:240px;
+}
+/*#leftcolumn span{
+	font-size: 20px;
+	font-weight: bold
+}*/
+.detailpriority{
+	font-size: 15px;
+}
+.detaildeadline{
+	float:right;
+}
+#taskdetail{
+	margin: 10px 0 0 0;
+}
+
+hr{
+	margin:10px 0 10px 0;
+}
+.comment{
+	margin:10px 0;
+}
+.comment span{
+	background-color: #fcf8e3;
+	border:1px solid;
+	border-radius: 4px;
+	padding:6px;
+	border-color: #faebcc;
+	color:#8a6d3b;
+}
+.mycomment{
+	overflow:hidden;
+	margin:-2px 0 0 0;
+}
+.mycomment img,.mycomment span{
+	float:right;
+}
+.mycomment span{
+	margin-right: 4px;
+}
+.mycomment img{
+	margin-top: 4px;
+}
+#rightcolumn .panel-body{
+	max-height: 470px;
+	overflow-y: scroll ;
+}
+#changetask{
+	overflow:hidden;
+	margin-top:10px;
+}
+#changetask a{
+	float:right;
+	margin:0 5px;
+}
+#rightcolumn .close{
+	margin-top: -18px;
+	margin-right: -5px;
+}
+#taskinfo{
+	/*display:none;*/
+}
+#stat{
+	/*opacity:1;*/
+}
+#rubbishaccordion{
+	display:none;
+}
+#delaydays{
+	float:left;
+	font-size: 16px;
+	font-weight: bold;
+	margin:-40px 0 0 130px;
+}
+#stat .panel-body h5:first-child{
+	margin-bottom: 20px;
+}
+
+.nocheckpanel .tasktitle {
+	margin-left: 8px;
+}
+#confirm-task-panel,#personal-task-panel{
+	display:none;
+}
+.glyphicon-chevron-right{
+	float:right;
+	font-size: 14px;
+
+}
+
+.label{
+	font-size: 15px;
+	line-height: 28px;
+}
+/*#teamselect{
+	border:none;
+}
+#teamselect:hover{
+	background-color: #f2f2f2;
+}*/
