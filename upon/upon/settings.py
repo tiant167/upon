@@ -58,12 +58,9 @@ WSGI_APPLICATION = 'upon.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'upon',
-        'USER': 'root',
-        'PASSWORD' : 'zyf68481025',
-        'HOST' : '42.121.108.228',
-        'PORT' : '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
     }
 }
 
