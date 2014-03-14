@@ -16,8 +16,8 @@ def login(request):
             return HttpResponseRedirect("upon/main.html")
         else:
             # Show an error page
-            errors.append('邮箱或密码错误');
-    return render(request,'upon/login.html')
+            errors.append('邮箱或密码错误')
+    return render(request,'upon/login.html',{'errors':errors,})
 
 def register(request):
     return render(request,'upon/register.html')
