@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!--ichecker-->
+    <link href="{{STATIC_URL}}css/blue.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/yellow.css" rel="stylesheet">
+    <link rel='stylesheet' href='{{STATIC_URL}}css/main.css' >
+  </head>
+
+  <body>
+    <header>
+        <div class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Upon团队管理</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id='headernav'>
+              <li id='teamtask' class="active"><a href="#">团队任务</a></li>
+              <li id='mytask'><a href="#about">我的任务</a></li>
+              <li id='waittask' ><a href="#contact" >待确认任务<span class="badge" id='waitnum'>4</span></a></li>
+              <li id='othertask' class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他任务<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li id='finishedtask'><a href="#">已完成任务</a></li>
+                  <li id='rubbishtask'><a href="#">回收箱</a></li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header">团队管理</li>
+                  <li><a href="#" id="addteambtn">创建团队</a></li>
+                  <li><a href="#">管理团队成员</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">项目管理</li>
+                  <li><a href="#">创建项目</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">个人管理</li>
+                  <li><a href="#">个人信息修改</a></li>
+                  <li><a href="#">退出登录</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </header>
+    <nav id='leftcolumn'>
+
+        <section>
+                <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                <a href="#" class='username'>柴昊天</a>
+        </section>
+        <section>
+            <!-- <span>团队</span> -->
+            <!-- <h4>团队</h4> -->
+            <div class="btn-group">
+              <button type="button" id='teamselect' class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                我们都是小逗比 <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">天王盖地虎</a></li>
+                <li><a href="#">宝塔镇河妖</a></li>
+                <li><a href="#">组织欢迎你</a></li>
+                <li class="divider"></li>
+                <li><a href="#">创建团队</a></li>
+              </ul>
+            </div>
+            <h4>项目</h4>
+            <div id='project-list' class="list-group">
+                <a href="#" class="list-group-item active">
+                  超挫的项目<span class='glyphicon glyphicon-chevron-right'></span>
+                </a>
+                <a href="#" class="list-group-item">我不要做逗比了</a>
+                <a href="#" class="list-group-item">逗比怎么了</a>
+                <a href="#" class="list-group-item">不干活的团队</a>
+                <a href="#" class="list-group-item">嘿嘿嘿组</a>
+                <a href="#" class="list-group-item"><span class='glyphicon glyphicon-plus-sign'></span>新建项目</a>
+            </div>
+        </section>
+
+        <section>
+            <h4>成员</h4  >
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+            <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+        </section>
+    </nav>
+
+
+    <article id='middlecolumn'>
+
+
+
+<!-- 回收箱，已完成 -->
+        <div class="panel-group" id="rubbishaccordion" >
+            <div class="panel panel-default">  
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#rubbishaccordion" href="#rubbishcollapse">
+                            回收箱
+                        </a>
+                    </h4>
+                </div>
+                <div id="rubbishcollapse" class="panel-collapse collapse in nocheckpanel">    
+                <div class="panel-body">
+                    <h5>昨天</h5>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <h5>上周</h5>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <h5>更早</h5>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                            <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-toggle="collapse" data-parent="#rubbishaccordion" href="#finishcollapse">
+                        已完成任务
+                    </a>
+                </h4>
+            </div>
+            <div id="finishcollapse" class="panel-collapse collapse nocheckpanel">
+                <div class="panel-body">
+                    <h5>本周</h5>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-export'></span>
+                    </div>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-export'></span>
+                    </div>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-export'></span>
+                    </div>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-export'></span>
+                    </div>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-export'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- 个人任务 -->
+    <div id='personal-task-panel' class="panel panel-success">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-toggle="collapse" data-parent="#personal-task-panel" href="#mytaskcollapse">
+                        我的任务
+                    </a>
+                </h4>
+            </div>
+            <div id="mytaskcollapse" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <h5>本周</h5>
+                    <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                    </div>
+                    <h5>以后</h5>
+                    <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- 待确认 -->
+    <div id='confirm-task-panel' class="panel panel-warning">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-toggle="collapse" data-parent="#confirm-task-panel" href="#confirmtaskcollapse">
+                        等待我确认的任务
+                    </a>
+                </h4>
+            </div>
+            <div id="confirmtaskcollapse" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class='task'>
+                        <input type='checkbox' class='confirmbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='confirmbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='confirmbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                    <div class='task'>
+                        <input type='checkbox' class='confirmbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-share-alt'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!-- 团队任务 -->
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  本周任务
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+                <span class="label label-danger">Critical</span>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-warning">Severe</span>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                        <span class='deadline' >2014.02.28</span>
+                </div>
+                <span class="label label-primary">Major</span>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                </div>
+                <span class="label label-info">Minor</span>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='glyphicon glyphicon-trash'></span>
+                </div>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <input type='checkbox' class='finishbox'/> 
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    下周任务
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse nocheckpanel">
+              <div class="panel-body">
+                <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+                <span class="label label-danger">Critical</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-warning">Severe</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-primary">Major</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-info">Minor</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  将来
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse nocheckpanel">
+              <div class="panel-body">
+                <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+                <span class="label label-danger">Critical</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-warning">Severe</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-primary">Major</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <span class="label label-info">Minor</span>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+                <div class='task'>
+                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
+                        <span class='deadline'>2014.02.28</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </article>
+
+
+
+    <aside id='rightcolumn'>
+        <div id="stat" class="panel panel-info collapse in">
+            <div class="panel-heading">
+              <h3 class="panel-title">统计图表</h3>
+            </div>
+            <div class="panel-body">
+                <h5>平均拖延天数</h5>
+                <span id='delaydays'>7天</span>
+                <h5>新增与完成任务曲线图</h5>
+                <canvas id="newandfinish" width="380" height="200"></canvas>
+                <hr>
+                <h5>团队成员工作量对比</h5>
+                <canvas id="workcontrast" width="380" height="200"></canvas>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div id="taskinfo" class="panel panel-info collapse">
+            <div class="panel-heading">
+              <h3 class="panel-title">任务信息</h3>
+              <button type="button" class="close" >&times;</button>
+            </div>
+            <div class="panel-body">
+
+                    <div>
+                        <span class="label label-primary">Major</span>
+                        <span class='detaildeadline'>截止时间：<b>2014.03.09</b></span>
+                    </div>
+                    <h4>完成交互稿第四版完成交互稿第完成交互稿第四版完成交互稿第</h4>
+                    <div>
+                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                    </div>
+                    <div id='taskdetail'>描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么</div>
+                    <div id='changetask'>
+                        
+                        <a href="#" class='deletebtn'>删除任务</a> 
+                        <a href="#">修改任务</a>
+                    </div>
+                    <hr>
+                    <section id='commentfield'>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        
+                        <div class="comment mycomment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                            
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        <div class="comment">
+                            <img src="image/head.png" class='smallphoto'/>
+                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
+                        </div>
+                        
+                    </section>
+
+
+                        <div class="input-group">
+                          <input type="text" class="form-control">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">发表评论</button>
+                          </span>
+                        </div><!-- /input-group -->
+
+
+            </div>
+          </div>
+    </aside>
+
+<div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">确定要删除？</h4>
+      </div>
+      <div class="modal-body">
+        <span>您确定要删除该任务吗？</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger">删除</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="new-task-modal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newModalLabel">新增任务</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">任务标题</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="col-sm-2 control-label">任务组</label>
+            <div class="col-sm-5">
+              <select class="form-control">
+                  <option>本周</option>
+                  <option>下周</option>
+                  <option>将来</option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group">
+          <label for="inputPassword" class="col-sm-2 control-label">优先级</label>
+            <div class="col-sm-5">
+              <select class="form-control">
+                  <option>Critical</option>
+                  <option>Severe</option>
+                  <option>Major</option>
+                  <option>Minor</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">指派给</label>
+            <div class="col-sm-6">
+              <select multiple class="form-control">
+                  <option>小逗比-doubi@upon.cn</option>
+                  <option>逗比萌妹子-menmeizi@upon.cn</option>
+                  <option>臭傻X-shax@upon.cn</option>
+                  <option>楼上是逗比-hahaha@upon.cn</option>
+                  <option>Maven-maven@upon.cn</option>
+                  <option>楼上是一个正常人-maven@upon.cn</option>
+                </select>
+          </div>
+      </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">任务描述</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" ></textarea>
+          </div>
+      </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">截止时间</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开始时间</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
+            </div>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">创建</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="newteam-modal" tabindex="-1" role="dialog" aria-labelledby="newteamModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newteamModalLabel">新建团队</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">团队名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">添加成员</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="tasktitle" placeholder="输入新成员的邮箱地址">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">成员</label>
+            <div class="col-sm-10">
+              <p class="form-control-static">杜肖-email@example.com</p>
+              <p class="form-control-static">是一个-email@example.com</p>
+              <p class="form-control-static">傻X-email@example.com</p>
+            </div>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">创建</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/icheck.js"></script>
+    <script src="{{STATIC_URL}}js/Chart.min.js"></script>
+    <script>
+    //ichecker
+
+    $(document).ready(function(){
+      $('.finishbox').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+      });
+      $('.confirmbox').iCheck({
+        checkboxClass: 'icheckbox_square-yellow',
+        radioClass: 'iradio_square-yellow',
+        increaseArea: '20%' // optional
+      });
+    
+    });
+
+    
+
+    $('#rightcolumn .close').click(function(){
+        $('#stat').collapse('show');
+         $('#taskinfo').collapse('hide');
+
+    });
+
+
+    $('.task a').click(function(){
+        $('#stat').collapse('hide');
+        // $('#taskinfo').css('display','block');
+         $('#taskinfo').collapse('show');
+    });
+
+    $('#teamtask a').click(function(){
+        $('#personal-task-panel').css('display','none');
+        $('#confirm-task-panel').css('display','none');
+        $('#rubbishaccordion').css('display','none');
+        $('#accordion').css('display','block');
+
+        $('#teamtask').attr('class','active');
+        $('#mytask').attr('class','');
+        $('#waittask').attr('class','');
+        $('#othertask').attr('class','');
+    });
+
+    $('#rubbishtask a').click(function(){
+        $('#accordion').css('display','none');
+        $('#personal-task-panel').css('display','none');
+        $('#confirm-task-panel').css('display','none');
+
+        $('#rubbishaccordion').css('display','block');
+        $('#finishcollapse').collapse('hide');
+        $('#rubbishcollapse').collapse('show');
+
+        $('#teamtask').attr('class','');
+        $('#mytask').attr('class','');
+        $('#waittask').attr('class','');
+        $('#othertask').attr('class','active');
+    });
+    $('#finishedtask a').click(function(){
+        $('#personal-task-panel').css('display','none');
+        $('#confirm-task-panel').css('display','none');
+        $('#accordion').css('display','none');
+        $('#rubbishaccordion').css('display','block');
+        $('#finishcollapse').collapse('show');
+        $('#rubbishcollapse').collapse('hide');
+
+        $('#teamtask').attr('class','');
+        $('#mytask').attr('class','');
+        $('#waittask').attr('class','');
+        $('#othertask').attr('class','active');
+    });
+
+    $('#mytask a').click(function(){
+        $('#personal-task-panel').css('display','block');
+        $('#confirm-task-panel').css('display','none');
+        $('#accordion').css('display','none');
+        $('#rubbishaccordion').css('display','none');
+
+        $('#teamtask').attr('class','');
+        $('#mytask').attr('class','active');
+        $('#waittask').attr('class','');
+        $('#othertask').attr('class','');
+    });
+    $('#waittask a').click(function(){
+        $('#personal-task-panel').css('display','none');
+        $('#confirm-task-panel').css('display','block');
+        $('#accordion').css('display','none');
+        $('#rubbishaccordion').css('display','none');
+
+        $('#teamtask').attr('class','');
+        $('#mytask').attr('class','');
+        $('#waittask').attr('class','active');
+        $('#othertask').attr('class','');  
+    });
+
+    $(".glyphicon-trash,.deletebtn").click(function(){
+        $("#alert-modal").modal('show');
+    });
+
+    $(".addtaskbtn").click(function(){
+        $("#new-task-modal").modal('show')
+    });
+    $("#addteambtn").click(function(){
+        $("#newteam-modal").modal('show');
+    });
+
+
+//diagram
+var finishdata = {
+    labels : ["January","February","March","April","May","June","July"],
+    datasets : [
+        {
+            fillColor : "rgba(220,220,220,0.5)",
+            strokeColor : "rgba(220,220,220,1)",
+            pointColor : "rgba(220,220,220,1)",
+            pointStrokeColor : "#fff",
+            data : [65,59,90,81,56,55,40]
+        },
+        {
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,1)",
+            pointColor : "rgba(151,187,205,1)",
+            pointStrokeColor : "#fff",
+            data : [28,48,40,19,96,27,100]
+        }
+    ]
+}
+var ctx = document.getElementById("newandfinish").getContext("2d");
+var myNewChart = new Chart(ctx).Line(finishdata);
+
+var workdata = [
+    {
+        value: 30,
+        color:"#F7464A"
+    },
+    {
+        value : 50,
+        color : "#E2EAE9"
+    },
+    {
+        value : 100,
+        color : "#D4CCC5"
+    },
+    {
+        value : 40,
+        color : "#949FB1"
+    },
+    {
+        value : 120,
+        color : "#4D5360"
+    }
+
+]
+
+var workctx = document.getElementById("workcontrast").getContext("2d");
+var workChart = new Chart(workctx).Doughnut(workdata);
+
+
+    </script>
+  </body>
+</html>
