@@ -50,7 +50,7 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/login")
-    
+
 @login_required
 def main(request):
-    return render(request,'upon/main.html')
+    return render(request,'upon/main.html',{'user':request.user})
