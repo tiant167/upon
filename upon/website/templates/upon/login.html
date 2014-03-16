@@ -36,12 +36,12 @@
 </div><!-- /.modal -->
 
 
-      <form class="form-signin" role="form" method="POST" action="">
+      <form class="form-signin" role="form" method="POST" action="{% url 'upon:login'%}">
         {% csrf_token%}
         <h2 class="form-signin-heading">登录</h2>
-        <input type="email" class="form-control" placeholder="邮箱地址" required="" autofocus="">
-        <input type="password" class="form-control" placeholder="密码" required="">
-        <span>还有没有账号？快来<a href="#">注册</a></span>
+        <input type="email" name="email" class="form-control" placeholder="邮箱地址" required="" autofocus="">
+        <input type="password" name="password" class="form-control" placeholder="密码" required="">
+        <span>还有没有账号？快来<a href="{% url 'upon:register'%}">注册</a></span>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
 

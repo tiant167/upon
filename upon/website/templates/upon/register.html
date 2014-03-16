@@ -17,7 +17,7 @@
 <body>
 
       
-      <form class="form-register" role="form" method="POST" action="">
+      <form class="form-register" role="form" method="POST" action="{%url 'upon:register'%}">
         {% csrf_token %}
         <h2 class="form-register-heading">注册账号</h2>
         <input type="email" class="form-control" name="email" placeholder="请输入您的邮箱地址" required="" autofocus="">
@@ -27,16 +27,42 @@
         
         <img src='{{STATIC_URL}}image/head.png' class='img-thumbnail bigphoto'>
         <input type="text" class="form-control" name="username" placeholder="怎么称呼您" required="" id="username">
-        <span>已经有账号？赶紧<a href="#">登陆</a></span>
+        <span>已经有账号？赶紧<a href="{% url 'upon:login'%}">登陆</a></span>
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
 
     
+<div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">注册失败</h4>
+      </div>
+      <div class="modal-body">
+        {% for error in errors%}
+        <span>{{error}}</span>
+        {%endfor%}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" >确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
     
 </body>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
+     {% if errors%}
+    <script>
+    //ichecker
+    $(document).ready(function(){
+      $('#alert-modal').modal('show')
+    });
+      </script>
+      {%endif%}
 </html>
