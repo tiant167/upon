@@ -208,6 +208,7 @@ hr{
 .label{
 	font-size: 15px;
 	line-height: 28px;
+	padding: .2em .6em;
 }
 /*#teamselect{
 	border:none;
