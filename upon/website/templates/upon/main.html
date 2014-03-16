@@ -57,7 +57,7 @@
                   <li class="divider"></li>
                   <li class="dropdown-header">个人管理</li>
                   <li><a href="#">个人信息修改</a></li>
-                  <li><a href="#">退出登录</a></li>
+                  <li><a href="{%url 'upon:logout'%}">退出登录</a></li>
                 </ul>
               </li>
             </ul>
@@ -69,7 +69,7 @@
 
         <section>
                 <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-                <a href="#" class='username'>柴昊天</a>
+                <a href="#" class='username'>{{user.email}}</a>
         </section>
         <section>
             <!-- <span>团队</span> -->

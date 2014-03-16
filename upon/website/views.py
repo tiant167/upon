@@ -47,6 +47,10 @@ def register(request):
             errors.append('请填写完整的表单')
     return render(request,"upon/register.html",{'errors':errors})
     
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect("/login")
+    
 @login_required
 def main(request):
     return render(request,'upon/main.html')
