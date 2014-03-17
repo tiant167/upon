@@ -84,6 +84,16 @@
  $("#addteambtn").click(function() {
      $("#newteam-modal").modal('show');
  });
+ 
+  $("#project-list > a").click(function(){
+	//alert("success");
+	var all = $(this).parent().children().length;
+	var parrent = $(this).index();
+	if(parrent < all - 1) {
+		$(this).parent().children(":lt(5)").removeClass("active").children().remove();
+		$(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
+	}
+ });
 
 
  //diagram
