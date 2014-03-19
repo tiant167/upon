@@ -84,6 +84,9 @@
  $("#addteambtn").click(function() {
      $("#newteam-modal").modal('show');
  });
+  $("#addprojectbtn").click(function() {
+     $("#newproject-modal").modal('show');
+ });
  
   $("#project-list > a").click(function(){
 	//alert("success");
