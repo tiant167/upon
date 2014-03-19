@@ -93,6 +93,9 @@
  $("#signoutbtn").click(function() {
      $("#signout-modal").modal('show');
  });
+ $("#manageteambtn").click(function() {
+     $("#manageteam-modal").modal('show');
+ });
  
   $("#project-list > a").click(function(){
 	var all = $(this).parent().children().length - 1;
