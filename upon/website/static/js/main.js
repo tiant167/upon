@@ -84,8 +84,11 @@
  $("#addteambtn").click(function() {
      $("#newteam-modal").modal('show');
  });
-  $("#addprojectbtn").click(function() {
+ $("#addprojectbtn").click(function() {
      $("#newproject-modal").modal('show');
+ });
+ $("#modifypersoninfobtn").click(function() {
+     $("#modifypersoninfo-modal").modal('show');
  });
  
   $("#project-list > a").click(function(){
