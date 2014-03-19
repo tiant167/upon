@@ -90,6 +90,9 @@
  $("#modifypersoninfobtn").click(function() {
      $("#modifypersoninfo-modal").modal('show');
  });
+ $("#signoutbtn").click(function() {
+     $("#signout-modal").modal('show');
+ });
  
   $("#project-list > a").click(function(){
 	var all = $(this).parent().children().length - 1;
