@@ -55,7 +55,7 @@ def logout(request):
 
 @login_required
 def main(request):
-    teamList =  Team.objects.get(member=request.user)
+    teamList =  Team.objects.filter(member=request.user)
     if not teamList:
         # 这个是没有team的时候渲染的页面，现在还冒得
         # return render(request,'upon/noteam.html')
@@ -72,12 +72,17 @@ def main(request):
     return render(request,'upon/main.html',{
         'user':request.user,
         'teams':teamList,
-        'tasks':taskField,
+        'projects':projectList,
+        'currentWeekTasks':taskField.currentWeekTask,
+        'nextWeekTasks':taskField.nextWeekTask,
+        'futureTasks':taskField.futureTask,
         })
 
 class TaskField:
     def __init__(self,taskList):
-        self.currentWeekTask = self.nextWeekTask = self.futureTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+        self.currentWeekTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+        self.futureTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+        self.nextWeekTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
         self.taskList = taskList
 
     def judgePriority(self):
@@ -90,10 +95,10 @@ class TaskField:
                 taskBox = self.currentWeekTask
 
             if task.priority == 0:
-                taskBox['Critical'].add(task)
+                taskBox['Critical'].append(task)
             elif task.priority == 1:
-                taskBox['Severe'].add(task)
+                taskBox['Severe'].append(task)
             elif task.priority == 2:
-                taskBox['Major'].add(task)
+                taskBox['Major'].append(task)
             elif task.priority == 3:
-                taskBox['Minor'].add(task)
+                taskBox['Minor'].append(task)
