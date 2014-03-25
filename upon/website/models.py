@@ -51,6 +51,10 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.contet
 
+class Avatar(models.Model):
+    user = models.ForeignKey(User)
+    avatar = models.CharField(max_length=100)
+    
 #team1 = Team.objects.create(name=u"测试团队")
 #user1 = User.objects.create_user(username=u"123@qq.com",email=u"Tim",password=u"123")
 #team1.member.add(user1)

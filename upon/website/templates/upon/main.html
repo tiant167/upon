@@ -69,32 +69,34 @@
 
         <section>
                 <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-                <a href="#" class='username'>柴昊天</a>
+                <a href="#" class='username'>{{user.email}}</a>
         </section>
         <section>
             <!-- <span>团队</span> -->
             <!-- <h4>团队</h4> -->
             <div class="btn-group">
               <button type="button" id='teamselect' class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                我们都是小逗比 <span class="caret"></span>
+                {{teams.0.name}} <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">天王盖地虎</a></li>
-                <li><a href="#">宝塔镇河妖</a></li>
-                <li><a href="#">组织欢迎你</a></li>
+                {%for team in teams%}
+                    <li><a href="#">{{team.name}}</a></li>
+                {%endfor%}
                 <li class="divider"></li>
                 <li><a href="#">创建团队</a></li>
               </ul>
             </div>
             <h4>项目</h4>
             <div id='project-list' class="list-group">
-                <a href="#" class="list-group-item active">
-                  超挫的项目<span class='glyphicon glyphicon-chevron-right'></span>
-                </a>
-                <a href="#" class="list-group-item">我不要做逗比了</a>
-                <a href="#" class="list-group-item">逗比怎么了</a>
-                <a href="#" class="list-group-item">不干活的团队</a>
-                <a href="#" class="list-group-item">嘿嘿嘿组</a>
+                {%for project in projects%}
+                    {%if forloop.counter == 1%}
+                        <a href="#" class="list-group-item active">
+                  {{project.name}}<span class='glyphicon glyphicon-chevron-right'></span>
+                        </a>
+                    {%else%}
+                        <a href="#" class="list-group-item">{{project.name}}</a>
+                    {%endif%}
+                {%endfor%}
                 <a href="#" class="list-group-item"><span class='glyphicon glyphicon-plus-sign'></span>新建项目</a>
             </div>
         </section>
@@ -289,58 +291,62 @@
             <div id="collapseOne" class="panel-collapse collapse in">
               <div class="panel-body">
                 <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
-                <span class="label label-danger">Critical</span>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='glyphicon glyphicon-trash'></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-warning">Severe</span>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='glyphicon glyphicon-trash'></span>
-                        <span class='deadline' >2014.02.28</span>
-                </div>
-                <span class="label label-primary">Major</span>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='glyphicon glyphicon-trash'></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='glyphicon glyphicon-trash'></span>
-                </div>
-                <span class="label label-info">Minor</span>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='glyphicon glyphicon-trash'></span>
-                </div>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <input type='checkbox' class='finishbox'/> 
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
+                {%if  currentWeekTasks.Critical or   currentWeekTasks.Severe or  currentWeekTasks.Major or  currentWeekTasks.Minor%}
+                {%if currentWeekTasks.Critical%}
+                    <h5 class='critical'>Critical</h5>
+                    {%for task in currentWeekTasks.Critical%}
+                    <div class='task'>
+                            <input type='checkbox' class='finishbox'/>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if currentWeekTasks.Severe%}
+                    <h5 class='severe'>Severe</h5>
+                    {%for task in currentWeekTasks.Severe%}
+                    <div class='task'>
+                            <input type='checkbox' class='finishbox'/>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if currentWeekTasks.Major%}
+                <h5 class="Major">Major</h5>
+                    {%for task in currentWeekTasks.Major%}
+                    <div class='task'>
+                            <input type='checkbox' class='finishbox'/>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if currentWeekTasks.Minor%}
+                    <h5 class="minor">Minor</h5>
+                    {%for task in currentWeekTasks.Minor%}
+                    <div class='task'>
+                            <input type='checkbox' class='finishbox'/>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%else%}
+                    <span>还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</span>
+                {%endif%}
               </div>
             </div>
           </div>
@@ -355,38 +361,58 @@
             <div id="collapseTwo" class="panel-collapse collapse nocheckpanel">
               <div class="panel-body">
                 <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
-                <span class="label label-danger">Critical</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-warning">Severe</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-primary">Major</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-info">Minor</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
+                {%if  nextWeekTasks.Critical or   nextWeekTasks.Severe or  nextWeekTasks.Major or  nextWeekTasks.Minor%}
+                {%if nextWeekTasks.Critical%}
+                    <h5 class='critical'>Critical</h5>
+                    {%for task in nextWeekTasks.Critical%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if nextWeekTasks.Severe%}
+                    <h5 class='severe'>Severe</h5>
+                    {%for task in nextWeekTasks.Severe%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if nextWeekTasks.Major%}
+                <h5 class="Major">Major</h5>
+                    {%for task in nextWeekTasks.Major%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if nextWeekTasks.Minor%}
+                    <h5 class="minor">Minor</h5>
+                    {%for task in nextWeekTasks.Minor%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%else%}
+                    <span>还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</span>
+                {%endif%}
               </div>
             </div>
           </div>
@@ -401,38 +427,58 @@
             <div id="collapseThree" class="panel-collapse collapse nocheckpanel">
               <div class="panel-body">
                 <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
-                <span class="label label-danger">Critical</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-warning">Severe</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-primary">Major</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第一版</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <span class="label label-info">Minor</span>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
-                <div class='task'>
-                        <span class='tasktitle'><a href='#' >完成交互稿第四版完成交互稿第</a></span>
-                        <span class='deadline'>2014.02.28</span>
-                </div>
+                {%if  futureTasks.Critical or   futureTasks.Severe or  futureTasks.Major or  futureTasks.Minor%}
+                {%if futureTasks.Critical%}
+                    <h5 class='critical'>Critical</h5>
+                    {%for task in futureTasks.Critical%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if futureTasks.Severe%}
+                    <h5 class='severe'>Severe</h5>
+                    {%for task in futureTasks.Severe%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if futureTasks.Major%}
+                    <h5 class="Major">Major</h5>
+                    {%for task in futureTasks.Major%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%if futureTasks.Minor%}
+                    <h5 class="minor">Minor</h5>
+                    {%for task in futureTasks.Minor%}
+                    <div class='task'>
+                            <span class='tasktitle'><a href='#' >{{task.name}}</a></span>
+                            <span class='glyphicon glyphicon-trash'></span>
+                            {%if task.deadline%}
+                            <span class='deadline'>{{task.deadline}}</span>
+                            {%endif%}
+                    </div>
+                    {%endfor%}
+                {%endif%}
+                {%else%}
+                    <span>还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</span>
+                {%endif%}
               </div>
             </div>
           </div>
