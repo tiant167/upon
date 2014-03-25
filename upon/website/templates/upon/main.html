@@ -839,11 +839,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="signoutModalLabel">是否退出登录</h4>
+        <h4 class="modal-title" id="signoutModalLabel">退出登录</h4>
       </div>
+      <div class="modal-body">
+      <span>您确定要退出登陆吗？</span>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">确定</button>
+        <a href="{%url 'upon:logout'%}"><button type="button" class="btn btn-danger">确定</button></a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
