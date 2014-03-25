@@ -84,6 +84,29 @@
  $("#addteambtn").click(function() {
      $("#newteam-modal").modal('show');
  });
+ $("#addprojectbtn").click(function() {
+     $("#newproject-modal").modal('show');
+ });
+ $("#modifypersoninfobtn").click(function() {
+     $("#modifypersoninfo-modal").modal('show');
+ });
+ $("#signoutbtn").click(function() {
+     $("#signout-modal").modal('show');
+ });
+ $("#manageteambtn").click(function() {
+     $("#manageteam-modal").modal('show');
+ });
+ 
+  $("#project-list > a").click(function(){
+	var all = $(this).parent().children().length - 1;
+	var parrent = $(this).index();
+	if(parrent < all) {
+		$(this).parent().children(":lt("+all+")").removeClass("active").children().remove();
+		$(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
+	} else {
+		$("#newproject-modal").modal('show');
+	}
+ });
 
 
  //diagram

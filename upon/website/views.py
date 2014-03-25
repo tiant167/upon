@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+
+from website.models import *
 # Create your views here.
 
 #attention to all
@@ -53,4 +55,45 @@ def logout(request):
 
 @login_required
 def main(request):
-    return render(request,'upon/main.html',{'user':request.user})
+    teamList =  Team.objects.get(member=request.user)
+    if not teamList:
+        # 这个是没有team的时候渲染的页面，现在还冒得
+        # return render(request,'upon/noteam.html')
+        render(request,"upon/register.html")
+    currentTeam = teamList[0]
+
+    projectList = Project.objects.filter(team=currentTeam)
+    currentProject = projectList[0]
+
+    taskList = Task.objects.filter(project=currentProject).exclude(type=3) #except rubbishbin task
+    taskField = TaskField(taskList)
+    taskField.judgePriority()
+
+    return render(request,'upon/main.html',{
+        'user':request.user,
+        'teams':teamList,
+        'tasks':taskField,
+        })
+
+class TaskField:
+    def __init__(self,taskList):
+        self.currentWeekTask = self.nextWeekTask = self.futureTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+        self.taskList = taskList
+
+    def judgePriority(self):
+        for task in self.taskList:
+            if task.type == 0:
+                taskBox = self.futureTask
+            elif task.type == 1:
+                taskBox = self.nextWeekTask
+            elif task.type == 2 :
+                taskBox = self.currentWeekTask
+
+            if task.priority == 0:
+                taskBox['Critical'].add(task)
+            elif task.priority == 1:
+                taskBox['Severe'].add(task)
+            elif task.priority == 2:
+                taskBox['Major'].add(task)
+            elif task.priority == 3:
+                taskBox['Minor'].add(task)
