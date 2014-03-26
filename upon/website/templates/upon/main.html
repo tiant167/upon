@@ -38,13 +38,12 @@
               <li id='mytask'><a href="#about">我的任务</a></li>
               <li id='waittask' ><a href="#contact" >待确认任务<span class="badge" id='waitnum'>4</span></a></li>
               <li id='othertask' class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他任务<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他任务</a>
                 <ul class="dropdown-menu">
                   <li id='finishedtask'><a href="#">已完成任务</a></li>
                   <li id='rubbishtask'><a href="#">回收箱</a></li>
                 </ul>
               </li>
-
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -54,12 +53,15 @@
                   <li class="divider"></li>
                   <li class="dropdown-header">项目管理</li>
                   <li><a href="#" id="addprojectbtn">创建项目</a></li>
-                  <li class="divider"></li>
-                  <li class="dropdown-header">个人管理</li>
-                  <li><a href="#" id="modifypersoninfobtn">个人信息修改</a></li>
-                  <li><a href="#" id="signoutbtn">退出登录</a></li>
                 </ul>
               </li>
+              <li class="dropdown" id='personal-info'>
+                <a href="#"><img src='{{STATIC_URL}}image/head.png' class='smallphoto'>{{user.email}}</a>
+            </li>
+            <li id="banner-icon">
+                <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+                <a href="{%url 'upon:logout'%}"><span class="glyphicon glyphicon-log-out"></span></a>
+            </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -67,13 +69,13 @@
     </header>
     <nav id='leftcolumn'>
 
-        <section>
+       <!--  <section>
                 <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
                 <a href="#" class='username'>{{user.email}}</a>
-        </section>
+        </section> -->
         <section>
             <!-- <span>团队</span> -->
-            <!-- <h4>团队</h4> -->
+            <h4>我的团队</h4>
             <div class="btn-group">
               <button type="button" id='teamselect' class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 {{teams.0.name}} <span class="caret"></span>
@@ -101,7 +103,7 @@
             </div>
         </section>
 
-        <section>
+        <!-- <section>
             <h4>成员</h4  >
             <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
             <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
@@ -109,7 +111,7 @@
             <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
             <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
             <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-        </section>
+        </section> -->
     </nav>
 
 

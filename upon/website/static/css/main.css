@@ -8,7 +8,7 @@ body{
 }
 nav#leftcolumn{
 	display:table-cell;
-	width:240px;
+	width:200px;
 }
 article{
 	width:350px;
@@ -16,7 +16,7 @@ article{
 	padding: 0 10px;
 }
 aside{
-	width:480px;
+	width:520px;
 	display:table-cell;
 }
 
@@ -24,7 +24,7 @@ aside{
 	width:50px;
 }
 .smallphoto{
-	width:25px;
+	width:20px;
 }
 .username{
 	font-size: 20px;
@@ -115,7 +115,7 @@ aside{
 }
 #teamselect{
 	margin: 10px 0;
-	width:240px;
+	width:200px;
 }
 /*#leftcolumn span{
 	font-size: 20px;
@@ -210,6 +210,20 @@ hr{
 	line-height: 28px;
 	padding: .2em .6em;
 }
+#personal-info{
+	margin-left: 196px;
+}
+#banner-icon{
+	margin-top: 14px;
+	margin-left: -8px;
+}
+#banner-icon a{
+	display:inline;
+	font-size:18px;
+	padding:15px 3px;
+
+}
+
 /*#teamselect{
 	border:none;
 }
