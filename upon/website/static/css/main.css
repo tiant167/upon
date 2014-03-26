@@ -100,7 +100,7 @@ aside{
 	overflow-y: scroll ;
 }
 #project-list{
-	max-height: 200px;
+	max-height: 376px;
 	overflow-y: scroll ;
 }
 #project-list a:last-child span{
