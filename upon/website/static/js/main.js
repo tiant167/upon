@@ -1,3 +1,19 @@
+ //ichecker
+
+ $(document).ready(function() {
+     $('.finishbox').iCheck({
+         checkboxClass: 'icheckbox_square-blue',
+         radioClass: 'iradio_square-blue',
+         increaseArea: '20%' // optional
+     });
+     $('.confirmbox').iCheck({
+         checkboxClass: 'icheckbox_square-yellow',
+         radioClass: 'iradio_square-yellow',
+         increaseArea: '20%' // optional
+     });
+
+ });
+
  $('#rightcolumn .close').click(function() {
      $('#stat').collapse('show');
      $('#taskinfo').collapse('hide');
@@ -96,16 +112,16 @@
  $("#manageteambtn").click(function() {
      $("#manageteam-modal").modal('show');
  });
- 
-  $("#project-list > a").click(function(){
-	var all = $(this).parent().children().length - 1;
-	var parrent = $(this).index();
-	if(parrent < all) {
-		$(this).parent().children(":lt("+all+")").removeClass("active").children().remove();
-		$(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
-	} else {
-		$("#newproject-modal").modal('show');
-	}
+
+ $("#project-list > a").click(function() {
+     var all = $(this).parent().children().length - 1;
+     var parrent = $(this).index();
+     if (parrent < all) {
+         $(this).parent().children(":lt(" + all + ")").removeClass("active").children().remove();
+         $(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
+     } else {
+         $("#newproject-modal").modal('show');
+     }
  });
 
 
