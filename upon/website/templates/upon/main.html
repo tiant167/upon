@@ -92,7 +92,7 @@
             <div id='project-list' class="list-group">
                 {%for project in projects%}
                     {%if forloop.counter == 1%}
-                        <a href="#" class="list-group-item active">
+                        <a href="#" class="list-group-item active progress-striped">
                   {{project.name}}<span class='glyphicon glyphicon-chevron-right'></span>
                         </a>
                     {%else%}
@@ -282,7 +282,7 @@
 
 <!-- 团队任务 -->
         <div class="panel-group" id="accordion">
-          <div class="panel panel-success">
+          <div class="panel panel-success ">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -541,37 +541,37 @@
                     <hr>
                     <section id='commentfield'>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         
                         <div class="comment mycomment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                             
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         <div class="comment">
-                            <img src="image/head.png" class='smallphoto'/>
+                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
                         </div>
                         
