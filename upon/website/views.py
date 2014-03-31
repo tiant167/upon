@@ -43,7 +43,7 @@ def register(request):
                     user.save()
                     login_user = auth.authenticate(username=username, password=password1)
                     auth.login(request, login_user)
-                    return HttpResponseRedirect("/")
+                    render(request,"upon/noteam.html")
             errors.append('邮箱已被注册')       
         except KeyError:
             errors.append('请填写完整的表单')
@@ -59,7 +59,7 @@ def main(request):
     if not teamList:
         # 这个是没有team的时候渲染的页面，现在还冒得
         # return render(request,'upon/noteam.html')
-        render(request,"upon/register.html")
+        return HttpResponseRedirect("/noteam")
     currentTeam = teamList[0]
 
     projectList = Project.objects.filter(team=currentTeam)
@@ -77,6 +77,16 @@ def main(request):
         'nextWeekTasks':taskField.nextWeekTask,
         'futureTasks':taskField.futureTask,
         })
+
+@login_required
+def noteam(request):
+    teamList =  Team.objects.filter(member=request.user)
+    if  teamList:
+        return HttpResponseRedirect("/")
+    else:
+        return render(request,'upon/noteam.html',{
+            'user':request.user,
+            })
 
 class TaskField:
     def __init__(self,taskList):

@@ -97,19 +97,19 @@
  $(".addtaskbtn").click(function() {
      $("#new-task-modal").modal('show');
  });
- $("#addteambtn").click(function() {
+ $(".addteambtn").click(function() {
      $("#newteam-modal").modal('show');
  });
- $("#addprojectbtn").click(function() {
+ $(".addprojectbtn").click(function() {
      $("#newproject-modal").modal('show');
  });
- $("#modifypersoninfobtn").click(function() {
+ $(".modifypersoninfobtn").click(function() {
      $("#modifypersoninfo-modal").modal('show');
  });
- $("#signoutbtn").click(function() {
+ $(".signoutbtn").click(function() {
      $("#signout-modal").modal('show');
  });
- $("#manageteambtn").click(function() {
+ $(".manageteambtn").click(function() {
      $("#manageteam-modal").modal('show');
  });
 

@@ -48,18 +48,18 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-header">团队管理</li>
-                  <li><a href="#" id="addteambtn">创建团队</a></li>
-                  <li><a href="#" id="manageteambtn">管理团队成员</a></li>
+                  <li><a href="#" class="addteambtn">创建团队</a></li>
+                  <li><a href="#" class="manageteambtn">管理团队成员</a></li>
                   <li class="divider"></li>
                   <li class="dropdown-header">项目管理</li>
-                  <li><a href="#" id="addprojectbtn">创建项目</a></li>
+                  <li><a href="#" class="addprojectbtn">创建项目</a></li>
                 </ul>
               </li>
               <li class="dropdown" id='personal-info'>
                 <a href="#"><img src='{{STATIC_URL}}image/head.png' class='smallphoto'>{{user.email}}</a>
             </li>
             <li id="banner-icon">
-                <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+                <a href="#" class="modifypersoninfobtn"><span class="glyphicon glyphicon-cog"></span></a>
                 <a href="{%url 'upon:logout'%}"><span class="glyphicon glyphicon-log-out"></span></a>
             </li>
             </ul>

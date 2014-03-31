@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!--ichecker-->
+    <link href="{{STATIC_URL}}css/blue.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/yellow.css" rel="stylesheet">
+    <link rel='stylesheet' href='{{STATIC_URL}}css/main.css' >
+  </head>
+
+  <body>
+    <header>
+        <div class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Upon团队管理</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id='headernav'>
+              <li class='addteambtn' ><a href="#">创建团队</a></li>
+              
+              <li class="dropdown" id='personal-info'>
+                <a href="#"><img src='{{STATIC_URL}}image/head.png' class='smallphoto'>{{user.email}}</a>
+            </li>
+            <li id="banner-icon">
+                <a href="#" class="modifypersoninfobtn"><span class="glyphicon glyphicon-cog"></span></a>
+                <a href="{%url 'upon:logout'%}"><span class="glyphicon glyphicon-log-out"></span></a>
+            </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </header>
+    <div class="mainbody">
+      您还没有加入任何团队，选择<a href="#" class="addteambtn">创建团队</a>或者通知你的队长将你加入他的团队
+    </div>
+
+
+<div class="modal fade" id="newteam-modal" tabindex="-1" role="dialog" aria-labelledby="newteamModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newteamModalLabel">新建团队</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">团队名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">添加成员</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="tasktitle" placeholder="输入新成员的邮箱地址">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">成员</label>
+            <div class="col-sm-10">
+              <p class="form-control-static">杜肖-email@example.com</p>
+              <p class="form-control-static">是一个-email@example.com</p>
+              <p class="form-control-static">傻X-email@example.com</p>
+            </div>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">创建</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<div class="modal fade" id="modifypersoninfo-modal" tabindex="-1" role="dialog" aria-labelledby="modifypersoninfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="modifypersoninfoModalLabel">个人信息修改</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">用户名ID</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="nametitle" placeholder="起一个响亮的名字是成功的一半">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="emailtitle" placeholder="输入个人邮箱">
+            </div>
+          </div>
+      
+      <div class="form-group">
+            <label class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="phonetitle" placeholder="输入手机号码">
+            </div>
+          </div>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/icheck.js"></script>
+    <script src="{{STATIC_URL}}js/Chart.min.js"></script>
+    <script src="{{STATIC_URL}}js/main.js"></script>
+  </body>
+  </html>
