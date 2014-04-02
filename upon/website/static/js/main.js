@@ -24,7 +24,53 @@
  $('.task a').click(function() {
      $.get('gettaskdetail/1/').then(function(resp) {
          //Gao Zhiwei should write DOM here 
-         console.log(resp);
+		 var data = JSON.parse(resp);  
+		 
+         //set priority
+         var priority = 0;
+         switch(data.priority) {
+         	case 0:
+         		priority = "Critical";
+         		break;
+         	case 1:
+         		priority = "Severe";
+         		break;
+         	case 2:
+         		priority = "Major";
+         		break;
+         	case 3:
+         		priority = "Minor";
+         		break;
+         }
+         $('.label,.label-primary').text(priority);
+         
+         //set status
+         // var status = 0;
+         // switch(data.status) {
+         	// case 0:
+         		// status = "Cannot Complete";
+         		// break;
+         	// case 1:
+         		// status = "Wait For Complete";
+         		// break;
+         	// case 2:
+         		// status = "Wait For Confirm";
+         		// break;
+         	// case 3:
+         		// status = "total Finished";
+         		// break;
+         // }
+         // $('.label,.label-primary').parent().next().text(status);
+         
+         //set task title
+         $('.label,.label-primary').parent().next().text(data.name);
+         
+         //detail info
+         $('#taskdetail').text(data.detail);
+         
+         //set deadline
+         $('.detaildeadline').children().text(data.deadline);
+         
          $('#stat').collapse('hide');
          $('#taskinfo').collapse('show');
      });
