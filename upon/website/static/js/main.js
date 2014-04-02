@@ -22,9 +22,12 @@
 
 
  $('.task a').click(function() {
-     $('#stat').collapse('hide');
-     // $('#taskinfo').css('display','block');
-     $('#taskinfo').collapse('show');
+     $.get('gettaskdetail/1/').then(function(resp) {
+         //Gao Zhiwei should write DOM here 
+         console.log(resp);
+         $('#stat').collapse('hide');
+         $('#taskinfo').collapse('show');
+     });
  });
 
  $('#teamtask a').click(function() {

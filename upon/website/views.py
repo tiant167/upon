@@ -2,10 +2,10 @@
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect , HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-
+import json
 from website.models import *
 # Create your views here.
 
@@ -87,6 +87,46 @@ def noteam(request):
         return render(request,'upon/noteam.html',{
             'user':request.user,
             })
+
+@login_required
+def getTaskDetail(request,taskid):
+    #what needs to do ?
+    #check if the task belongs to the user's team
+    #add logs and comments
+    if taskid:
+        try:
+            taskDetail = Task.objects.get(id=taskid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'500'}))
+        todoerids = []
+        todoerids.append([{'userid':item.id,'username':item.email} for item in taskDetail.todoer.all()])
+        result = {
+            'id':taskDetail.id,
+            'name':taskDetail.name,
+            'projectid':taskDetail.project.id,
+            'detail':taskDetail.detail,
+            'starterid':taskDetail.starter.id,
+            'todoer':todoerids,
+            'deadline':trasferDatetimeToString(taskDetail.deadline),
+            'starttime':trasferDatetimeToString(taskDetail.starttime),
+            'priority':taskDetail.priority,
+            'type':taskDetail.type,
+            'status':taskDetail.status,
+            'createtime':trasferDatetimeToString(taskDetail.createtime),
+            }
+        return HttpResponse(json.dumps(result))
+    return HttpResponse(json.dumps({'error_code':'500'}))
+
+
+
+
+########################helper function##########################
+def trasferDatetimeToString(time):
+    if time == None:
+        return None
+    else:
+        return time.strftime("%Y-%m-%d")
+
 
 class TaskField:
     def __init__(self,taskList):

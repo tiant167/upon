@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^register/$',views.register,name='register'),
     url(r'^logout/$',views.logout,name='logout'),
     url(r'^noteam/$',views.noteam,name='noteam'),
+    url(r'^gettaskdetail/(?P<taskid>\d+)/$',views.getTaskDetail),
 )
