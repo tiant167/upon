@@ -100,6 +100,11 @@ def getTaskDetail(request,taskid):
             return HttpResponse(json.dumps({'error_code':'500'}))
         todoerids = []
         todoerids.append([{'userid':item.id,'username':item.email} for item in taskDetail.todoer.all()])
+        # Comment.objects.create(author=request.user,content=u"这个抓紧做啊！",task=taskDetail)
+        comments = Comment.objects.filter(task=taskDetail)
+        commentsList = []
+        if comments:
+            commentsList.append([{'commentid':item.id,'authorid':item.author.id,'authorName':item.author.email,'content':item.content,'createtime':trasferDatetimeToString(item.createtime)} for item in comments])       
         result = {
             'id':taskDetail.id,
             'name':taskDetail.name,
@@ -113,6 +118,7 @@ def getTaskDetail(request,taskid):
             'type':taskDetail.type,
             'status':taskDetail.status,
             'createtime':trasferDatetimeToString(taskDetail.createtime),
+            'comments':commentsList,
             }
         return HttpResponse(json.dumps(result))
     return HttpResponse(json.dumps({'error_code':'500'}))
