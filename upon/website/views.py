@@ -91,21 +91,19 @@ def noteam(request):
 @login_required
 def getTaskDetail(request,taskid):
     #what needs to do ?
-    #check if the task belongs to the user's team
-    #add logs and comments
+    #add logs 
     if taskid:
         try:
             taskDetail = Task.objects.get(id=taskid)
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'500'}))
         if request.user in taskDetail.project.team.member.all():
-            todoerids = []
-            todoerids.append([{'userid':item.id,'username':item.email} for item in taskDetail.todoer.all()])
-            # Comment.objects.create(author=request.user,content=u"这个抓紧做啊！",task=taskDetail)
+            todoerids = ([{'userid':item.id,'username':item.email} for item in taskDetail.todoer.all()])
+            # Comment.objects.create(author=request.user,content=u"这个本周五之前给我答复",task=taskDetail)
             comments = Comment.objects.filter(task=taskDetail)
             commentsList = []
             if comments:
-                commentsList.append([{'commentid':item.id,'authorid':item.author.id,'authorName':item.author.email,'content':item.content,'createtime':trasferDatetimeToString(item.createtime)} for item in comments])       
+                commentsList = ([{'commentid':item.id,'authorid':item.author.id,'authorName':item.author.email,'content':item.content,'createtime':trasferDatetimeToString(item.createtime)} for item in comments])       
             result = {
                 'error_code':'0',
                 'id':taskDetail.id,
@@ -125,7 +123,16 @@ def getTaskDetail(request,taskid):
             return HttpResponse(json.dumps(result))
     return HttpResponse(json.dumps({'error_code':'500'}))
 
-
+@login_required
+def addComment(requests):
+    if method == "POST":
+        try:
+            taskid = request.POST.get("taskid",False)
+            content = request.POST.get("content",'')
+            author = request.user
+            # task = Task.
+        except:
+            pass
 
 
 ########################helper function##########################
