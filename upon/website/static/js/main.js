@@ -35,15 +35,19 @@
              switch (data.priority) {
                  case 0:
                      priority = "Critical";
+                     $('.label').addClass('label-danger');
                      break;
                  case 1:
                      priority = "Severe";
+                     $('.label').addClass('label-warning');
                      break;
                  case 2:
                      priority = "Major";
+                     $('.label').addClass('label-primary');
                      break;
                  case 3:
                      priority = "Minor";
+                     $('.label').addClass('label-info');
                      break;
              }
              $('.label,.label-primary').text(priority);
@@ -67,7 +71,7 @@
              // $('.label,.label-primary').parent().next().text(status);
 
              //set task title
-             $('.label,.label-primary').parent().next().text(data.name);
+             $('.taskname').text(data.name);
 
              //detail info
              $('#taskdetail').text(data.detail);
