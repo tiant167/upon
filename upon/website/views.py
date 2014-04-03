@@ -129,10 +129,17 @@ def addComment(requests):
         try:
             taskid = request.POST.get("taskid",False)
             content = request.POST.get("content",'')
-            author = request.user
-            # task = Task.
         except:
-            pass
+            return HttpResponse(json.dumps({'error_code':'500'}))
+        author = request.user
+        if taskid:
+            task = Task.objects.get(id=taskid)
+            comment = Comment.objects.create(author=author,content=content,task=task)
+            if comment:
+                return HttpResponse(json.dumps({'error_code':'0'}))
+    return HttpResponse(json.dumps({'error_code':'500'}))
+
+        
 
 
 ########################helper function##########################
