@@ -299,7 +299,7 @@
                     {%for task in currentWeekTasks.Critical%}
                     <div class='task'>
                             <input type='checkbox' class='finishbox'/>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -312,7 +312,7 @@
                     {%for task in currentWeekTasks.Severe%}
                     <div class='task'>
                             <input type='checkbox' class='finishbox'/>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -325,7 +325,7 @@
                     {%for task in currentWeekTasks.Major%}
                     <div class='task'>
                             <input type='checkbox' class='finishbox'/>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle' ><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -338,7 +338,7 @@
                     {%for task in currentWeekTasks.Minor%}
                     <div class='task'>
                             <input type='checkbox' class='finishbox'/>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -368,7 +368,7 @@
                     <h5 class='critical'>Critical</h5>
                     {%for task in nextWeekTasks.Critical%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -380,7 +380,7 @@
                     <h5 class='severe'>Severe</h5>
                     {%for task in nextWeekTasks.Severe%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -392,7 +392,7 @@
                 <h5 class="Major">Major</h5>
                     {%for task in nextWeekTasks.Major%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -404,7 +404,7 @@
                     <h5 class="minor">Minor</h5>
                     {%for task in nextWeekTasks.Minor%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -434,7 +434,7 @@
                     <h5 class='critical'>Critical</h5>
                     {%for task in futureTasks.Critical%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -446,7 +446,7 @@
                     <h5 class='severe'>Severe</h5>
                     {%for task in futureTasks.Severe%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -458,7 +458,7 @@
                     <h5 class="Major">Major</h5>
                     {%for task in futureTasks.Major%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
@@ -470,7 +470,7 @@
                     <h5 class="minor">Minor</h5>
                     {%for task in futureTasks.Minor%}
                     <div class='task'>
-                            <span class='tasktitle' data-taskid={{task.id}}><a href='#' >{{task.name}}</a></span>
+                            <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
                             <span class='deadline'>{{task.deadline}}</span>
