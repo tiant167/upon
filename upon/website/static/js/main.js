@@ -24,52 +24,67 @@
  $('.task a').click(function() {
      $.get('gettaskdetail/1/').then(function(resp) {
          //Gao Zhiwei should write DOM here 
-		 var data = JSON.parse(resp);  
-		 
-         //set priority
-         var priority = 0;
-         switch(data.priority) {
-         	case 0:
-         		priority = "Critical";
-         		break;
-         	case 1:
-         		priority = "Severe";
-         		break;
-         	case 2:
-         		priority = "Major";
-         		break;
-         	case 3:
-         		priority = "Minor";
-         		break;
+		 //var data = JSON.parse(resp);
+		 //ajax请求返回的数据是字符串的类型。json是Object对象，所以需要用eval对你的返回值运行一下生成一个object。  
+		 var data=eval('('+resp+')');
+		 //check if the error_code equal 0
+		 if(data.error_code == 0) {
+	         //set priority
+	         var priority = 0;
+	         switch(data.priority) {
+	         	case 0:
+	         		priority = "Critical";
+	         		break;
+	         	case 1:
+	         		priority = "Severe";
+	         		break;
+	         	case 2:
+	         		priority = "Major";
+	         		break;
+	         	case 3:
+	         		priority = "Minor";
+	         		break;
+	         }
+	         $('.label,.label-primary').text(priority);
+	         
+	         //set status
+	         // var status = 0;
+	         // switch(data.status) {
+	         	// case 0:
+	         		// status = "Cannot Complete";
+	         		// break;
+	         	// case 1:
+	         		// status = "Wait For Complete";
+	         		// break;
+	         	// case 2:
+	         		// status = "Wait For Confirm";
+	         		// break;
+	         	// case 3:
+	         		// status = "total Finished";
+	         		// break;
+	         // }
+	         // $('.label,.label-primary').parent().next().text(status);
+	         
+	         //set task title
+	         $('.label,.label-primary').parent().next().text(data.name);
+	         
+	         //detail info
+	         $('#taskdetail').text(data.detail);
+	         
+	         //set deadline
+	         $('.detaildeadline').children().text(data.deadline);
+	         
+	         //set comments
+	         $('#commentfield').empty();
+	         $.each(data.comments[0], function(i, item) {
+            	var innerhtml = $("<div class='comment'><img class='smallphoto' src='/static/image/head.png'><span class='comment-content'>"+item.content+"</span></div>");
+            	$('#commentfield').append(innerhtml);
+            	if(window.userid == item.authorid) {
+            		$('.comment').addClass('mycomment');
+            	}
+         	 });
+	         
          }
-         $('.label,.label-primary').text(priority);
-         
-         //set status
-         // var status = 0;
-         // switch(data.status) {
-         	// case 0:
-         		// status = "Cannot Complete";
-         		// break;
-         	// case 1:
-         		// status = "Wait For Complete";
-         		// break;
-         	// case 2:
-         		// status = "Wait For Confirm";
-         		// break;
-         	// case 3:
-         		// status = "total Finished";
-         		// break;
-         // }
-         // $('.label,.label-primary').parent().next().text(status);
-         
-         //set task title
-         $('.label,.label-primary').parent().next().text(data.name);
-         
-         //detail info
-         $('#taskdetail').text(data.detail);
-         
-         //set deadline
-         $('.detaildeadline').children().text(data.deadline);
          
          $('#stat').collapse('hide');
          $('#taskinfo').collapse('show');
