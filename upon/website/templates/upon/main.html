@@ -505,83 +505,37 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
         <div id="taskinfo" class="panel panel-info collapse">
             <div class="panel-heading">
               <h3 class="panel-title">任务信息</h3>
               <button type="button" class="close" >&times;</button>
             </div>
             <div class="panel-body">
-
                     <div>
-                        <span class="label label-primary">Major</span>
-                        <span class='detaildeadline'>截止时间：<b>2014.03.09</b></span>
+                        <span class="label"></span>
+                        <!-- <span class='detaildeadline'>截止时间：<b>2014.03.09</b></span> -->
                     </div>
-                    <h4>完成交互稿第四版完成交互稿第完成交互稿第四版完成交互稿第</h4>
+                    <h4></h4>
                     <div>
-                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
-                        <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                        <!-- <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'> -->
                     </div>
-                    <div id='taskdetail'>描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么描述是什么</div>
+                    <div id='taskdetail'></div>
                     <div id='changetask'>
-                        
                         <a href="#" class='deletebtn'>删除任务</a> 
                         <a href="#">修改任务</a>
                     </div>
                     <hr>
                     <section id='commentfield'>
-                        <div class="comment">
+                        <!-- <div class="comment"> || <div class="comment mycomment">
                             <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
                             <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        
-                        <div class="comment mycomment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                            
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        <div class="comment">
-                            <img src="{{STATIC_URL}}image/head.png" class='smallphoto'/>
-                            <span class='comment-content'>这是什么XX任务，怎么做啊！！</span>
-                        </div>
-                        
+                        </div> -->                        
                     </section>
 
-
                         <div class="input-group">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" id="comment-content">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">发表评论</button>
+                            <button class="btn btn-default" id="add-comment-btn" type="button">发表评论</button>
                           </span>
                         </div><!-- /input-group -->
 

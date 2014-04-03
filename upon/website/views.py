@@ -97,7 +97,7 @@ def getTaskDetail(request,taskid):
             taskDetail = Task.objects.get(id=taskid)
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'500'}))
-        if request.user in taskDetail.project.team.member.all():
+        if checkUserAndTask(request.user,taskDetail):
             todoerids = ([{'userid':item.id,'username':item.email} for item in taskDetail.todoer.all()])
             # Comment.objects.create(author=request.user,content=u"这个本周五之前给我答复",task=taskDetail)
             comments = Comment.objects.filter(task=taskDetail)
@@ -124,25 +124,36 @@ def getTaskDetail(request,taskid):
     return HttpResponse(json.dumps({'error_code':'500'}))
 
 @login_required
-def addComment(requests):
-    if method == "POST":
+def addComment(request):
+    if request.method == "POST":
         try:
             taskid = request.POST.get("taskid",False)
-            content = request.POST.get("content",'')
+            content = request.POST.get("content","")
         except:
-            return HttpResponse(json.dumps({'error_code':'500'}))
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         author = request.user
         if taskid:
             task = Task.objects.get(id=taskid)
-            comment = Comment.objects.create(author=author,content=content,task=task)
-            if comment:
-                return HttpResponse(json.dumps({'error_code':'0'}))
-    return HttpResponse(json.dumps({'error_code':'500'}))
+            if checkUserAndTask(author,task):
+                comment = Comment.objects.create(author=author,content=content,task=task)
+                if comment:
+                    return HttpResponse(json.dumps({'error_code':'0'}))
+                else:
+                    return HttpResponse(json.dumps({'error_code':'502','error_message':'internal mistake'}))
+            else:
+                return HttpResponse(json.dumps({'error_code':'503','error_message':'not your belongings'}))
+    return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
         
 
 
 ########################helper function##########################
+def checkUserAndTask(user,task):
+    if user in task.project.team.member.all():
+        return True
+    else:
+        return False
+
 def trasferDatetimeToString(time):
     if time == None:
         return None

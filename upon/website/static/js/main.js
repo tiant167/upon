@@ -87,9 +87,26 @@
 
          }
 
+         //add taskid to add-comment-btn
+         $("#add-comment-btn").data("taskid", taskid);
          $('#stat').collapse('hide');
          $('#taskinfo').collapse('show');
      });
+ });
+
+ $("#add-comment-btn").click(function() {
+     var taskid = $("#add-comment-btn").data("taskid");
+     var content = $("#comment-content").val();
+     if (content !== "") {
+         $.post("addcomment/", {
+             taskid: taskid,
+             content: content
+         }).then(function(resp) {
+             //append a comment to the comment box
+             console.log(resp);
+         });
+     }
+
  });
 
  $('#teamtask a').click(function() {
