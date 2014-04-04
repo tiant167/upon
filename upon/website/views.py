@@ -76,6 +76,7 @@ def main(request):
         'currentWeekTasks':taskField.currentWeekTask,
         'nextWeekTasks':taskField.nextWeekTask,
         'futureTasks':taskField.futureTask,
+        'members':currentTeam.member.all(),
         })
 
 @login_required
@@ -144,7 +145,55 @@ def addComment(request):
                 return HttpResponse(json.dumps({'error_code':'503','error_message':'not your belongings'}))
     return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
-        
+@login_required
+def addTask(request):
+    if request.method == "POST":
+        try:
+            taskid = request.POST.get("taskid","0")
+            projectid = request.POST.get("projectid",False)
+            name = request.POST.get("name",False)
+            detail = request.POST.get("detail","")
+            deadline = request.POST.get("deadline","")
+            starttime = request.POST.get("starttime","")
+            priority = request.POST.get("priority","2")
+            type = request.POST.get("type","0")
+            todoers = request.POST.getlist("todoer",[])
+        except:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        if projectid and name:
+            if taskid == "0":
+                #new task
+                project = Project.objects.get(id=projectid)
+                if type == "2":
+                    status = "1"
+                else:
+                    status = "0"
+                if starttime == "":
+                    starttime = None
+                if deadline == "":
+                    deadline = None
+                newTask = Task.objects.create(
+                    project=project,
+                    name=name,
+                    detail=detail,
+                    starter=request.user,
+                    deadline=deadline,
+                    starttime=starttime,
+                    priority=priority,
+                    type=type,
+                    status=status
+                    )
+                if todoers:
+                    for todoer in todoers:
+                        newTask.todoer.add(User.objects.get(id=todoer))
+                return HttpResponse(json.dumps({'error_code':'0','taskid':newTask.id}))
+            else:
+                #update task
+                pass
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
 
 ########################helper function##########################

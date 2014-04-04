@@ -255,3 +255,13 @@
 
  var workctx = document.getElementById("workcontrast").getContext("2d");
  var workChart = new Chart(workctx).Doughnut(workdata);
+
+
+ function addTask() {
+     $("#add-task-form").ajaxSubmit(function(resp) {
+         console.log(resp);
+         return false;
+     });
+
+     return false;
+ }
