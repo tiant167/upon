@@ -181,10 +181,10 @@
  });
 
  $(".addtaskbtn").click(function() {
-     $("#new-task-modal").modal('show');
+     $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
-     $("#change-task-modal").modal('show');
+     $("#task-modal").modal('show');
  });
  $(".addteambtn").click(function() {
      $("#newteam-modal").modal('show');
