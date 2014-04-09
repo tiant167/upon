@@ -186,6 +186,7 @@
  });
 
  $(".addtaskbtn").click(function() {
+     $("#task-modal .suggesstion").remove();
      $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
@@ -195,6 +196,7 @@
      $("#newteam-modal").modal('show');
  });
  $(".addprojectbtn").click(function() {
+     $("#newproject-modal .suggesstion").remove();
      $("#newproject-modal").modal('show');
  });
  $(".modifypersoninfobtn").click(function() {
@@ -272,6 +274,16 @@
 
      var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
+
+     //if title or todoer is null ,suggesstion
+     if (title == "") {
+         if ($("#add-task-form .suggesstion").length > 0) {
+             $("#add-task-form .suggesstion").remove();
+         }
+         $("#task-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
+     };
+
+
      if (taskid === 0) {
          //new
          $.post("/addtask/", {
