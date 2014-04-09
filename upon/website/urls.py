@@ -2,7 +2,9 @@ from django.conf.urls import patterns, url
 from website import views
 
 urlpatterns = patterns('',
-    url(r'^$',views.main,name='main'),
+    url(r'^$',views.main,{'teamid':None,'projectid':None},name='main'),
+    url(r'^(?P<teamid>\d+)/$',views.main,{'projectid':None}),
+    url(r'^(?P<teamid>\d+)/(?P<projectid>\d+)/$',views.main),
     url(r'^login/$',views.login,name='login'),
     url(r'^register/$',views.register,name='register'),
     url(r'^logout/$',views.logout,name='logout'),

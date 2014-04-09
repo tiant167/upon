@@ -54,16 +54,32 @@ def logout(request):
     return HttpResponseRedirect("/login")
 
 @login_required
-def main(request):
+def main(request,teamid,projectid):
     teamList =  Team.objects.filter(member=request.user)
     if not teamList:
         # 这个是没有team的时候渲染的页面，现在还冒得
         # return render(request,'upon/noteam.html')
         return HttpResponseRedirect("/noteam")
-    currentTeam = teamList[0]
+    if teamid == None:
+        currentTeam = teamList[0]
+    else:
+        try:
+            currentTeam = Team.objects.get(id=teamid)
+        except ObjectDoesNotExist:
+            currentTeam = teamList[0]
+        if request.user  not in currentTeam.member.all():
+            currentTeam = teamList[0]
 
     projectList = Project.objects.filter(team=currentTeam)
-    currentProject = projectList[0]
+    if projectid == None:
+        currentProject = projectList[0]
+    else:
+        try:
+            currentProject = Project.objects.get(id=projectid)
+        except ObjectDoesNotExist:
+            currentProject = projectList[0]
+        if request.user not in currentProject.team.member.all():
+            currentProject = projectList[0]
 
     taskList = Task.objects.filter(project=currentProject).exclude(type=3) #except rubbishbin task
     taskField = TaskField(taskList)
@@ -73,6 +89,8 @@ def main(request):
         'user':request.user,
         'teams':teamList,
         'projects':projectList,
+        'currentTeam':currentTeam,
+        'currentProject':currentProject,
         'currentWeekTasks':taskField.currentWeekTask,
         'nextWeekTasks':taskField.nextWeekTask,
         'futureTasks':taskField.futureTask,

@@ -78,11 +78,11 @@
             <h4>我的团队</h4>
             <div class="btn-group">
               <button type="button" id='teamselect' class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                {{teams.0.name}} <span class="caret"></span>
+                {{currentTeam.name}} <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
                 {%for team in teams%}
-                    <li><a href="#">{{team.name}}</a></li>
+                    <li><a href="/{{team.id}}/">{{team.name}}</a></li>
                 {%endfor%}
                 <li class="divider"></li>
                 <li><a href="#" class="addteambtn">创建团队</a></li>
@@ -91,12 +91,12 @@
             <h4>项目</h4>
             <div id='project-list' class="list-group">
                 {%for project in projects%}
-                    {%if forloop.counter == 1%}
-                        <a href="#" class="list-group-item active">
+                    {%if project.id == currentProject.id%}
+                        <a href="/{{currentTeam.id}}/{{project.id}}" class="list-group-item active">
                   {{project.name}}<span class='glyphicon glyphicon-chevron-right'></span>
                         </a>
                     {%else%}
-                        <a href="#" class="list-group-item">{{project.name}}</a>
+                        <a href="/{{currentTeam.id}}/{{project.id}}" class="list-group-item">{{project.name}}</a>
                     {%endif%}
                 {%endfor%}
                 <a href="#" class="list-group-item"><span class='glyphicon glyphicon-plus-sign'></span>新建项目</a>
