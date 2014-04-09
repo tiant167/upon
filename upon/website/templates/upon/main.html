@@ -570,8 +570,7 @@
         <h4 class="modal-title" id="newModalLabel">任务</h4>
       </div>
       <div class="modal-body">
-        <form id="add-task-form" class="form-horizontal" role="form" action="{%url 'upon:addtask'%}" method="post" onsubmit="addTask();return false;">
-            {%csrf_token%}
+        <form id="add-task-form" class="form-horizontal" role="form">
           <div class="form-group">
             <label class="col-sm-2 control-label">任务标题</label>
             <div class="col-sm-10">
@@ -579,9 +578,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword" class="col-sm-2 control-label">任务组</label>
+            <label for="task-group-select" class="col-sm-2 control-label">任务组</label>
             <div class="col-sm-5">
-              <select class="form-control" name="type">
+              <select id="task-group-select"class="form-control" name="type">
                   <option value="2">本周</option>
                   <option value="1">下周</option>
                   <option value="0">将来</option>
@@ -591,7 +590,7 @@
           <div class="form-group">
           <label for="inputPassword" class="col-sm-2 control-label">优先级</label>
             <div class="col-sm-5">
-              <select class="form-control" name="priority">
+              <select id="task-priority-select" class="form-control" name="priority">
                   <option value="0">Critical</option>
                   <option value="1">Severe</option>
                   <option value="2">Major</option>
@@ -602,7 +601,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">指派给</label>
             <div class="col-sm-6">
-              <select multiple class="form-control" name="todoer">
+              <select multiple class="form-control" name="todoer" id="todoer-select">
                 {%for member in members%}
                 <option value="{{member.id}}">{{member.email}} - {{member.username}}</option>
                 {%endfor%}
@@ -612,21 +611,21 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">任务描述</label>
             <div class="col-sm-10">
-              <textarea class="form-control" name="detail"></textarea>
+              <textarea class="form-control" name="detail" id="task-desc-textarea"></textarea>
           </div>
       </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">截止时间</label>
             <div class="col-sm-5">
-              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="deadline">
+              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="deadline" id="task-deadline-input">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">开始时间</label>
             <div class="col-sm-5">
-              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="starttime">
+              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="starttime" id="task-starttime-input">
             </div>
         </div>
         <input id="task-form-taskid" type="hidden" name="taskid" value="0"/>
@@ -634,11 +633,12 @@
 
         
       </div>
+      </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="submit" class="btn btn-primary">创建</button>
       </div>
-      </form>
+      
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
