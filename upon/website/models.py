@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 # Create your models here.
 
 
@@ -57,10 +58,9 @@ class Comment(models.Model):
 class Avatar(models.Model):
     user = models.ForeignKey(User)
     avatar = models.CharField(max_length=100)
-    
-#team1 = Team.objects.create(name=u"测试团队")
-#user1 = User.objects.create_user(username=u"123@qq.com",email=u"Tim",password=u"123")
-#team1.member.add(user1)
-#project1 = Project.objects.create(name=u"广告模块",team=team1)
-#task1 = Task.objects.create(name=u"广告模块第一广告位黑盒测试",project=project1,detail=u"针对第一广告位进行黑盒测试，保证各个逻辑分支准确无误",starter=user1,type=2,status=1)
-#task1.todoer.add(user1)
+   
+
+class TaskForm(ModelForm):
+    class Meta:
+        model=Task
+        fields = ['name','detail','todoer','deadline','starttime','priority']

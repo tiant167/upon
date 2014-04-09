@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^noteam/$',views.noteam,name='noteam'),
     url(r'^gettaskdetail/(?P<taskid>\d+)/$',views.getTaskDetail),
     url(r'^addcomment/$',views.addComment),
+    url(r'^addtask/$',views.addTask,name="addtask"),
 )

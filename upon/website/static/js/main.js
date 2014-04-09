@@ -72,9 +72,15 @@
 
              //set task title
              $('.taskname').text(data.name);
+             //if change the task info,this statement update the modal
+             $('#changetasktitle').attr("placeholder", data.name);
 
              //detail info
              $('#taskdetail').text(data.detail);
+             $('#taskdetailinfo').text(data.detail);
+             
+             //set the starttime
+             $('#starttime').attr("placeholder", data.createtime);
 
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
@@ -181,10 +187,10 @@
  });
 
  $(".addtaskbtn").click(function() {
-     $("#new-task-modal").modal('show');
+     $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
-     $("#change-task-modal").modal('show');
+     $("#task-modal").modal('show');
  });
  $(".addteambtn").click(function() {
      $("#newteam-modal").modal('show');
@@ -255,3 +261,13 @@
 
  var workctx = document.getElementById("workcontrast").getContext("2d");
  var workChart = new Chart(workctx).Doughnut(workdata);
+
+
+ function addTask() {
+     $("#add-task-form").ajaxSubmit(function(resp) {
+         console.log(resp);
+         return false;
+     });
+
+     return false;
+ }

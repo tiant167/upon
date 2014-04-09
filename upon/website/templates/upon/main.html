@@ -562,72 +562,71 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="new-task-modal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+<div class="modal fade" id="task-modal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="newModalLabel">新增任务</h4>
+        <h4 class="modal-title" id="newModalLabel">任务</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form">
+        <form id="add-task-form" class="form-horizontal" role="form" action="{%url 'upon:addtask'%}" method="post" onsubmit="addTask();return false;">
+            {%csrf_token%}
           <div class="form-group">
             <label class="col-sm-2 control-label">任务标题</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
+              <input type="text" name="name" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword" class="col-sm-2 control-label">任务组</label>
             <div class="col-sm-5">
-              <select class="form-control">
-                  <option>本周</option>
-                  <option>下周</option>
-                  <option>将来</option>
+              <select class="form-control" name="type">
+                  <option value="2">本周</option>
+                  <option value="1">下周</option>
+                  <option value="0">将来</option>
                 </select>
             </div>
           </div>
           <div class="form-group">
           <label for="inputPassword" class="col-sm-2 control-label">优先级</label>
             <div class="col-sm-5">
-              <select class="form-control">
-                  <option>Critical</option>
-                  <option>Severe</option>
-                  <option>Major</option>
-                  <option>Minor</option>
+              <select class="form-control" name="priority">
+                  <option value="0">Critical</option>
+                  <option value="1">Severe</option>
+                  <option value="2">Major</option>
+                  <option value="3">Minor</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">指派给</label>
             <div class="col-sm-6">
-              <select multiple class="form-control">
-                  <option>小逗比-doubi@upon.cn</option>
-                  <option>逗比萌妹子-menmeizi@upon.cn</option>
-                  <option>臭傻X-shax@upon.cn</option>
-                  <option>楼上是逗比-hahaha@upon.cn</option>
-                  <option>Maven-maven@upon.cn</option>
-                  <option>楼上是一个正常人-maven@upon.cn</option>
+              <select multiple class="form-control" name="todoer">
+                {%for member in members%}
+                <option value="{{member.id}}">{{member.email}} - {{member.username}}</option>
+                {%endfor%}
                 </select>
           </div>
       </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">任务描述</label>
             <div class="col-sm-10">
-              <textarea class="form-control" ></textarea>
+              <textarea class="form-control" name="detail"></textarea>
           </div>
       </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">截止时间</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
+              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="deadline">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">开始时间</label>
             <div class="col-sm-5">
+<<<<<<< HEAD
               <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
             </div>
         </div>
@@ -693,7 +692,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">任务描述</label>
             <div class="col-sm-10">
-              <textarea class="form-control" ></textarea>
+              <textarea class="form-control" id="taskdetailinfo"></textarea>
           </div>
       </div>
 
@@ -701,21 +700,35 @@
             <label class="col-sm-2 control-label">截止时间</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
+=======
+              <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="starttime">
+>>>>>>> 92c42f74e40083ddbfa8852e1da6f7bb3a029c68
             </div>
         </div>
+        <input id="task-form-taskid" type="hidden" name="taskid" value="0"/>
+        <input id="task-form-projectid" type="hidden" name="projectid" value="{{projects.0.id}}"/> <!-- here need to fill value by ajax -->
 
+<<<<<<< HEAD
         <div class="form-group">
             <label class="col-sm-2 control-label">开始时间</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder='举个栗子：2014-01-01'>
+              <input type="text" class="form-control" id="starttime" placeholder='举个栗子：2014-01-01'>
             </div>
         </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">创建</button>
+        <button type="button" class="btn btn-primary">修改</button>
+=======
+        
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">创建</button>
+>>>>>>> 92c42f74e40083ddbfa8852e1da6f7bb3a029c68
+      </div>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
