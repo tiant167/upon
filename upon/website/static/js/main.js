@@ -107,6 +107,11 @@
              content: content
          }).then(function(resp) {
              //append a comment to the comment box
+             var comments = "<div class='comment mycomment'>\
+             <img src='/static/image/head.png' class='smallphoto'>\
+             <span class='comment-content'>"+content+"</span></div>";
+             $('#commentfield').append(comments);
+             $('#comment-content').val() = "";
              console.log(resp);
          });
      }
@@ -281,6 +286,7 @@
              todoer: todoer
          }).then(function(resp) {
              //callback
+             $("")
              console.log(resp);
          });
      } else {
