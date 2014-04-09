@@ -161,15 +161,14 @@ def addTask(request):
         except:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         if projectid and name:
-            if taskid == "0":
-                #new task
-                project = Project.objects.get(id=projectid)
-                if type == "2":
-                    status = "1"
-                else:
-                    status = "0"
-                if starttime == "":
-                    starttime = None
+            #new task
+            project = Project.objects.get(id=projectid)
+            if type == "2":
+                status = "1"
+            else:
+                status = "0"
+            if starttime == "":
+                starttime = None
                 if deadline == "":
                     deadline = None
                 newTask = Task.objects.create(
@@ -187,14 +186,20 @@ def addTask(request):
                     for todoer in todoers:
                         newTask.todoer.add(User.objects.get(id=todoer))
                 return HttpResponse(json.dumps({'error_code':'0','taskid':newTask.id}))
-            else:
-                #update task
-                pass
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+
+@login_required
+def getTaskByProjectid(request,projectid):
+    project = Project.objects.get(id=projectid)
+    taskList = Task.objects.filter(project=project).exclude(type=3)
+    taskField = TaskField(taskList)
+    taskField.judgePriorityWithJson()
+
+    return HttpResponse(json.dumps({'current_week':taskField.currentWeekTask,'next_week':taskField.nextWeekTask,'future_task':taskField.futureTask}))
 
 ########################helper function##########################
 def checkUserAndTask(user,task):
@@ -234,3 +239,20 @@ class TaskField:
                 taskBox['Major'].append(task)
             elif task.priority == 3:
                 taskBox['Minor'].append(task)
+    def judgePriorityWithJson(self):
+        for task in self.taskList:
+            if task.type == 0:
+                taskBox = self.futureTask
+            elif task.type == 1:
+                taskBox = self.nextWeekTask
+            elif task.type == 2 :
+                taskBox = self.currentWeekTask
+            #here only give name and starttime deadline
+            if task.priority == 0:    
+                taskBox['Critical'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
+            elif task.priority == 1:
+                taskBox['Severe'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
+            elif task.priority == 2:
+                taskBox['Major'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
+            elif task.priority == 3:
+                taskBox['Minor'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
