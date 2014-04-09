@@ -286,7 +286,7 @@
 
      if (taskid === 0) {
          //new
-         $.post("addtask/", {
+         $.post("/addtask/", {
              taskid: "0",
              projectid: projectid,
              name: title,
