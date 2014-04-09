@@ -23,7 +23,7 @@
 
  $('.task a').click(function(e) {
      var taskid = $(e.target).data("taskid");
-     $.get("gettaskdetail/" + taskid + "/").then(function(resp) {
+     $.get("/gettaskdetail/" + taskid + "/").then(function(resp) {
          //Gao Zhiwei should write DOM here 
          //var data = JSON.parse(resp);
          //ajax请求返回的数据是字符串的类型。json是Object对象，所以需要用eval对你的返回值运行一下生成一个object。  
@@ -102,7 +102,7 @@
      var taskid = $("#add-comment-btn").data("taskid");
      var content = $("#comment-content").val();
      if (content !== "") {
-         $.post("addcomment/", {
+         $.post("/addcomment/", {
              taskid: taskid,
              content: content
          }).then(function(resp) {
@@ -274,7 +274,7 @@
      var taskid = $(e.target).data("taskid");
      if (taskid === 0) {
          //new
-         $.post("addtask/", {
+         $.post("/addtask/", {
              taskid: "0",
              projectid: projectid,
              name: title,
@@ -341,7 +341,7 @@
      if (title == "") {
          //GZW
      } else {
-         $.post('addproject/', {
+         $.post('/addproject/', {
              projectname: title,
              teamid: teamid
          }).then(function(resp) {
