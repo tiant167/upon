@@ -204,6 +204,25 @@ def getTaskByProjectid(request,projectid):
 
     return HttpResponse(json.dumps({'current_week':taskField.currentWeekTask,'next_week':taskField.nextWeekTask,'future_task':taskField.futureTask}))
 
+@login_required
+def addProject(request):
+    if request.method == "POST":
+        projectName = request.POST.get("projectname",False)
+        teamid = request.POST.get("teamid",False)
+        if projectName and teamid:
+            team = Team.objects.get(id=teamid)
+            #check if this project name is existed in this team
+            existProject = Project.objects.filter(team=team,name=projectName)
+            if existProject:
+                        return HttpResponse(json.dumps({'error_code':'502','error_message':'same name'}))
+            newProject = Project.objects.create(name=projectName,team=team)
+            return HttpResponse(json.dumps({'error_code':'0','projectid':newProject.id}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
+
 ########################helper function##########################
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():
