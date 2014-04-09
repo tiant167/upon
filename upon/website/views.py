@@ -187,8 +187,9 @@ def addTask(request):
                 status = "0"
             if starttime == "":
                 starttime = None
-                if deadline == "":
-                    deadline = None
+            if deadline == "":
+                deadline = None
+            if taskid =="0":
                 newTask = Task.objects.create(
                     project=project,
                     name=name,
@@ -200,10 +201,25 @@ def addTask(request):
                     type=type,
                     status=status
                     )
-                if todoers:
-                    for todoer in todoers:
-                        newTask.todoer.add(User.objects.get(id=todoer))
-                return HttpResponse(json.dumps({'error_code':'0','taskid':newTask.id}))
+            else:
+                #no test
+                oldTask = Task.objects.get(id=taskid)
+                if checkUserAndTask(request.user,oldTask):
+                    oldTask.name = name
+                    oldTask.detail = detail
+                    oldTask.deadline = deadline
+                    oldTask.starttime = starttime
+                    oldTask.priority = priority
+                    oldTask.type = type
+                    oldTask.status = status
+                    oldTask.save()
+                    oldTask.member.all().delete()
+                else:
+                    return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+            if todoers:
+                for todoer in todoers:
+                    newTask.todoer.add(User.objects.get(id=todoer))
+            return HttpResponse(json.dumps({'error_code':'0','taskid':newTask.id}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
