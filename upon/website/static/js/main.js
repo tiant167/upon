@@ -256,12 +256,36 @@
  var workctx = document.getElementById("workcontrast").getContext("2d");
  var workChart = new Chart(workctx).Doughnut(workdata);
 
+ $("#addtask-submit-btn").click(function(e) {
+     var title = $("#task-title-input").val();
+     var group = $("#task-group-select").val();
+     var priority = $("#task-priority-select").val();
+     var todoer = $("#todoer-select").val();
+     var detail = $("#task-desc-textarea").val();
+     var deadline = $("#task-deadline-input").val();
+     var starttime = $("#task-starttime-input").val();
 
- function addTask() {
-     $("#add-task-form").ajaxSubmit(function(resp) {
-         console.log(resp);
-         return false;
-     });
+     var projectid = window.projectid;
+     var taskid = $(e.target).data("taskid");
+     if (taskid === 0) {
+         //new
+         $.post("addtask/", {
+             taskid: "0",
+             projectid: projectid,
+             name: title,
+             detail: detail,
+             deadline: deadline,
+             starttime: starttime,
+             priority: priority,
+             type: group,
+             todoer: todoer
+         }).then(function(resp) {
+             //callback
+             console.log(resp);
+         });
+     } else {
+         //update
 
-     return false;
- }
+     }
+
+ });

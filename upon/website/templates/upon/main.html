@@ -574,7 +574,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">任务标题</label>
             <div class="col-sm-10">
-              <input type="text" name="name" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
+              <input type="text" name="name" class="form-control" id="task-title-input" placeholder="起一个响亮的名字是成功的一半">
             </div>
           </div>
           <div class="form-group">
@@ -628,7 +628,6 @@
               <input type="date" class="form-control" placeholder='举个栗子：2014-01-01' name="starttime" id="task-starttime-input">
             </div>
         </div>
-        <input id="task-form-taskid" type="hidden" name="taskid" value="0"/>
         <input id="task-form-projectid" type="hidden" name="projectid" value="{{projects.0.id}}"/> <!-- here need to fill value by ajax -->
 
         
@@ -636,7 +635,7 @@
       </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary">创建</button>
+        <button type="submit" class="btn btn-primary" data-taskid="0" id="addtask-submit-btn">创建</button>
       </div>
       
     </div><!-- /.modal-content -->
@@ -851,6 +850,7 @@
     //global varible
     userid="{{user.id}}"
     username = "{{user.email}}"
+    projectid = "{{projects.0.id}}"
     </script>
 
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
