@@ -43,7 +43,7 @@ def register(request):
                     user.save()
                     login_user = auth.authenticate(username=username, password=password1)
                     auth.login(request, login_user)
-                    render(request,"upon/noteam.html")
+                    return render(request,"upon/noteam.html")
             errors.append('邮箱已被注册')       
         except KeyError:
             errors.append('请填写完整的表单')
@@ -194,7 +194,10 @@ def addTask(request):
 
 @login_required
 def getTaskByProjectid(request,projectid):
-    project = Project.objects.get(id=projectid)
+    try:
+        project = Project.objects.get(id=projectid)
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     taskList = Task.objects.filter(project=project).exclude(type=3)
     taskField = TaskField(taskList)
     taskField.judgePriorityWithJson()
