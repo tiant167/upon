@@ -109,7 +109,7 @@
              //append a comment to the comment box
              var comments = "<div class='comment mycomment'>\
              <img src='/static/image/head.png' class='smallphoto'>\
-             <span class='comment-content'>"+content+"</span></div>";
+             <span class='comment-content'>" + content + "</span></div>";
              $('#commentfield').append(comments);
              $('#comment-content').val() = "";
              console.log(resp);
@@ -286,61 +286,66 @@
              todoer: todoer
          }).then(function(resp) {
              //callback
-             var whichweek = "";
-             var priorityname = "";
-             var h5 = "h5.";
+             var whichweek = ""
+             var priorityname = ""
              var datataskid = eval('(' + resp + ')').taskid;
-             switch(group) {
-                case "0":
-                    whichweek="#futureTask";
-                    break;
-                case "1":
-                    whichweek="#nextWeekTask";
-                    break;
-                case "2":
-                    whichweek="#currentWeekTask";
-                    break;
+             switch (group) {
+                 case "0":
+                     whichweek = "#futureTask";
+                     break;
+                 case "1":
+                     whichweek = "#nextWeekTast";
+                     break;
+                 case "2":
+                     whichweek = "#currentWeekTask";
+                     break;
              }
 
-             switch(priority) {
-                case "0":
-                    priorityname = "Critical";
-                    break;
-                case "1":
-                    priorityname = "Severe";
-                    break;
-                case "2":
-                    priorityname = "Major";
-                    break;
-                case "3":
-                    priorityname = "Minor";
-                    break;
+             switch (priority) {
+                 case "0":
+                     priorityname = "h5.critical";
+                     break;
+                 case "1":
+                     priorityname = "h5.severe";
+                     break;
+                 case "2":
+                     priorityname = "h5.major";
+                     break;
+                 case "3":
+                     priorityname = "h5.minor";
+                     break;
              }
 
-             if ( $(whichweek+ " "+h5 +priorityname).length > 0 ) {
-                // $(whichweek+ " " +priorityname).append("<div class='task'>\
-                //             <div class='icheckbox_square-blue' style='position: relative;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>\
-                //             <span class='tasktitle'><a href='#' data-taskid='"+datataskid+"'>"+ title +"</a></span>\
-                //             <span class='glyphicon glyphicon-trash'></span>\
-                //     </div>");
-             } else {
-                var tmpclass = ".panel-body";
-                var delespan = " > span";
-                $(whichweek +" " + tmpclass + " " + delespan).remove();
-                $(whichweek +" " + tmpclass).append("<h5 class='"+priorityname+"'>"+priorityname+"</h5>");
-             }
-             $(whichweek+ " "+h5 +priorityname).append("<div class='task'>\
+             if ($(whichweek + " " + priorityname) > 0) {
+                 $(whichweek + " " + priorityname).append("<div class='task'>\
                             <div class='icheckbox_square-blue' style='position: relative;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>\
-                            <span class='tasktitle'><a href='#' data-taskid='"+datataskid+"'>"+ title +"</a></span>\
+                            <span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'>" + title + "</a></span>\
                             <span class='glyphicon glyphicon-trash'></span>\
                     </div>");
+             } else {
 
-             
+             }
+
+
              console.log(resp);
          });
      } else {
          //update
 
      }
+ });
 
+ $("#add-project-submitbtn").click(function() {
+     var title = $("#newproject-modal input").val();
+     var teamid = window.teamid;
+     if (title == "") {
+         //GZW
+     } else {
+         $.post('addproject/', {
+             projectname: title,
+             teamid: teamid
+         }).then(function(resp) {
+             console.log(resp);
+         });
+     }
  });
