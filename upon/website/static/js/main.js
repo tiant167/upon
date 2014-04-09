@@ -340,6 +340,10 @@
      var teamid = window.teamid;
      if (title == "") {
          //GZW
+         if ($("#newproject-modal .suggesstion").length > 0) {
+             $("#newproject-modal .suggesstion").remove();
+         }
+         $("#newproject-modal input").parent().append("<div class='suggesstion'>*项目名称不能为空</div>");
      } else {
          $.post('addproject/', {
              projectname: title,
