@@ -430,6 +430,7 @@
      $.post("/deleteproject/", {
          projectid: projectid
      }).then(function(resp) {
+         //callback GZW
          console.log(resp);
      });
  });
