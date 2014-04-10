@@ -110,7 +110,7 @@
              });
 
          }
-         $("#taskinfo").data("taskid", taskid);
+         $("#deletetask-modal").data("taskid", taskid);
          //add taskid to add-comment-btn
          $("#add-comment-btn").data("taskid", taskid);
          $('#stat').collapse('hide');
@@ -201,7 +201,9 @@
      $('#othertask').attr('class', '');
  });
 
- $(".glyphicon-trash,.deletebtn").click(function() {
+ $(".glyphicon-trash,.deletebtn").click(function(e) {
+     var taskid = $(e.target).prev().children().data("taskid");
+     $("#deletetask-modal").data("taskid", taskid);
      $("#deletetask-modal").modal('show');
  });
 
@@ -397,7 +399,7 @@
  });
 
  $("#deletetask-modal .delete-btn").click(function() {
-     var taskid = $("#taskinfo").data("taskid");
+     var taskid = $("#deletetask-modal").data("taskid");
      $.post('/deletetask/', {
          taskid: taskid
      }).then(function(resp) {
