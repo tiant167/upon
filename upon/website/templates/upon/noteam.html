@@ -34,22 +34,25 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id='headernav'>
-              <li class='addteambtn' ><a href="#">创建团队</a></li>
               
-              <li class="dropdown" id='personal-info'>
-                <a href="#"><img src='{{STATIC_URL}}image/head.png' class='smallphoto'>{{user.email}}</a>
+              
+              <li class="pull-right" id="banner-icon">
+                <a href="#" class="modifypersoninfobtn"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="/logout/"><span class="glyphicon glyphicon-log-out"></span></a>
             </li>
-            <li id="banner-icon">
-                <a href="#" class="modifypersoninfobtn"><span class="glyphicon glyphicon-cog"></span></a>
-                <a href="{%url 'upon:logout'%}"><span class="glyphicon glyphicon-log-out"></span></a>
+             <li class="dropdown pull-right" id="personal-info">
+                <a href="#"><img src="/static/image/head.png" class="smallphoto">111</a>
             </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </header>
-    <div class="mainbody">
-      您还没有加入任何团队，选择<a href="#" class="addteambtn">创建团队</a>或者通知你的队长将你加入他的团队
+   <div class="mainbody" id="createTeam">
+      <div id="p-tBtnAbove">您还没有加入任何团队，您可以</div>
+      <div id="p-tBtn"><a href="#" class="addteambtn"><button type="button" class="btn btn-primary btn-lg" id="btn-creatTeam">创建团队</button></a>
+      <div id="p-tBtnBelow">or  通知你的队长将你加入他的团队</div>
+    </div>
     </div>
 
 

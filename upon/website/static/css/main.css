@@ -225,6 +225,40 @@ hr{
 
 }
 
+#headernav{
+	width: 850px;
+}
+
+#createTeam{
+	margin-top: 140px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 16px;
+	vertical-align: text-bottom;
+}
+#btn-createTeam{
+	margin-left: 200px;
+}
+
+#p-tBtnAbove{
+	margin-left: 260px;
+}
+
+#p-tBtn{
+	margin-left: 310px;
+	margin-top: 20px;
+	height: 50px;
+}
+
+#p-tBtnBelow{
+	font-size: 13px;
+	height: 50px;
+	margin-top: 10px;
+	margin-left: -50px;
+	vertical-align: bottom;
+}
+
 /*#teamselect{
 	border:none;
 }
