@@ -73,12 +73,12 @@
              //set task title
              $('.taskname').text(data.name);
              //when update the task , set task title
-             $('#task-title-input').attr("placeholder", data.name);
+             $('#task-title-input').val(data.name);
 
              //detail info
              $('#taskdetail').text(data.detail);
              //update the task
-             $('#task-desc-textarea').attr("placeholder", data.detail);
+             $('#task-desc-textarea').val(data.detail);
 
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
@@ -380,6 +380,8 @@
              $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + "</a></span><span class='glyphicon glyphicon-trash'></span></div>");
 
              $("#task-modal").modal('hide');
+             //reload
+             window.location.reload();
              console.log(resp);
          });
      } else {
@@ -419,6 +421,7 @@
          $("#deletetask-modal").modal('hide');
          $('#stat').collapse('show');
          $('#taskinfo').collapse('hide');
+         window.location.reload(); //重新刷新页面
          console.log(resp);
          //delete
      });
