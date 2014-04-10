@@ -203,9 +203,13 @@
      $('#othertask').attr('class', '');
  });
 
- $(".glyphicon-trash,.deletebtn").click(function(e) {
+ // delete task
+ $(".glyphicon-trash").click(function(e) {
      var taskid = $(e.target).prev().children().data("taskid");
      $("#deletetask-modal").data("taskid", taskid);
+     $("#deletetask-modal").modal('show');
+ });
+ $(".deletebtn").click(function(e) {
      $("#deletetask-modal").modal('show');
  });
 
