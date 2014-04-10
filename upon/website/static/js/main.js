@@ -381,7 +381,7 @@
                  $(whichweek + " " + tmpclass + " " + delespan).remove();
                  $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
              }
-             $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + "</a></span><span class='glyphicon glyphicon-trash'></span></div>");
+             $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + " </a></span><span class='glyphicon glyphicon-trash'></span></div>");
 
              $("#task-modal").modal('hide');
              //reload
@@ -421,11 +421,21 @@
      }).then(function(resp) {
          //GZW
          var deletetaskid = "#task" + taskid;
+         //如果task为空,删除相应h5
+         if ($(deletetaskid).prev().is('h5')) {
+             if ($(deletetaskid).next().is('h5')) {
+                 $(deletetaskid).prev().remove();
+             };
+             if ($(deletetaskid).next().length == 0) {
+                 $(deletetaskid).prev().remove();
+             };
+         };
+
          $(deletetaskid).remove();
          $("#deletetask-modal").modal('hide');
          $('#stat').collapse('show');
          $('#taskinfo').collapse('hide');
-         window.location.reload(); //重新刷新页面
+         //window.location.reload(); //重新刷新页面
          console.log(resp);
          //delete
      });
