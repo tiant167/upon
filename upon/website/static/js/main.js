@@ -308,6 +308,8 @@
      var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
 
+     var todoerstr = todoer.join(",");
+
      //if title or todoer is null ,suggesstion
      if (title == "") {
          if ($("#add-task-form .suggesstion").length > 0) {
@@ -328,7 +330,7 @@
              starttime: starttime,
              priority: priority,
              type: group,
-             todoer: todoer
+             todoer: todoerstr
          }).then(function(resp) {
              //callback
              var whichweek = "";
