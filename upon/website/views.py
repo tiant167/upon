@@ -256,6 +256,33 @@ def addProject(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@login_required
+def deleteTask(request):
+    if request.method == "POST":
+        taskid = request.POST.get("taskid",False)
+        if taskid:
+            task = Task.objects.get(id=taskid)
+            task.delete()
+            return HttpResponse(json.dumps({'error_code':'0'}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
+@login_required
+def deleteProject(request):
+    if request.method == "POST":
+        projectid = request.POST.get("projectid",False)
+        if projectid:
+            project = Project.objects.get(id=projectid)
+            project.delete()
+            return HttpResponse(json.dumps({'error_code':'0'}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
+
 
 ########################helper function##########################
 def checkUserAndTask(user,task):
