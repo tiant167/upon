@@ -21,7 +21,8 @@
  });
 
 
- $('.task a').click(function(e) {
+ $(document).on("click", ".task a", function(e) {
+     //$('.task a').on("click", (function(e) {
      var taskid = $(e.target).data("taskid");
      $.get("/gettaskdetail/" + taskid + "/").then(function(resp) {
          //Gao Zhiwei should write DOM here 
@@ -204,7 +205,8 @@
  });
 
  // delete task
- $(".glyphicon-trash").click(function(e) {
+ $(document).on("click", ".glyphicon-trash", function(e) {
+     //$(".glyphicon-trash").click(function(e) {
      var taskid = $(e.target).prev().children().data("taskid");
      $("#deletetask-modal").data("taskid", taskid);
      $("#deletetask-modal").modal('show');
@@ -383,7 +385,7 @@
 
              $("#task-modal").modal('hide');
              //reload
-             window.location.reload();
+             //window.location.reload();
              console.log(resp);
          });
      } else {
