@@ -298,7 +298,7 @@
                 {%if currentWeekTasks.Critical%}
                     <h5 class='Critical'>Critical</h5>
                     {%for task in currentWeekTasks.Critical%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <input type='checkbox' class='finishbox'/>
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
@@ -311,7 +311,7 @@
                 {%if currentWeekTasks.Severe%}
                     <h5 class='Severe'>Severe</h5>
                     {%for task in currentWeekTasks.Severe%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <input type='checkbox' class='finishbox'/>
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
@@ -324,7 +324,7 @@
                 {%if currentWeekTasks.Major%}
                 <h5 class="Major">Major</h5>
                     {%for task in currentWeekTasks.Major%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <input type='checkbox' class='finishbox'/>
                             <span class='tasktitle' ><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
@@ -337,7 +337,7 @@
                 {%if currentWeekTasks.Minor%}
                     <h5 class="Minor">Minor</h5>
                     {%for task in currentWeekTasks.Minor%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <input type='checkbox' class='finishbox'/>
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
@@ -368,7 +368,7 @@
                 {%if nextWeekTasks.Critical%}
                     <h5 class='Critical'>Critical</h5>
                     {%for task in nextWeekTasks.Critical%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -380,7 +380,7 @@
                 {%if nextWeekTasks.Severe%}
                     <h5 class='Severe'>Severe</h5>
                     {%for task in nextWeekTasks.Severe%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -392,7 +392,7 @@
                 {%if nextWeekTasks.Major%}
                 <h5 class="Major">Major</h5>
                     {%for task in nextWeekTasks.Major%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -404,7 +404,7 @@
                 {%if nextWeekTasks.Minor%}
                     <h5 class="Minor">Minor</h5>
                     {%for task in nextWeekTasks.Minor%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -434,7 +434,7 @@
                 {%if futureTasks.Critical%}
                     <h5 class='Critical'>Critical</h5>
                     {%for task in futureTasks.Critical%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -446,7 +446,7 @@
                 {%if futureTasks.Severe%}
                     <h5 class='Severe'>Severe</h5>
                     {%for task in futureTasks.Severe%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -458,7 +458,7 @@
                 {%if futureTasks.Major%}
                     <h5 class="Major">Major</h5>
                     {%for task in futureTasks.Major%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
@@ -470,7 +470,7 @@
                 {%if futureTasks.Minor%}
                     <h5 class="Minor">Minor</h5>
                     {%for task in futureTasks.Minor%}
-                    <div class='task'>
+                    <div class='task' id="task{{task.id}}">
                             <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                             <span class='glyphicon glyphicon-trash'></span>
                             {%if task.deadline%}
