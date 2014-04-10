@@ -317,7 +317,7 @@
      };
 
 
-     if (taskid === 0) {
+     if (taskid == 0) {
          //new
          $.post("/addtask/", {
              taskid: "0",
