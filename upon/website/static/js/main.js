@@ -232,6 +232,11 @@
  $(".manageteambtn").click(function() {
      $("#manageteam-modal").modal('show');
  });
+ $(".deleteprojectbtn").click(function() {
+     var projectname = $("#project-list a.active").text();
+     $("#deleteproject-modal div.modal-body span b").text(projectname);
+     $("#deleteproject-modal").modal("show");
+ });
 
  $("#project-list > a").click(function() {
      var all = $(this).parent().children().length - 1;
