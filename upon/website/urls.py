@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^addtask/$',views.addTask,name="addtask"),
     url(r'^gettask/(?P<projectid>\d+)/$',views.getTaskByProjectid),
     url(r'^addproject/$',views.addProject),
+    url(r'^deletetask/$',views.deleteTask),
+
 )

@@ -53,6 +53,7 @@
                   <li class="divider"></li>
                   <li class="dropdown-header">项目管理</li>
                   <li><a href="#" class="addprojectbtn">创建项目</a></li>
+                  <li><a href="#" class="deleteprojectbtn">删除项目</a></li>
                 </ul>
               </li>
               <li class="dropdown" id='personal-info'>
@@ -505,7 +506,7 @@
             </div>
         </div>
 
-        <div id="taskinfo" class="panel panel-info collapse">
+        <div id="taskinfo" class="panel panel-info collapse" data-taskid="0">
             <div class="panel-heading">
               <h3 class="panel-title">任务信息</h3>
               <button type="button" class="close" >&times;</button>
@@ -544,7 +545,7 @@
           </div>
     </aside>
 
-<div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="deletetask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -556,7 +557,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-danger">删除</button>
+        <button type="button" class="btn btn-danger delete-btn">删除</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

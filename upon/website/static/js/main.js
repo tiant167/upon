@@ -90,7 +90,7 @@
              });
 
          }
-
+         $("#taskinfo").data("taskid", taskid);
          //add taskid to add-comment-btn
          $("#add-comment-btn").data("taskid", taskid);
          $('#stat').collapse('hide');
@@ -182,7 +182,7 @@
  });
 
  $(".glyphicon-trash,.deletebtn").click(function() {
-     $("#alert-modal").modal('show');
+     $("#deletetask-modal").modal('show');
  });
 
  $(".addtaskbtn").click(function() {
@@ -374,4 +374,15 @@
              console.log(resp);
          });
      }
+ });
+
+ $("#deletetask-modal .delete-btn").click(function() {
+     var taskid = $("#taskinfo").data("taskid");
+     $.post('/deletetask/', {
+         taskid: taskid
+     }).then(function(resp) {
+         //GZW
+         console.log(resp);
+         //delete
+     });
  });
