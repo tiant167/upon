@@ -335,6 +335,7 @@
              var priorityname = "";
              var h5 = "h5.";
              var datataskid = eval('(' + resp + ')').taskid;
+             var tmptaskid = "task" + datataskid;
              var checkboxhtml = "<div class='icheckbox_square-blue' style='position: relative; display: none;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>";
              switch (group) {
                  case "0":
@@ -376,9 +377,9 @@
                  $(whichweek + " " + tmpclass + " " + delespan).remove();
                  $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
              }
-             $(whichweek + " " + h5 + priorityname).append("<div class='task'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'>" + title + "</a></span><span class='glyphicon glyphicon-trash'></span></div>");
+             $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + "</a></span><span class='glyphicon glyphicon-trash'></span></div>");
 
-
+             $("#task-modal").modal('hide');
              console.log(resp);
          });
      } else {
