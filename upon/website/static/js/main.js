@@ -98,7 +98,9 @@
              $("#task-priority-select option[value='" + data.priority + "']").attr("selected", true);
 
              //when update task set the todoer
-             $("#todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
+             if (data.todoer.length > 0) {
+                 $("#todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
+             }
              //set comments
              $('#commentfield').empty();
              $.each(data.comments, function(i, item) {
