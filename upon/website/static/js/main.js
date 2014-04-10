@@ -72,13 +72,33 @@
 
              //set task title
              $('.taskname').text(data.name);
+             //when update the task , set task title
+             $('#task-title-input').attr("placeholder", data.name);
 
              //detail info
              $('#taskdetail').text(data.detail);
+             //update the task
+             $('#task-desc-textarea').attr("placeholder", data.detail);
 
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
+             //when update task
+             if (data.deadline != "") {
+                 $('#task-deadline-input').val(data.deadline);
+             }
 
+             if (data.starttime != "") {
+                 $('#task-starttime-input').val(data.starttime);
+             }
+
+             //when update task set the type
+             $("#task-group-select option[value='" + data.type + "']").attr("selected", true);
+
+             //when update task set the priority
+             $("#task-priority-select option[value='" + data.priority + "']").attr("selected", true);
+
+             //when update task set the todoer
+             $("#todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
              //set comments
              $('#commentfield').empty();
              $.each(data.comments, function(i, item) {
