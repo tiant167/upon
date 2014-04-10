@@ -261,7 +261,10 @@ def deleteTask(request):
     if request.method == "POST":
         taskid = request.POST.get("taskid",False)
         if taskid:
-            task = Task.objects.get(id=taskid)
+            try:
+                task = Task.objects.get(id=taskid)
+            except ObjectDoesNotExist:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             if checkUserAndTask(request.user, task):
                 task.delete()
                 return HttpResponse(json.dumps({'error_code':'0'}))
@@ -277,7 +280,10 @@ def deleteProject(request):
     if request.method == "POST":
         projectid = request.POST.get("projectid",False)
         if projectid:
-            project = Project.objects.get(id=projectid)
+            try:
+                project = Project.objects.get(id=projectid)
+            except ObjectDoesNotExist:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             if request.user in project.team.member.all():
                 project.delete()
                 return HttpResponse(json.dumps({'error_code':'0'}))
@@ -288,7 +294,26 @@ def deleteProject(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
-
+@login_required
+def fetchMyTask(request,projectid):
+    if projectid:
+        try:
+            project = Project.objects.get(id=projectid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        if request.user in project.team.member.all():
+            taskList = Task.objects.filter(project=project,todoer=request.user).exclude(status=3)
+            taskField = TaskField(taskList)
+            taskField.judgePriority()
+            resultList = {
+                'currentWeek':taskField.currentWeekTask['Critical']+taskField.currentWeekTask['Severe']+taskField.currentWeekTask["Major"]+taskField.currentWeekTask['Minor'],
+                'future':taskField.nextWeekTask['Critical']+taskField.futureTask['Critical']+taskField.nextWeekTask['Severe']+taskField.futureTask['Severe']+taskField.nextWeekTask['Major']+taskField.futureTask['Major']+taskField.nextWeekTask['Minor']+taskField.futureTask['Minor'], 
+            }
+            return render(request,"upon/mytask.html",{'currentWeek':resultList['currentWeek'],'future':resultList['future']})
+        else:
+            return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
 ########################helper function##########################
 def checkUserAndTask(user,task):

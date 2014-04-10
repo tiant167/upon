@@ -1,0 +1,31 @@
+<div class="panel-body">
+    {%if currentWeek or future%}
+    {%if currentWeek%}
+    <h5>本周</h5>
+    {%for task in currentWeek%}
+    <div class='task' id="task{{task.id}}">
+        <input type='checkbox' class='finishbox'/>
+        <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+        <span class='glyphicon glyphicon-trash'></span>
+        {%if task.deadline%}
+        <span class='deadline'>{{task.deadline}}</span>
+        {%endif%}
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%if future%}
+    <h5>以后</h5>
+    {%for task in future%}
+    <div class='task' id="task{{task.id}}">
+        <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+        <span class='glyphicon glyphicon-trash'></span>
+        {%if task.deadline%}
+        <span class='deadline'>{{task.deadline}}</span>
+        {%endif%}
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%else%}
+    <span>您还没有任务哦~</span>
+    {%endif%}
+</div>
