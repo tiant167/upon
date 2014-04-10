@@ -419,3 +419,12 @@
          //delete
      });
  });
+
+ $("#deleteproject-modal .delete-btn").click(function() {
+     var projectid = window.projectid;
+     $.post("/deleteproject/", {
+         projectid: projectid
+     }).then(function(resp) {
+         console.log(resp);
+     });
+ });

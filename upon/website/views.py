@@ -262,8 +262,11 @@ def deleteTask(request):
         taskid = request.POST.get("taskid",False)
         if taskid:
             task = Task.objects.get(id=taskid)
-            task.delete()
-            return HttpResponse(json.dumps({'error_code':'0'}))
+            if checkUserAndTask(request.user, task):
+                task.delete()
+                return HttpResponse(json.dumps({'error_code':'0'}))
+            else:
+                return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
@@ -275,8 +278,11 @@ def deleteProject(request):
         projectid = request.POST.get("projectid",False)
         if projectid:
             project = Project.objects.get(id=projectid)
-            project.delete()
-            return HttpResponse(json.dumps({'error_code':'0'}))
+            if request.user in project.team.member.all():
+                project.delete()
+                return HttpResponse(json.dumps({'error_code':'0'}))
+            else:
+                return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
