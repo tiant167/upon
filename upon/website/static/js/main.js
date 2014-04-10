@@ -415,6 +415,11 @@
          taskid: taskid
      }).then(function(resp) {
          //GZW
+         var deletetaskid = "#task" + taskid;
+         $(deletetaskid).remove();
+         $("#deletetask-modal").modal('hide');
+         $('#stat').collapse('show');
+         $('#taskinfo').collapse('hide');
          console.log(resp);
          //delete
      });
