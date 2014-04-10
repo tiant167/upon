@@ -31,7 +31,7 @@ class Task(models.Model):
     starttime = models.DateField(blank=True,null=True)
     priority = models.IntegerField(default=2) #优先级 0-Critical 1-Severe 2-Major   3-Minor
     type = models.IntegerField() #类型 0-Future 1-NextWeek 2-ThisWeek 3-RubbishBin 
-    status = models.IntegerField() #状态 0-Cannot Complete 1-Wait For Complete 2-Wait For Confirm 3-total Finished
+    status = models.IntegerField() #状态 0-Wait For Complete(thisweek nextweek future) 1-Cannot complete(rubbishbin) 2-Wait For Confirm 3-total Finished
     createtime = models.DateField(auto_now=True)
 
     def __unicode__(self):

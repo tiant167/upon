@@ -1,0 +1,11 @@
+{%if taskList%}
+{%for task in taskList%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='confirmbox'/> 
+    <span class='tasktitle'><a href='#' data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-share-alt'></span>
+</div>
+{%endfor%}
+{%else%}
+<span>您还没有需要确认的任务哦~</span>
+{%endif$}
