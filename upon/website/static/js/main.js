@@ -374,7 +374,7 @@
                  $(whichweek + " " + tmpclass + " " + delespan).remove();
                  $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
              }
-             $(whichweek + " " + h5 + priorityname).append("<div class='task'>\
+            $(whichweek + " " + h5 + priorityname).append("<div class='task'>\
                             <div class='icheckbox_square-blue' style='position: relative;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>\
                             <span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'>" + title + "</a></span>\
                             <span class='glyphicon glyphicon-trash'></span>\
@@ -422,14 +422,5 @@
          $('#taskinfo').collapse('hide');
          console.log(resp);
          //delete
-     });
- });
-
- $("#deleteproject-modal .delete-btn").click(function() {
-     var projectid = window.projectid;
-     $.post("/deleteproject/", {
-         projectid: projectid
-     }).then(function(resp) {
-         console.log(resp);
      });
  });
