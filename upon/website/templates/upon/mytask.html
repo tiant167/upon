@@ -1,31 +1,29 @@
-<div class="panel-body">
-    {%if currentWeek or future%}
-    {%if currentWeek%}
-    <h5>本周</h5>
-    {%for task in currentWeek%}
-    <div class='task' id="task{{task.id}}">
-        <input type='checkbox' class='finishbox'/>
-        <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
-        <span class='glyphicon glyphicon-trash'></span>
-        {%if task.deadline%}
-        <span class='deadline'>{{task.deadline}}</span>
-        {%endif%}
-    </div>
-    {%endfor%}
-    {%endif%}
-    {%if future%}
-    <h5>以后</h5>
-    {%for task in future%}
-    <div class='task' id="task{{task.id}}">
-        <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
-        <span class='glyphicon glyphicon-trash'></span>
-        {%if task.deadline%}
-        <span class='deadline'>{{task.deadline}}</span>
-        {%endif%}
-    </div>
-    {%endfor%}
-    {%endif%}
-    {%else%}
-    <span>您还没有任务哦~</span>
+{%if currentWeek or future%}
+{%if currentWeek%}
+<h5>本周</h5>
+{%for task in currentWeek%}
+<div class='task' id="task{{task.id}}">
+    <div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" class="finishbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;"></ins></div>
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
     {%endif%}
 </div>
+{%endfor%}
+{%endif%}
+{%if future%}
+<h5>以后</h5>
+{%for task in future%}
+<div class='task' id="task{{task.id}}">
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
+    {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%else%}
+<span>您还没有任务哦~</span>
+{%endif%}

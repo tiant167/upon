@@ -190,6 +190,9 @@
  });
 
  $('#mytask a').click(function() {
+     $.get("/mytask/" + window.projectid + "/").then(function(resp) {
+         $("#personal-task-panel .panel-body").html(resp);
+     });
      $('#personal-task-panel').css('display', 'block');
      $('#confirm-task-panel').css('display', 'none');
      $('#accordion').css('display', 'none');
@@ -201,6 +204,9 @@
      $('#othertask').attr('class', '');
  });
  $('#waittask a').click(function() {
+     $.get("/confirmtask/" + window.projectid + "/").then(function(resp) {
+         $("#confirm-task-panel .panel-body").html(resp);
+     });
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'block');
      $('#accordion').css('display', 'none');
