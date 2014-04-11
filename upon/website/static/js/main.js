@@ -74,33 +74,33 @@
              //set task title
              $('.taskname').text(data.name);
              //when update the task , set task title
-             $('#task-title-input').val(data.name);
+             $('#updatetask-title-input').val(data.name);
 
              //detail info
              $('#taskdetail').text(data.detail);
              //update the task
-             $('#task-desc-textarea').val(data.detail);
+             $('#updatetask-desc-textarea').val(data.detail);
 
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
              //when update task
              if (data.deadline != "") {
-                 $('#task-deadline-input').val(data.deadline);
+                 $('#updatetask-deadline-input').val(data.deadline);
              }
 
              if (data.starttime != "") {
-                 $('#task-starttime-input').val(data.starttime);
+                 $('#updatetask-starttime-input').val(data.starttime);
              }
 
              //when update task set the type
-             $("#task-group-select option[value='" + data.type + "']").attr("selected", true);
+             $("#updatetask-group-select option[value='" + data.type + "']").attr("selected", true);
 
              //when update task set the priority
-             $("#task-priority-select option[value='" + data.priority + "']").attr("selected", true);
+             $("#updatetask-priority-select option[value='" + data.priority + "']").attr("selected", true);
 
              //when update task set the todoer
              if (data.todoer.length > 0) {
-                 $("#todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
+                 $("#updatetask-todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
              }
              //set comments
              $('#commentfield').empty();
@@ -220,7 +220,7 @@
      $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
-     $("#task-modal").modal('show');
+     $("#updatetask-modal").modal('show');
  });
  $(".addteambtn").click(function() {
      $("#newteam-modal").modal('show');
