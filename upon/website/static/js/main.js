@@ -345,6 +345,7 @@
              //callback
              var whichweek = "";
              var priorityname = "";
+             var nextpriorityname = ""; //save the next priority name when insert the task
              var h5 = "h5.";
              var datataskid = eval('(' + resp + ')').taskid;
              var tmptaskid = "task" + datataskid;
@@ -365,12 +366,15 @@
              switch (priority) {
                  case "0":
                      priorityname = "Critical";
+                     nextpriorityname = "Severe";
                      break;
                  case "1":
                      priorityname = "Severe";
+                     nextpriorityname = "Major";
                      break;
                  case "2":
                      priorityname = "Major";
+                     nextpriorityname = "Minor";
                      break;
                  case "3":
                      priorityname = "Minor";
@@ -387,7 +391,16 @@
                  var tmpclass = ".panel-body";
                  var delespan = " > span";
                  $(whichweek + " " + tmpclass + " " + delespan).remove();
-                 $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                 if (nextpriorityname != "") {
+                     if ($(whichweek + " " + h5 + nextpriorityname).length > 0) {
+                         $(whichweek + " " + h5 + nextpriorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else {
+                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     }
+                 } else {
+                     $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                 }
+
              }
              $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + " </a></span><span class='glyphicon glyphicon-trash'></span></div>");
 
