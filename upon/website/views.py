@@ -41,6 +41,8 @@ def register(request):
                     email = request.POST['username']
                     user = User.objects.create_user(username=username,email=email,password=password1)
                     user.save()
+                    avatarsrc = request.POST.get('avatar','image/avatar/red.jpg') 
+                    Avatar.objects.create(user=user,avatar=avatarsrc)
                     login_user = auth.authenticate(username=username, password=password1)
                     auth.login(request, login_user)
                     return render(request,"upon/noteam.html")
@@ -333,7 +335,15 @@ def fetchConfirmTask(request,projectid):
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
 def fetchAvatar(request,userid):
-    pass
+    try:
+        user = User.objects.get(id=userid)
+        useravatar = Avatar.objects.filter(user=user)
+        avatar = useravatar[0].avatar
+    except ObjectDoesNotExist:
+        avatar = 'image/avatar/red.jpg'
+    #static url need to change by yourself when static file is changed
+    f = open('./website/static/'+avatar, "rb")
+    return HttpResponse(f.read(), mimetype="image/jpeg")
 ########################helper function##########################
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():
