@@ -36,19 +36,19 @@
              switch (data.priority) {
                  case 0:
                      priority = "Critical";
-                     $('.label').addClass('label-danger');
+                     $('.label').removeClass().addClass('label label-danger');
                      break;
                  case 1:
                      priority = "Severe";
-                     $('.label').addClass('label-warning');
+                     $('.label').removeClass().addClass('label label-warning');
                      break;
                  case 2:
                      priority = "Major";
-                     $('.label').addClass('label-primary');
+                     $('.label').removeClass().addClass('label label-primary');
                      break;
                  case 3:
                      priority = "Minor";
-                     $('.label').addClass('label-info');
+                     $('.label').removeClass().addClass('label label-info');
                      break;
              }
              $('.label,.label-primary').text(priority);
