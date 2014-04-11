@@ -78,6 +78,14 @@
 
              //detail info
              $('#taskdetail').text(data.detail);
+             $("#taskinfo .tasktodoer").empty();
+             //<img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+             for (var i = 0; i < data.todoer.length; i++) {
+                 item = data.todoer[i]
+                 $("#taskinfo .tasktodoer").append("<img src='/avatar/" + item.userid + "/' title='" + item.username + "'alt='" + item.username + "' class='img-thumbnail bigphoto'/>");
+             }
+
+
              //update the task
              $('#updatetask-desc-textarea').val(data.detail);
 
