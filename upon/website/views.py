@@ -331,6 +331,9 @@ def fetchConfirmTask(request,projectid):
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+
+def fetchAvatar(request,userid):
+    pass
 ########################helper function##########################
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():

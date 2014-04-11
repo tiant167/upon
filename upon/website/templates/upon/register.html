@@ -25,9 +25,10 @@
         <input type="password" class="form-control" name="password2" placeholder="请再次输入密码" required="">
         <hr>
         
-        <img src='{{STATIC_URL}}image/head.png' class='img-thumbnail bigphoto'>
+        <img src='{{STATIC_URL}}image/avatar/red.jpg' class='img-thumbnail bigphoto' id='avatar-picker'>
         <input type="text" class="form-control" name="username" placeholder="怎么称呼您" required="" id="username">
-        <span>已经有账号？赶紧<a href="{% url 'upon:login'%}">登陆</a></span>
+        <input type="hidden" id="avatar-input" name="avatar" value="image/avatar/red.jpg"/>
+        <span>已经有账号？赶紧<a href="{% url 'upon:login'%}">登陆</a></span> 
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
 
@@ -51,6 +52,38 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">选择头像</h4>
+      </div>
+      <div class="modal-body">
+        <span><img src="{{STATIC_URL}}image/avatar/bear.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/bear.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/brown.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/brown.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/cat.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/cat.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/duck.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/duck.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/forest.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/forest.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/funny.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/funny.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/green.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/green.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/hate.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/hate.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/iron.jpg" class="thumbnail bigphoto backupphoto"/ data-avatarsrc="image/avatar/iron.jpg"></span>
+        <span><img src="{{STATIC_URL}}image/avatar/monster.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/monster.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/ocean.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/ocean.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/one.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/one.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/pika.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/pika.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/pole.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/pole.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/qie.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/qie.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/red.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/red.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/ugly.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/ugly.jpg"/></span>
+        <span><img src="{{STATIC_URL}}image/avatar/walkdead.jpg" class="thumbnail bigphoto backupphoto" data-avatarsrc="image/avatar/walkdead.jpg"/></span>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
     
 </body>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -65,4 +98,28 @@
     });
       </script>
       {%endif%}
+
+      <script>
+      $("#avatar-picker").click(function(){
+        $("#avatar-modal").modal("show");
+      });
+      $(".backupphoto").click(function(e){
+        $("#avatar-modal").modal("hide");
+        var src = $(e.target).data("avatarsrc");
+        $("#avatar-input").val(src);
+        $("#avatar-picker").attr("src","{{STATIC_URL}}"+src);
+      });
+      </script>
+      <style>
+      .bigphoto{
+        cursor: pointer;
+      }
+      .backupphoto{
+        display: inline;
+        margin: 5px 5px;
+      }
+      #avatar-modal .modal-dialog{
+        width:1024px;
+      }
+      </style>
 </html>
