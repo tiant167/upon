@@ -82,7 +82,7 @@
              //<img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
              for (var i = 0; i < data.todoer.length; i++) {
                  item = data.todoer[i]
-                 $("#taskinfo .tasktodoer").append("<img src='/avatar/" + item.userid + "/' title='" + item.username + "'alt='" + item.username + "' class='img-thumbnail bigphoto'/>");
+                 $("#taskinfo .tasktodoer").append("<img src='/avatar/" + item.userid + "/'  class='img-thumbnail bigphoto todoer' data-toggle='tooltip' data-placement='bottom' data-original-title='" + item.username + "'/>");
              }
 
 
@@ -129,6 +129,7 @@
          $("#add-comment-btn").data("taskid", taskid);
          $('#stat').collapse('hide');
          $('#taskinfo').collapse('show');
+         $('.todoer').tooltip('hide');
      });
  });
 
@@ -165,6 +166,12 @@
  });
 
  $('#rubbishtask a').click(function() {
+     $.get("/rubbishbin/" + window.projectid + "/").then(function(resp) {
+         $("#rubbishcollapse .panel-body").html(resp);
+     });
+     $.get("/completed/" + window.projectid + "/").then(function(resp) {
+         $("#finishcollapse .panel-body").html(resp);
+     });
      $('#accordion').css('display', 'none');
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'none');
@@ -179,6 +186,12 @@
      $('#othertask').attr('class', 'active');
  });
  $('#finishedtask a').click(function() {
+     $.get("/rubbishbin/" + window.projectid + "/").then(function(resp) {
+         $("#rubbishcollapse .panel-body").html(resp);
+     });
+     $.get("/completed/" + window.projectid + "/").then(function(resp) {
+         $("#finishcollapse .panel-body").html(resp);
+     });
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'none');
      $('#accordion').css('display', 'none');
@@ -249,8 +262,8 @@
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
-     $("#task-group-select option[value='2']").attr("selected", true);
-     $("#task-priority-select option[value='0']").attr("selected", true);
+    $("#task-group-select option[value='2']").attr("selected", true);
+     $("#task-priority-select option[value='2']").attr("selected", true);
      $("#task-todoer-select option[value='']").attr("selected", false);
 
      $("#task-modal .suggesstion").remove();
