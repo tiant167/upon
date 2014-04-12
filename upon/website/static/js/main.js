@@ -108,7 +108,10 @@
 
              //when update task set the todoer
              if (data.todoer.length > 0) {
-                 $("#updatetask-todoer-select option[value='" + data.todoer[0].userid + "']").attr("selected", true);
+                 //update the todoer
+                 $.each(data.todoer, function(i, item) {
+                     $("#updatetask-todoer-select option[value='" + item.userid + "']").attr("selected", true);
+                 });
              }
              //set comments
              $('#commentfield').empty();
@@ -345,6 +348,16 @@
      var taskid = $(e.target).data("taskid");
 
      var todoerstr = todoer.join(",");
+
+     //check the input is correct or not
+     if (title == "" || todoerstr == "") {
+         return false;
+     }
+     if (starttime != "" && deadline != "") {
+         if (starttime > deadline) {
+             return false;
+         }
+     }
 
      //if title or todoer is null ,suggesstion
      if (title == "") {
