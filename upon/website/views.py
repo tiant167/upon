@@ -327,23 +327,12 @@ def fetchConfirmTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         if request.user in project.team.member.all():
-            taskList = Task.objects.filter(project=project,starter=request.user,status=2).exclude(type=3)
+            taskList = Task.objects.filter(project=project,starter=request.user,status=2)
             return render(request,"upon/confirm.html",{'taskList':taskList})
         else:
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-
-def fetchAvatar(request,userid):
-    try:
-        user = User.objects.get(id=userid)
-        useravatar = Avatar.objects.filter(user=user)
-        avatar = useravatar[0].avatar
-    except ObjectDoesNotExist:
-        avatar = 'image/avatar/red.jpg'
-    #static url need to change by yourself when static file is changed
-    f = open('./website/static/'+avatar, "rb")
-    return HttpResponse(f.read(), mimetype="image/jpeg")
 
 @login_required
 def fetchRubbishTask(request,projectid):
@@ -353,15 +342,14 @@ def fetchRubbishTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         if request.user in project.team.member.all():
-            taskList = Task.objects.filter(project=project,type=3)
+            taskList = Task.objects.filter(project=project,status=1)
             thisWeekList = []
             otherWeekList = []
-            thisWeekStart = date - datetime.timedelta(date.weekday())
             for task in  taskList:
-                if task.createtime >= thisWeekStart:
-                    thisWeekList.append(task)
-                else:
+                if task.type == 3:
                     otherWeekList.append(task)
+                else:
+                    thisWeekList.append(task)
             return render(request,"upon/rubbishbin.html",{'thisWeekList':thisWeekList,'otherWeekList':otherWeekList})
         else:
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
@@ -379,17 +367,28 @@ def fetchCompletedTask(request,projectid):
             taskList = Task.objects.filter(project=project,status=3)
             thisWeekList = []
             otherWeekList = []
-            thisWeekStart = date - datetime.timedelta(date.weekday())
             for task in  taskList:
-                if task.createtime >= thisWeekStart:
-                    thisWeekList.append(task)
-                else:
+                if task.type == 3:
                     otherWeekList.append(task)
-            return render(request,"upon/rubbishbin.html",{'thisWeekList':thisWeekList,'otherWeekList':otherWeekList})
+                else:
+                    thisWeekList.append(task)
+            return render(request,"upon/completed.html",{'thisWeekList':thisWeekList,'otherWeekList':otherWeekList})
         else:
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+
+
+def fetchAvatar(request,userid):
+    try:
+        user = User.objects.get(id=userid)
+        useravatar = Avatar.objects.filter(user=user)
+        avatar = useravatar[0].avatar
+    except ObjectDoesNotExist:
+        avatar = 'image/avatar/red.jpg'
+    #static url need to change by yourself when static file is changed
+    f = open('./website/static/'+avatar, "rb")
+    return HttpResponse(f.read(), mimetype="image/jpeg")
 ########################helper function##########################
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():

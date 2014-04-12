@@ -162,6 +162,12 @@
  });
 
  $('#rubbishtask a').click(function() {
+     $.get("/rubbishbin/" + window.projectid + "/").then(function(resp) {
+         $("#rubbishcollapse .panel-body").html(resp);
+     });
+     $.get("/completed/" + window.projectid + "/").then(function(resp) {
+         $("#finishcollapse .panel-body").html(resp);
+     });
      $('#accordion').css('display', 'none');
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'none');
@@ -176,6 +182,12 @@
      $('#othertask').attr('class', 'active');
  });
  $('#finishedtask a').click(function() {
+     $.get("/rubbishbin/" + window.projectid + "/").then(function(resp) {
+         $("#rubbishcollapse .panel-body").html(resp);
+     });
+     $.get("/completed/" + window.projectid + "/").then(function(resp) {
+         $("#finishcollapse .panel-body").html(resp);
+     });
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'none');
      $('#accordion').css('display', 'none');
