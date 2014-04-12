@@ -240,6 +240,16 @@
  });
 
  $(document).on("click", ".addtaskbtn", function() {
+
+     //init the add task modal
+     $('#task-title-input').val("");
+     $('#task-desc-textarea').val("");
+     $('#task-deadline-input').val("");
+     $('#task-starttime-input').val("");
+     $("#task-group-select option[value='2']").attr("selected", true);
+     $("#task-priority-select option[value='0']").attr("selected", true);
+     $("#task-todoer-select option[value='']").attr("selected", false);
+
      $("#task-modal .suggesstion").remove();
      $("#task-modal").modal('show');
  });
