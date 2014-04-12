@@ -239,7 +239,7 @@
      $("#deletetask-modal").modal('show');
  });
 
- $(".addtaskbtn").click(function() {
+ $(document).on("click", ".addtaskbtn", function() {
      $("#task-modal .suggesstion").remove();
      $("#task-modal").modal('show');
  });
