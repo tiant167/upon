@@ -82,7 +82,7 @@
              //<img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
              for (var i = 0; i < data.todoer.length; i++) {
                  item = data.todoer[i]
-                 $("#taskinfo .tasktodoer").append("<img src='/avatar/" + item.userid + "/' title='" + item.username + "'alt='" + item.username + "' class='img-thumbnail bigphoto'/>");
+                 $("#taskinfo .tasktodoer").append("<img src='/avatar/" + item.userid + "/'  class='img-thumbnail bigphoto todoer' data-toggle='tooltip' data-placement='bottom' data-original-title='" + item.username + "'/>");
              }
 
 
@@ -126,6 +126,7 @@
          $("#add-comment-btn").data("taskid", taskid);
          $('#stat').collapse('hide');
          $('#taskinfo').collapse('show');
+         $('.todoer').tooltip('hide');
      });
  });
 
