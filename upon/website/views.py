@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect , HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-import json
+import json,datetime
 from website.models import *
 # Create your views here.
 
@@ -344,6 +344,52 @@ def fetchAvatar(request,userid):
     #static url need to change by yourself when static file is changed
     f = open('./website/static/'+avatar, "rb")
     return HttpResponse(f.read(), mimetype="image/jpeg")
+
+@login_required
+def fetchRubbishTask(request,projectid):
+    if projectid:
+        try:
+            project = Project.objects.get(id=projectid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        if request.user in project.team.member.all():
+            taskList = Task.objects.filter(project=project,type=3)
+            thisWeekList = []
+            otherWeekList = []
+            thisWeekStart = date - datetime.timedelta(date.weekday())
+            for task in  taskList:
+                if task.createtime >= thisWeekStart:
+                    thisWeekList.append(task)
+                else:
+                    otherWeekList.append(task)
+            return render(request,"upon/rubbishbin.html",{'thisWeekList':thisWeekList,'otherWeekList':otherWeekList})
+        else:
+            return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+
+@login_required
+def fetchCompletedTask(request,projectid):
+    if projectid:
+        try:
+            project = Project.objects.get(id=projectid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        if request.user in project.team.member.all():
+            taskList = Task.objects.filter(project=project,status=3)
+            thisWeekList = []
+            otherWeekList = []
+            thisWeekStart = date - datetime.timedelta(date.weekday())
+            for task in  taskList:
+                if task.createtime >= thisWeekStart:
+                    thisWeekList.append(task)
+                else:
+                    otherWeekList.append(task)
+            return render(request,"upon/rubbishbin.html",{'thisWeekList':thisWeekList,'otherWeekList':otherWeekList})
+        else:
+            return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 ########################helper function##########################
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():

@@ -18,5 +18,7 @@ urlpatterns = patterns('',
     url(r'^deleteproject/$',views.deleteProject),
     url(r'^mytask/(?P<projectid>\d+)/$',views.fetchMyTask),
     url(r'^confirmtask/(?P<projectid>\d+)/$',views.fetchConfirmTask),
+    url(r'^rubbishbin/(?P<projectid>\d+)/$',views.fetchRubbishTask),
+    url(r'^completed/(?P<projectid>\d+)/$',views.fetchRubbishTask),
     url(r'^avatar/(?P<userid>\d+)/$',views.fetchAvatar),
 )

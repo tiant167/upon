@@ -192,6 +192,11 @@
  $('#mytask a').click(function() {
      $.get("/mytask/" + window.projectid + "/").then(function(resp) {
          $("#personal-task-panel .panel-body").html(resp);
+         $('.finishbox').iCheck({
+             checkboxClass: 'icheckbox_square-blue',
+             radioClass: 'iradio_square-blue',
+             increaseArea: '20%' // optional
+         });
      });
      $('#personal-task-panel').css('display', 'block');
      $('#confirm-task-panel').css('display', 'none');
@@ -206,6 +211,11 @@
  $('#waittask a').click(function() {
      $.get("/confirmtask/" + window.projectid + "/").then(function(resp) {
          $("#confirm-task-panel .panel-body").html(resp);
+         $('.confirmbox').iCheck({
+             checkboxClass: 'icheckbox_square-yellow',
+             radioClass: 'iradio_square-yellow',
+             increaseArea: '20%' // optional
+         });
      });
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'block');

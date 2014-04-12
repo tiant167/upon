@@ -1,0 +1,22 @@
+{%if thisWeekList or otherWeekList%}
+    {%if thisWeekList%}
+    <h5>本周</h5>
+    {%for task in thisWeekList%}
+    <div class='task' id="task{{task.id}}">
+        <span class='tasktitle'><a href='#' data-taskid={{task.id}}>{{task.name}}</a></span>
+        <span class='glyphicon glyphicon-share-alt'></span>
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%if otherWeekList%}
+    <h5>更早</h5>
+    {%for task in otherWeekList%}
+    <div class='task' id="task{{task.id}}">
+        <span class='tasktitle'><a href='#' data-taskid={{task.id}}>{{task.name}}</a></span>
+        <span class='glyphicon glyphicon-share-alt'></span>
+    </div>
+    {%endfor%}
+    {%endif%}
+{%else%}
+    <span>回收箱空空如也</span>
+{%endif%}
