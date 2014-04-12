@@ -490,8 +490,12 @@
                  $(deletetaskid).prev().remove();
              };
          };
-
-         $(deletetaskid).remove();
+         //if h5 is null ,and the suggestion to add new task
+         if ($(deletetaskid).parent().children("h5").length == 0) {
+             $(deletetaskid).after("<span>还没有任务哦，赶紧<a href='#' class='addtaskbtn'>添加</a>一个吧</span>").remove();
+         } else {
+             $(deletetaskid).remove();
+         }
          $("#deletetask-modal").modal('hide');
          $('#stat').collapse('show');
          $('#taskinfo').collapse('hide');
