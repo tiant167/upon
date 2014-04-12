@@ -361,7 +361,9 @@
              //callback
              var whichweek = "";
              var priorityname = "";
-             var nextpriorityname = ""; //save the next priority name when insert the task
+             var next1priorityname = ""; //save the next priority name when insert the task
+             var next2priorityname = "";
+             var next3priorityname = "";
              var h5 = "h5.";
              var datataskid = eval('(' + resp + ')').taskid;
              var tmptaskid = "task" + datataskid;
@@ -382,15 +384,18 @@
              switch (priority) {
                  case "0":
                      priorityname = "Critical";
-                     nextpriorityname = "Severe";
+                     next1priorityname = "Severe";
+                     next2priorityname = "Major";
+                     next3priorityname = "Minor";
                      break;
                  case "1":
                      priorityname = "Severe";
-                     nextpriorityname = "Major";
+                     next1priorityname = "Major";
+                     next2priorityname = "Minor";
                      break;
                  case "2":
                      priorityname = "Major";
-                     nextpriorityname = "Minor";
+                     next1priorityname = "Minor";
                      break;
                  case "3":
                      priorityname = "Minor";
@@ -407,9 +412,27 @@
                  var tmpclass = ".panel-body";
                  var delespan = " > span";
                  $(whichweek + " " + tmpclass + " " + delespan).remove();
-                 if (nextpriorityname != "") {
-                     if ($(whichweek + " " + h5 + nextpriorityname).length > 0) {
-                         $(whichweek + " " + h5 + nextpriorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                 if (next1priorityname != "" && next2priorityname != "" && next3priorityname != "") {
+                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else if ($(whichweek + " " + h5 + next2priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next2priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else if ($(whichweek + " " + h5 + next3priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next3priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else {
+                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     }
+                 } else if (next1priorityname != "" && next2priorityname != "") {
+                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else if ($(whichweek + " " + h5 + next2priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next2priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     } else {
+                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
+                     }
+                 } else if (next1priorityname != "") {
+                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
+                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
                      } else {
                          $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
                      }
