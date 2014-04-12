@@ -183,10 +183,7 @@ def addTask(request):
         if projectid and name:
             #new task
             project = Project.objects.get(id=projectid)
-            if type == "2":
-                status = "0"
-            else:
-                status = "0"
+            status="0"
             if starttime == "":
                 starttime = None
             if deadline == "":
@@ -205,6 +202,7 @@ def addTask(request):
                     )
             else:
                 #no test
+                status = "0"
                 task = Task.objects.get(id=taskid)
                 if checkUserAndTask(request.user,task):
                     task.name = name
