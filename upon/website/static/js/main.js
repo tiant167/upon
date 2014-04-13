@@ -361,26 +361,36 @@
      var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
 
-     var todoerstr = todoer.join(",");
-
+     if (todoer == null) {
+         var todoerstr = "";
+     } else {
+         var todoerstr = todoer.join(",");
+     }
      //check the input is correct or not
-     if (title == "" || todoerstr == "") {
-         return false;
-     }
-     if (starttime != "" && deadline != "") {
-         if (starttime > deadline) {
-             return false;
-         }
-     }
-
      //if title or todoer is null ,suggesstion
      if (title == "") {
          if ($("#add-task-form .suggesstion").length > 0) {
              $("#add-task-form .suggesstion").remove();
          }
          $("#task-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
+         return false;
      };
-
+     if (todoerstr == "") {
+         if ($("#add-task-form .suggesstion").length > 0) {
+             $("#add-task-form .suggesstion").remove();
+         }
+         $("#todoer-select").parent().append("<div class='suggesstion'>*指派人不能为空</div>");
+         return false;
+     }
+     if (starttime != "" && deadline != "") {
+         if (starttime > deadline) {
+             if ($("#add-task-form .suggesstion").length > 0) {
+                 $("#add-task-form .suggesstion").remove();
+             }
+             $("#task-starttime-input").parent().append("<div class='suggesstion'>*任务开始日期不能大于截至日期</div>");
+             return false;
+         }
+     }
 
      if (taskid == 0) {
          //new
