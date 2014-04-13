@@ -1,3 +1,4 @@
+<input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
 {%if  taskList.Critical or   taskList.Severe or  taskList.Major or  taskList.Minor%}
 {%if taskList.Critical%}
 <h5 class='Critical'>Critical</h5>
@@ -56,6 +57,15 @@
     {%if task.deadline%}
     <span class='deadline'>{{task.deadline}}</span>
     {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%if taskList.Finished%}
+<h5 class="Finished">Finished</h5>
+{%for task in taskList.Finished%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='finishbox' data-taskid="{{task.id}}" checked/>
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
 </div>
 {%endfor%}
 {%endif%}

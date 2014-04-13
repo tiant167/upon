@@ -249,6 +249,15 @@
             </div>
             {%endfor%}
             {%endif%}
+            {%if currentWeekTasks.Finished%}
+            <h5 class="Finished">Finished</h5>
+            {%for task in currentWeekTasks.Finished%}
+            <div class='task' id="task{{task.id}}">
+                <input type='checkbox' class='finishbox' data-taskid="{{task.id}}" checked/>
+                <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+            </div>
+            {%endfor%}
+            {%endif%}
             {%else%}
             <span>还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</span>
             {%endif%}

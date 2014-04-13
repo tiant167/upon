@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 import json,datetime
 from website.models import *
+from django.db.models import Q
 # Create your views here.
 
 #attention to all
@@ -83,7 +84,7 @@ def main(request,teamid,projectid):
         if request.user not in currentProject.team.member.all():
             currentProject = projectList[0]
 
-    taskList = Task.objects.filter(project=currentProject,status=0).exclude(type=3) #except rubbishbin task
+    taskList = Task.objects.filter(Q(project=currentProject) & Q(status=0) | Q(status=2)).exclude(type=3) #except rubbishbin task
     taskField = TaskField(taskList)
     taskField.judgePriority()
 
@@ -223,9 +224,13 @@ def addTask(request):
                     task.todoer.add(User.objects.get(id=todoer))
             
             if type != "3":
-                tasks = Task.objects.filter(project=project,type=type)
-                taskList = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+                tasks = Task.objects.filter(Q(project=project) & Q(type=type) & Q(status=0) | Q(status=2))
+                taskList = {'type':type,'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
                 for task  in tasks:
+                    if task.type == 2 and task.status == 2:
+                        taskList['Finished'].append(task)
+                        continue
+
                     if task.priority == 0:
                         taskList['Critical'].append(task)
                     elif task.priority == 1:
@@ -241,19 +246,6 @@ def addTask(request):
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
-
-
-@login_required
-def getTaskByProjectid(request,projectid):
-    try:
-        project = Project.objects.get(id=projectid)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-    taskList = Task.objects.filter(project=project,status=0).exclude(type=3)
-    taskField = TaskField(taskList)
-    taskField.judgePriorityWithJson()
-
-    return HttpResponse(json.dumps({'current_week':taskField.currentWeekTask,'next_week':taskField.nextWeekTask,'future_task':taskField.futureTask}))
 
 @login_required
 def addProject(request):
@@ -432,7 +424,7 @@ def trasferDatetimeToString(time):
 
 class TaskField:
     def __init__(self,taskList):
-        self.currentWeekTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+        self.currentWeekTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
         self.futureTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
         self.nextWeekTask = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
         self.taskList = taskList
@@ -446,28 +438,14 @@ class TaskField:
             elif task.type == 2 :
                 taskBox = self.currentWeekTask
 
-            if task.priority == 0:
-                taskBox['Critical'].append(task)
-            elif task.priority == 1:
-                taskBox['Severe'].append(task)
-            elif task.priority == 2:
-                taskBox['Major'].append(task)
-            elif task.priority == 3:
-                taskBox['Minor'].append(task)
-    def judgePriorityWithJson(self):
-        for task in self.taskList:
-            if task.type == 0:
-                taskBox = self.futureTask
-            elif task.type == 1:
-                taskBox = self.nextWeekTask
-            elif task.type == 2 :
-                taskBox = self.currentWeekTask
-            #here only give name and starttime deadline
-            if task.priority == 0:    
-                taskBox['Critical'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
-            elif task.priority == 1:
-                taskBox['Severe'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
-            elif task.priority == 2:
-                taskBox['Major'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
-            elif task.priority == 3:
-                taskBox['Minor'].append({'name':task.name,'deadline':trasferDatetimeToString(task.deadline),'starttime':trasferDatetimeToString(task.starttime)})
+            if task.status == 2 and task.type == 2:
+                taskBox['Finished'].append(task)
+            else:
+                if task.priority == 0:
+                    taskBox['Critical'].append(task)
+                elif task.priority == 1:
+                    taskBox['Severe'].append(task)
+                elif task.priority == 2:
+                    taskBox['Major'].append(task)
+                elif task.priority == 3:
+                    taskBox['Minor'].append(task)
