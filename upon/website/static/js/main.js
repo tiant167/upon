@@ -493,7 +493,7 @@
      }).then(function(resp) {
          if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
              // my task
-
+             $("#personal-task-panel #task" + taskid).remove();
          } else {
              // current week task
              $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
