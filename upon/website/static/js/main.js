@@ -482,12 +482,30 @@
          //delete
      });
  });
- $('.finishbox').on('ifChecked', function(e) {
+ // 蓝色的完成框只会出现在两个地方，一个是本周任务，一个是我的任务
+ // 本周任务用局部刷新来做
+ // 我的任务用dom删除来做
+ $(document).on("ifChecked", ".finishbox", function(e) {
      var elem = e.target;
      var taskid = $(elem).data("taskid");
-     $.get("/completetask/", {
+     $.post("/completetask/", {
          taskid: taskid
      }).then(function(resp) {
+         if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
+             // my task
+
+         } else {
+             // current week task
+             $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+                 $("#currentWeekTask .panel-body").html(resp);
+                 $('.finishbox').iCheck({
+                     checkboxClass: 'icheckbox_square-blue',
+                     radioClass: 'iradio_square-blue',
+                     increaseArea: '20%' // optional
+                 });
+             });
+
+         }
          console.log(taskid);
      });
  });

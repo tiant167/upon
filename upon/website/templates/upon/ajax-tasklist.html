@@ -60,7 +60,7 @@
 </div>
 {%endfor%}
 {%endif%}
-{%if taskList.Finished%}
+{%if taskList.type == '2' and taskList.Finished%}
 <h5 class="Finished">Finished</h5>
 {%for task in taskList.Finished%}
 <div class='task' id="task{{task.id}}">

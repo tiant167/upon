@@ -222,23 +222,8 @@ def addTask(request):
                 todoers = todoers.split(',')
                 for todoer in todoers:
                     task.todoer.add(User.objects.get(id=todoer))
-            
-            if type != "3":
-                tasks = Task.objects.filter(Q(project=project) & Q(type=type) & Q(status=0) | Q(status=2))
-                taskList = {'type':type,'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
-                for task  in tasks:
-                    if task.type == 2 and task.status == 2:
-                        taskList['Finished'].append(task)
-                        continue
-
-                    if task.priority == 0:
-                        taskList['Critical'].append(task)
-                    elif task.priority == 1:
-                        taskList["Severe"].append(task)
-                    elif task.priority == 2:
-                        taskList["Major"].append(task)
-                    elif task.priority == 3:
-                        taskList['Minor'].append(task)
+            if type != 3:
+                taskList = fetchTaskListHelper(project,type)
                 return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
             else:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
@@ -391,13 +376,25 @@ def completeTask(request):
             task = Task.objects.get(id=taskid)
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-        task.status = 2
-        task.save()
-        return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
+        if checkUserAndTask(request.user,task):
+            task.status = 2
+            task.save()
+            return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'502','error_message':'not yours'}))    
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
-
+@login_required
+def fetchTaskList(request,projectid,type):
+    #week 2-current week  1-next week  0-future
+    try:
+        project = Project.objects.get(id=projectid)
+        taskList = fetchTaskListHelper(project,type)
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
+    
 def fetchAvatar(request,userid):
     try:
         user = User.objects.get(id=userid)
@@ -409,6 +406,25 @@ def fetchAvatar(request,userid):
     f = open('./website/static/'+avatar, "rb")
     return HttpResponse(f.read(), mimetype="image/jpeg")
 ########################helper function##########################
+def fetchTaskListHelper(project,type):
+    tasks = Task.objects.filter(Q(project=project) & Q(type=type) & Q(status=0) | Q(status=2))
+    taskList = {'type':type,'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
+    for task  in tasks:
+        if task.type == 2 and task.status == 2:
+            taskList['Finished'].append(task)
+            continue
+
+        if task.priority == 0:
+            taskList['Critical'].append(task)
+        elif task.priority == 1:
+            taskList["Severe"].append(task)
+        elif task.priority == 2:
+            taskList["Major"].append(task)
+        elif task.priority == 3:
+            taskList['Minor'].append(task)
+    return taskList
+    
+
 def checkUserAndTask(user,task):
     if user in task.project.team.member.all():
         return True

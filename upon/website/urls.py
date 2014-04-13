@@ -21,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^completed/(?P<projectid>\d+)/$',views.fetchCompletedTask),
     url(r'^avatar/(?P<userid>\d+)/$',views.fetchAvatar),
     url(r'^completetask/$',views.completeTask),
+    url(r'^gettask/(?P<projectid>\d+)/(?P<type>\d+)/$',views.fetchTaskList),
 
 )
