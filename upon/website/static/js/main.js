@@ -405,94 +405,25 @@
              type: group,
              todoer: todoerstr
          }).then(function(resp) {
-             //callback
-             var whichweek = "";
-             var priorityname = "";
-             var next1priorityname = ""; //save the next priority name when insert the task
-             var next2priorityname = "";
-             var next3priorityname = "";
-             var h5 = "h5.";
-             var datataskid = eval('(' + resp + ')').taskid;
-             var tmptaskid = "task" + datataskid;
-             var checkboxhtml = "<div class='icheckbox_square-blue' style='position: relative; display: none;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>";
+             var target = "";
              switch (group) {
                  case "0":
-                     whichweek = "#futureTask";
+                     whichweek = "#futureTask .panel-body";
                      break;
                  case "1":
-                     whichweek = "#nextWeekTask";
+                     whichweek = "#nextWeekTask .panel-body";
                      break;
                  case "2":
-                     whichweek = "#currentWeekTask";
-                     checkboxhtml = "<div class='icheckbox_square-blue' style='position: relative;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>";
+                     whichweek = "#currentWeekTask .panel-body";
                      break;
              }
-
-             switch (priority) {
-                 case "0":
-                     priorityname = "Critical";
-                     next1priorityname = "Severe";
-                     next2priorityname = "Major";
-                     next3priorityname = "Minor";
-                     break;
-                 case "1":
-                     priorityname = "Severe";
-                     next1priorityname = "Major";
-                     next2priorityname = "Minor";
-                     break;
-                 case "2":
-                     priorityname = "Major";
-                     next1priorityname = "Minor";
-                     break;
-                 case "3":
-                     priorityname = "Minor";
-                     break;
-             }
-
-             if ($(whichweek + " " + h5 + priorityname).length > 0) {
-                 // $(whichweek+ " " +priorityname).append("<div class='task'>\
-                 //             <div class='icheckbox_square-blue' style='position: relative;'><input type='checkbox' class='inishbox' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'><ins class='iCheck-helper' style='position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255); border: 0px; opacity: 0; background-position: initial initial; background-repeat: initial initial;'></ins></div>\
-                 //             <span class='tasktitle'><a href='#' data-taskid='"+datataskid+"'>"+ title +"</a></span>\
-                 //             <span class='glyphicon glyphicon-trash'></span>\
-                 //     </div>");
-             } else {
-                 var tmpclass = ".panel-body";
-                 var delespan = " > span";
-                 $(whichweek + " " + tmpclass + " " + delespan).remove();
-                 if (next1priorityname != "" && next2priorityname != "" && next3priorityname != "") {
-                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else if ($(whichweek + " " + h5 + next2priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next2priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else if ($(whichweek + " " + h5 + next3priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next3priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else {
-                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     }
-                 } else if (next1priorityname != "" && next2priorityname != "") {
-                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else if ($(whichweek + " " + h5 + next2priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next2priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else {
-                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     }
-                 } else if (next1priorityname != "") {
-                     if ($(whichweek + " " + h5 + next1priorityname).length > 0) {
-                         $(whichweek + " " + h5 + next1priorityname).before("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     } else {
-                         $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                     }
-                 } else {
-                     $(whichweek + " " + tmpclass).append("<h5 class='" + priorityname + "'>" + priorityname + "</h5>");
-                 }
-
-             }
-             $(whichweek + " " + h5 + priorityname).after("<div class='task' id='" + tmptaskid + "'>" + checkboxhtml + "<span class='tasktitle'><a href='#' data-taskid='" + datataskid + "'> " + title + " </a></span><span class='glyphicon glyphicon-trash'></span></div>");
-
+             $(whichweek).html(resp);
+             $('.finishbox').iCheck({
+                 checkboxClass: 'icheckbox_square-blue',
+                 radioClass: 'iradio_square-blue',
+                 increaseArea: '20%' // optional
+             });
              $("#task-modal").modal('hide');
-             //reload
-             //window.location.reload();
              console.log(resp);
          });
      } else {

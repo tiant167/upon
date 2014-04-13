@@ -221,7 +221,22 @@ def addTask(request):
                 todoers = todoers.split(',')
                 for todoer in todoers:
                     task.todoer.add(User.objects.get(id=todoer))
-            return HttpResponse(json.dumps({'error_code':'0','taskid':task.id,'todoer':[item for item in todoers]}))
+            
+            if type != "3":
+                tasks = Task.objects.filter(project=project,type=type)
+                taskList = {'Critical':[],'Severe':[],'Major':[],'Minor':[]}
+                for task  in tasks:
+                    if task.priority == 0:
+                        taskList['Critical'].append(task)
+                    elif task.priority == 1:
+                        taskList["Severe"].append(task)
+                    elif task.priority == 2:
+                        taskList["Major"].append(task)
+                    elif task.priority == 3:
+                        taskList['Minor'].append(task)
+                return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
+            else:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:

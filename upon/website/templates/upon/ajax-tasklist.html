@@ -1,0 +1,56 @@
+{%if  taskList.Critical or   taskList.Severe or  taskList.Major or  taskList.Minor%}
+{%if taskList.Critical%}
+<h5 class='Critical'>Critical</h5>
+{%for task in taskList.Critical%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='finishbox'/>
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
+    {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%if taskList.Severe%}
+<h5 class='Severe'>Severe</h5>
+{%for task in taskList.Severe%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='finishbox'/>
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
+    {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%if taskList.Major%}
+<h5 class="Major">Major</h5>
+{%for task in taskList.Major%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='finishbox'/>
+    <span class='tasktitle' ><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
+    {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%if taskList.Minor%}
+<h5 class="Minor">Minor</h5>
+{%for task in taskList.Minor%}
+<div class='task' id="task{{task.id}}">
+    <input type='checkbox' class='finishbox'/>
+    <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
+    <span class='glyphicon glyphicon-trash'></span>
+    {%if task.deadline%}
+    <span class='deadline'>{{task.deadline}}</span>
+    {%endif%}
+</div>
+{%endfor%}
+{%endif%}
+{%else%}
+<span>还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</span>
+{%endif%}
