@@ -391,6 +391,20 @@ def fetchCompletedTask(request,projectid):
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
+@login_required
+def completeTask(request):
+    if request.method == "POST":
+        taskid = request.POST.get("taskid",0)
+        try:
+            task = Task.objects.get(id=taskid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        task.status = 2
+        task.save()
+        return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
 
 def fetchAvatar(request,userid):
     try:

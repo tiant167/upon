@@ -201,7 +201,7 @@
             <h5 class='Critical'>Critical</h5>
             {%for task in currentWeekTasks.Critical%}
             <div class='task' id="task{{task.id}}">
-                <input type='checkbox' class='finishbox'/>
+                <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
                 <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                 <span class='glyphicon glyphicon-trash'></span>
                 {%if task.deadline%}
@@ -214,7 +214,7 @@
             <h5 class='Severe'>Severe</h5>
             {%for task in currentWeekTasks.Severe%}
             <div class='task' id="task{{task.id}}">
-                <input type='checkbox' class='finishbox'/>
+                <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
                 <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                 <span class='glyphicon glyphicon-trash'></span>
                 {%if task.deadline%}
@@ -227,7 +227,7 @@
             <h5 class="Major">Major</h5>
             {%for task in currentWeekTasks.Major%}
             <div class='task' id="task{{task.id}}">
-                <input type='checkbox' class='finishbox'/>
+                <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
                 <span class='tasktitle' ><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                 <span class='glyphicon glyphicon-trash'></span>
                 {%if task.deadline%}
@@ -240,7 +240,7 @@
             <h5 class="Minor">Minor</h5>
             {%for task in currentWeekTasks.Minor%}
             <div class='task' id="task{{task.id}}">
-                <input type='checkbox' class='finishbox'/>
+                <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
                 <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
                 <span class='glyphicon glyphicon-trash'></span>
                 {%if task.deadline%}

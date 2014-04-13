@@ -1,7 +1,7 @@
 {%if taskList%}
 {%for task in taskList%}
 <div class='task' id="task{{task.id}}">
-    <input type='checkbox' class='confirmbox'/> 
+    <input type='checkbox' class='confirmbox' data-taskid="{{task.id}}"/> 
     <span class='tasktitle'><a href='#' data-taskid={{task.id}}>{{task.name}}</a></span>
     <span class='glyphicon glyphicon-share-alt'></span>
 </div>

@@ -482,3 +482,12 @@
          //delete
      });
  });
+ $('.finishbox').on('ifChecked', function(e) {
+     var elem = e.target;
+     var taskid = $(elem).data("taskid");
+     $.get("/completetask/", {
+         taskid: taskid
+     }).then(function(resp) {
+         console.log(taskid);
+     });
+ });
