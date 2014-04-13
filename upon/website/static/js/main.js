@@ -360,11 +360,11 @@
 
      var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
-
+     var todoerstr = ""
      if (todoer == null) {
-         var todoerstr = "";
+         todoerstr = "";
      } else {
-         var todoerstr = todoer.join(",");
+         todoerstr = todoer.join(",");
      }
      //check the input is correct or not
      //if title or todoer is null ,suggesstion
