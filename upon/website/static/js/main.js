@@ -107,6 +107,7 @@
              $("#updatetask-priority-select option[value='" + data.priority + "']").attr("selected", true);
 
              //when update task set the todoer
+             $('#updatetask-todoer-select')[0].selectedIndex = -1;
              if (data.todoer.length > 0) {
                  //update the todoer
                  $.each(data.todoer, function(i, item) {
@@ -262,9 +263,9 @@
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
-    $("#task-group-select option[value='2']").attr("selected", true);
+     $("#task-group-select option[value='2']").attr("selected", true);
      $("#task-priority-select option[value='2']").attr("selected", true);
-     $("#task-todoer-select option[value='']").attr("selected", false);
+     $('#task-todoer-select').selectedIndex = -1;
 
      $("#task-modal .suggesstion").remove();
      $("#task-modal").modal('show');
