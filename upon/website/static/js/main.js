@@ -494,18 +494,18 @@
          if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
              // my task
              $("#personal-task-panel #task" + taskid).remove();
-         } else {
-             // current week task
-             $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
-                 $("#currentWeekTask .panel-body").html(resp);
-                 $('.finishbox').iCheck({
-                     checkboxClass: 'icheckbox_square-blue',
-                     radioClass: 'iradio_square-blue',
-                     increaseArea: '20%' // optional
-                 });
-             });
-
+             //bug  本周任务也需要重新载入！
+             //我的任务和待确认的任务都是点击刷新的，所以不会出现一致性问题
+             //只有在我的任务和待确认里面勾掉任务的时候， 本周任务才会出现一致性问题
          }
+         $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+             $("#currentWeekTask .panel-body").html(resp);
+             $('.finishbox').iCheck({
+                 checkboxClass: 'icheckbox_square-blue',
+                 radioClass: 'iradio_square-blue',
+                 increaseArea: '20%' // optional
+             });
+         });
          console.log(taskid);
      });
  });
