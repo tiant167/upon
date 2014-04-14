@@ -259,7 +259,8 @@ def deleteTask(request):
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             if checkUserAndTask(request.user, task):
-                task.delete()
+                task.status = 1
+                task.save()
                 return HttpResponse(json.dumps({'error_code':'0'}))
             else:
                 return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
