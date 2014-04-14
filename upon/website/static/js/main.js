@@ -501,45 +501,53 @@
  $(document).on("ifChecked", ".finishbox", function(e) {
      var elem = e.target;
      var taskid = $(elem).data("taskid");
-     $.post("/completetask/", {
-         taskid: taskid
-     }).then(function(resp) {
-         if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
-             // my task
-             $("#personal-task-panel #task" + taskid).remove();
-             //bug  本周任务也需要重新载入！
-             //我的任务和待确认的任务都是点击刷新的，所以不会出现一致性问题
-             //只有在我的任务和待确认里面勾掉任务的时候， 本周任务才会出现一致性问题
-         }
-         $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
-             $("#currentWeekTask .panel-body").html(resp);
-             $('.finishbox').iCheck({
-                 checkboxClass: 'icheckbox_square-blue',
-                 radioClass: 'iradio_square-blue',
-                 increaseArea: '20%' // optional
+     setTimeout(function() {
+         $.post("/completetask/", {
+             taskid: taskid
+         }).then(function(resp) {
+             if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
+                 // my task
+                 $("#personal-task-panel #task" + taskid).remove();
+                 //bug  本周任务也需要重新载入！
+                 //我的任务和待确认的任务都是点击刷新的，所以不会出现一致性问题
+                 //只有在我的任务和待确认里面勾掉任务的时候， 本周任务才会出现一致性问题
+             }
+             $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+                 $("#currentWeekTask .panel-body").html(resp);
+                 $('.finishbox').iCheck({
+                     checkboxClass: 'icheckbox_square-blue',
+                     radioClass: 'iradio_square-blue',
+                     increaseArea: '20%' // optional
+                 });
              });
+             console.log(taskid);
          });
-         console.log(taskid);
-     });
+     }, 1000);
+
+
  });
 
  $(document).on("ifChecked", ".confirmbox", function(e) {
      var elem = e.target;
      var taskid = $(elem).data("taskid");
-     $.post("/confirmtask/", {
-         taskid: taskid
-     }).then(function(resp) {
-         $("#confirm-task-panel #task" + taskid).remove();
-         $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
-             $("#currentWeekTask .panel-body").html(resp);
-             $('.finishbox').iCheck({
-                 checkboxClass: 'icheckbox_square-blue',
-                 radioClass: 'iradio_square-blue',
-                 increaseArea: '20%' // optional
+     setTimeout(function() {
+         $.post("/confirmtask/", {
+             taskid: taskid
+         }).then(function(resp) {
+             $("#confirm-task-panel #task" + taskid).remove();
+             $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+                 $("#currentWeekTask .panel-body").html(resp);
+                 $('.finishbox').iCheck({
+                     checkboxClass: 'icheckbox_square-blue',
+                     radioClass: 'iradio_square-blue',
+                     increaseArea: '20%' // optional
+                 });
              });
+             console.log(taskid);
          });
-         console.log(taskid);
-     });
+     }, 1000);
+
+
  });
 
  function freshConfirmNum() {
@@ -552,7 +560,7 @@
                  $("#waitnum").text(data.confirm);
              }
          }
-         setTimeout('freshConfirmNum()', 30000); //指定10秒刷新一次
+         setTimeout('freshConfirmNum()', 3000); //指定3秒刷新一次
      });
  }
  setTimeout('freshConfirmNum()', 1000); //指定1秒刷新一次
