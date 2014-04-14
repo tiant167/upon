@@ -410,7 +410,7 @@
              }
          }
          $.post("/addtask/", {
-             taskid: "0",
+             taskid: taskid,
              projectid: projectid,
              name: title,
              detail: detail,
@@ -494,6 +494,9 @@
              console.log(resp);
          });
      }
+     //update task finish then fresh
+     var freshtask = "#task" + taskid + " a";
+     $(freshtask).click();
 
  });
 
