@@ -270,3 +270,6 @@ hr{
 	color: red;
 	font-size: 10px;
 }
+.panel-body .notask{
+	margin-top:5px;
+}
