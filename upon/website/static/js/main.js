@@ -509,3 +509,22 @@
          console.log(taskid);
      });
  });
+
+ $(document).on("ifChecked", ".confirmbox", function(e) {
+     var elem = e.target;
+     var taskid = $(elem).data("taskid");
+     $.post("/confirmtask/", {
+         taskid: taskid
+     }).then(function(resp) {
+         $("#confirm-task-panel #task" + taskid).remove();
+         $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+             $("#currentWeekTask .panel-body").html(resp);
+             $('.finishbox').iCheck({
+                 checkboxClass: 'icheckbox_square-blue',
+                 radioClass: 'iradio_square-blue',
+                 increaseArea: '20%' // optional
+             });
+         });
+         console.log(taskid);
+     });
+ });

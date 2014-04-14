@@ -20,7 +20,8 @@ urlpatterns = patterns('',
     url(r'^rubbishbin/(?P<projectid>\d+)/$',views.fetchRubbishTask),
     url(r'^completed/(?P<projectid>\d+)/$',views.fetchCompletedTask),
     url(r'^avatar/(?P<userid>\d+)/$',views.fetchAvatar),
-    url(r'^completetask/$',views.completeTask),
+    url(r'^completetask/$',views.changeTaskStatus,{'status':2}),
+    url(r'^confirmtask/$',views.changeTaskStatus,{'status':3}),
     url(r'^gettask/(?P<projectid>\d+)/(?P<type>\d+)/$',views.fetchTaskList),
 
 )

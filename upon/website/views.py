@@ -369,21 +369,22 @@ def fetchCompletedTask(request,projectid):
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
 @login_required
-def completeTask(request):
-    if request.method == "POST":
+def changeTaskStatus(request,status):
+    if request.method == "POST" and status in (0,1,2,3):
         taskid = request.POST.get("taskid",0)
         try:
             task = Task.objects.get(id=taskid)
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         if checkUserAndTask(request.user,task):
-            task.status = 2
+            task.status = status
             task.save()
             return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
         else:
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not yours'}))    
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
 
 @login_required
 def fetchTaskList(request,projectid,type):
