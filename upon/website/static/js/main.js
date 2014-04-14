@@ -89,6 +89,9 @@
              //update the task
              $('#updatetask-desc-textarea').val(data.detail);
 
+             //update the status
+             $("#updatetask-status-select option[value='" + data.status + "']").attr("selected", true);
+
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
              //when update task
