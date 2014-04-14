@@ -212,8 +212,8 @@ def addTask(request):
                     task.priority = priority
                     task.type = type
                     task.status = status
-                    task.save()
-                    task.member.all().delete()
+                    task.todoer.clear()
+                    
                 else:
                     return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             
@@ -221,6 +221,7 @@ def addTask(request):
                 todoers = todoers.split(',')
                 for todoer in todoers:
                     task.todoer.add(User.objects.get(id=todoer))
+            task.save()
             if type != 3:
                 taskList = fetchTaskListHelper(project,type)
                 return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
