@@ -352,7 +352,7 @@
  var workctx = document.getElementById("workcontrast").getContext("2d");
  var workChart = new Chart(workctx).Doughnut(workdata);
 
- $("#addtask-submit-btn").click(function(e) {
+ $(document).on("click", "#addtask-submit-btn", function(e) {
      var title = $("#task-title-input").val();
      var group = $("#task-group-select").val();
      var priority = $("#task-priority-select").val();
@@ -441,7 +441,20 @@
          });
      } else {
          //update
+         $.post("/addtask/", {
+             taskid: taskid,
+             projectid: projectid,
+             name: title,
+             detail: detail,
+             deadline: deadline,
+             starttime: starttime,
+             priority: priority,
+             type: group,
+             status: status,
+             todoer: todoerstr
+         }).then(function(resp) {
 
+         });
      }
 
  });
