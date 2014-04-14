@@ -249,7 +249,7 @@
  });
 
  // delete task
- $(document).on("click", ".glyphicon-trash", function(e) {
+ $(document).on("click", ".task .glyphicon-trash", function(e) {
      //$(".glyphicon-trash").click(function(e) {
      var taskid = $(e.target).prev().children().data("taskid");
      $("#deletetask-modal").data("taskid", taskid);

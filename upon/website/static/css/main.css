@@ -273,3 +273,14 @@ hr{
 .panel-body .notask{
 	margin-top:5px;
 }
+.teammember {
+	cursor:default;
+}
+.teammember   .glyphicon-trash{
+	display:none
+}
+.teammember:hover .glyphicon-trash{
+	cursor:pointer;
+	margin-left: 3px;
+	display:inline;
+}
