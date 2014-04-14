@@ -619,9 +619,18 @@
  }
  setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次
 
- $('#autocomplete').autocomplete({
+ $('#create-memberinput').autocomplete({
      serviceUrl: '/searchperson/',
      onSelect: function(suggestion) {
-         alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+         $(".create-addmember").data("userid", suggestion.data);
      }
+     //$(".memberbox").append('<p class="form-control-static teammember" data-userid="' + suggestion.data + '">' + suggestion.value + '<span class="glyphicon glyphicon-trash"></span></p>');
+ });
+
+ $(".create-addmember").click(function() {
+     var userid = $(".create-addmember").data("userid");
+     var username = $("#create-memberinput").val();
+     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
+     $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     $("#create-memberinput").val("");
  });
