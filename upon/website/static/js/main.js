@@ -530,3 +530,18 @@
          console.log(taskid);
      });
  });
+
+ function freshConfirmNum() {
+     $.get("/getconfirmnum/" + window.projectid + "/").then(function(resp) {
+         var data = eval('(' + resp + ')');
+         if (data.error_code == "0") {
+             if (data.confirm == "0") {
+                 $("#waitnum").text("");
+             } else {
+                 $("#waitnum").text(data.confirm);
+             }
+         }
+         setTimeout('freshConfirmNum()', 30000); //指定10秒刷新一次
+     });
+ }
+ setTimeout('freshConfirmNum()', 1000); //指定1秒刷新一次

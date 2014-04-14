@@ -23,5 +23,5 @@ urlpatterns = patterns('',
     url(r'^completetask/$',views.changeTaskStatus,{'status':2}),
     url(r'^confirmtask/$',views.changeTaskStatus,{'status':3}),
     url(r'^gettask/(?P<projectid>\d+)/(?P<type>\d+)/$',views.fetchTaskList),
-
+    url(r'^getconfirmnum/(?P<projectid>\d+)/$',views.fetchConfirmNum),
 )

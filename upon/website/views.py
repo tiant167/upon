@@ -395,6 +395,19 @@ def fetchTaskList(request,projectid,type):
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
     
+def fetchConfirmNum(request,projectid):
+    if projectid:
+        try:
+            project = Project.objects.get(id=projectid)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        if request.user in project.team.member.all():
+            taskList = Task.objects.filter(project=project,starter=request.user,status=2)
+            return HttpResponse(json.dumps({'error_code':'0','confirm':len(taskList)}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 def fetchAvatar(request,userid):
     try:
         user = User.objects.get(id=userid)
