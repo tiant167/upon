@@ -596,3 +596,10 @@
      });
  }
  setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次
+
+ $('#autocomplete').autocomplete({
+     serviceUrl: '/searchperson/',
+     onSelect: function(suggestion) {
+         alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+     }
+ });

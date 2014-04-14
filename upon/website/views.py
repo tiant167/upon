@@ -419,6 +419,12 @@ def fetchAvatar(request,userid):
     #static url need to change by yourself when static file is changed
     f = open('./website/static/'+avatar, "rb")
     return HttpResponse(f.read(), mimetype="image/jpeg")
+
+def searchPerson(request):
+    keywords = request.GET.get('query','')
+    result = User.objects.filter(username__contains=keywords)
+    return HttpResponse(json.dumps({'suggestions':[{'value':item.username+' - '+item.email,'data':item.id} for item in result]}))
+
 ########################helper function##########################
 def fetchTaskListHelper(project,type):
     tasks = Task.objects.filter(Q(project=project) & Q(type=type) & Q(status=0) | Q(status=2))

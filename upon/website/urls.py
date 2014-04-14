@@ -25,4 +25,6 @@ urlpatterns = patterns('',
     url(r'^confirmtask/$',views.changeTaskStatus,{'status':3}),
     url(r'^gettask/(?P<projectid>\d+)/(?P<type>\d+)/$',views.fetchTaskList),
     url(r'^getconfirmnum/(?P<projectid>\d+)/$',views.fetchConfirmNum),
+    url(r'^searchperson/$',views.searchPerson),
+
 )
