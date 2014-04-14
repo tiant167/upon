@@ -559,9 +559,29 @@
              console.log(taskid);
          });
      }, 1000);
-
-
  });
+
+ $(document).on("ifUnchecked", ".finishbox", function(e) {
+     var elem = e.target;
+     var taskid = $(elem).data("taskid");
+     setTimeout(function() {
+         $.post("/incompletetask/", {
+             taskid: taskid
+         }).then(function(resp) {
+             $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
+                 $("#currentWeekTask .panel-body").html(resp);
+                 $('.finishbox').iCheck({
+                     checkboxClass: 'icheckbox_square-blue',
+                     radioClass: 'iradio_square-blue',
+                     increaseArea: '20%' // optional
+                 });
+             });
+             console.log(taskid);
+         });
+     }, 1000);
+ });
+
+
 
  function freshConfirmNum() {
      $.get("/getconfirmnum/" + window.projectid + "/").then(function(resp) {
