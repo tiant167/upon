@@ -355,59 +355,60 @@
  var workChart = new Chart(workctx).Doughnut(workdata);
 
  $(document).on("click", "#addtask-submit-btn", function(e) {
-     var title = $("#task-title-input").val();
-     var group = $("#task-group-select").val();
-     var priority = $("#task-priority-select").val();
-     var todoer = $("#todoer-select").val();
-     var detail = $("#task-desc-textarea").val();
-     var deadline = $("#task-deadline-input").val();
-     var starttime = $("#task-starttime-input").val();
-     var status = $("#task-status-select").val();
-
-     var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
-     var todoerstr = ""
-     if (todoer == null) {
-         todoerstr = "";
-     } else {
-         todoerstr = todoer.join(",");
-     }
-     //check the input is correct or not
-     //if title or todoer is null ,suggesstion
-     if (title == "") {
-         if ($("#add-task-form .suggesstion").length > 0) {
-             $("#add-task-form .suggesstion").remove();
-         }
-         $("#task-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
-         return false;
-     };
-     if (status > 0) {
-         if ($("#add-task-form .suggesstion").length > 0) {
-             $("#add-task-form .suggesstion").remove();
-         }
-         $("#task-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
-         return false;
-     };
-
-     if (todoerstr == "") {
-         if ($("#add-task-form .suggesstion").length > 0) {
-             $("#add-task-form .suggesstion").remove();
-         }
-         $("#todoer-select").parent().append("<div class='suggesstion'>*指派人不能为空</div>");
-         return false;
-     }
-     if (starttime != "" && deadline != "") {
-         if (starttime > deadline) {
-             if ($("#add-task-form .suggesstion").length > 0) {
-                 $("#add-task-form .suggesstion").remove();
-             }
-             $("#task-starttime-input").parent().append("<div class='suggesstion'>*任务开始日期不能大于截至日期</div>");
-             return false;
-         }
-     }
 
      if (taskid == 0) {
          //new
+         var title = $("#task-title-input").val();
+         var group = $("#task-group-select").val();
+         var priority = $("#task-priority-select").val();
+         var todoer = $("#todoer-select").val();
+         var detail = $("#task-desc-textarea").val();
+         var deadline = $("#task-deadline-input").val();
+         var starttime = $("#task-starttime-input").val();
+         var status = $("#task-status-select").val();
+
+         var projectid = window.projectid;
+         //var taskid = $(e.target).data("taskid");
+         var todoerstr = ""
+         if (todoer == null) {
+             todoerstr = "";
+         } else {
+             todoerstr = todoer.join(",");
+         }
+         //check the input is correct or not
+         //if title or todoer is null ,suggesstion
+         if (title == "") {
+             if ($("#add-task-form .suggesstion").length > 0) {
+                 $("#add-task-form .suggesstion").remove();
+             }
+             $("#task-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
+             return false;
+         };
+         if (status > 0) {
+             if ($("#add-task-form .suggesstion").length > 0) {
+                 $("#add-task-form .suggesstion").remove();
+             }
+             $("#task-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
+             return false;
+         };
+
+         if (todoerstr == "") {
+             if ($("#add-task-form .suggesstion").length > 0) {
+                 $("#add-task-form .suggesstion").remove();
+             }
+             $("#todoer-select").parent().append("<div class='suggesstion'>*指派人不能为空</div>");
+             return false;
+         }
+         if (starttime != "" && deadline != "") {
+             if (starttime > deadline) {
+                 if ($("#add-task-form .suggesstion").length > 0) {
+                     $("#add-task-form .suggesstion").remove();
+                 }
+                 $("#task-starttime-input").parent().append("<div class='suggesstion'>*任务开始日期不能大于截至日期</div>");
+                 return false;
+             }
+         }
          $.post("/addtask/", {
              taskid: "0",
              projectid: projectid,
@@ -444,6 +445,21 @@
      } else {
          //update
          var title = $("#updatetask-title-input").val();
+         var group = $("#updatetask-group-select").val();
+         var priority = $("#updatetask-priority-select").val();
+         var todoer = $("#updatetask-todoer-select").val();
+         var detail = $("#updatetask-desc-textarea").val();
+         var deadline = $("#updatetask-deadline-input").val();
+         var starttime = $("#updatetask-starttime-input").val();
+         var status = $("#updatetask-status-select").val();
+
+         var projectid = window.projectid;
+         var todoerstr = ""
+         if (todoer == null) {
+             todoerstr = "";
+         } else {
+             todoerstr = todoer.join(",");
+         }
          $.post("/addtask/", {
              taskid: taskid,
              projectid: projectid,
