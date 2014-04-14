@@ -490,13 +490,13 @@
                  radioClass: 'iradio_square-blue',
                  increaseArea: '20%' // optional
              });
+             //update task finish then fresh
+             var freshtask = "#task" + taskid + " a";
+             $(freshtask).click();
              $("#updatetask-modal").modal('hide');
              console.log(resp);
          });
      }
-     //update task finish then fresh
-     var freshtask = "#task" + taskid + " a";
-     $(freshtask).click();
 
  });
 
