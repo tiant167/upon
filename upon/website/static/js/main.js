@@ -573,7 +573,6 @@
                  $("#waitnum").text(data.confirm);
              }
          }
-         setTimeout('freshConfirmNum()', 3000); //指定3秒刷新一次
      });
  }
- setTimeout('freshConfirmNum()', 1000); //指定1秒刷新一次
+ setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次

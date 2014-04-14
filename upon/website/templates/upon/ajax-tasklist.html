@@ -1,5 +1,5 @@
 <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
-{%if  taskList.Critical or   taskList.Severe or  taskList.Major or  taskList.Minor%}
+{%if  taskList.Critical or   taskList.Severe or  taskList.Major or  taskList.Minor or taskList.Finished%}
 {%if taskList.Critical%}
 <h5 class='Critical'>Critical</h5>
 {%for task in taskList.Critical%}

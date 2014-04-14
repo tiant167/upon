@@ -196,7 +196,7 @@
       <div id="collapseOne" class="panel-collapse collapse in">
           <div class="panel-body">
             <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
-            {%if  currentWeekTasks.Critical or   currentWeekTasks.Severe or  currentWeekTasks.Major or  currentWeekTasks.Minor%}
+            {%if  currentWeekTasks.Critical or   currentWeekTasks.Severe or  currentWeekTasks.Major or  currentWeekTasks.Minor or currentWeekTasks.Finished%}
             {%if currentWeekTasks.Critical%}
             <h5 class='Critical'>Critical</h5>
             {%for task in currentWeekTasks.Critical%}
