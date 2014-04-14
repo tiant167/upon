@@ -89,6 +89,9 @@
              //update the task
              $('#updatetask-desc-textarea').val(data.detail);
 
+             //update the status
+             $("#updatetask-status-select option[value='" + data.status + "']").attr("selected", true);
+
              //set deadline
              $('.detaildeadline').children().text(data.deadline);
              //when update task
@@ -376,6 +379,14 @@
          $("#task-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
          return false;
      };
+     if (status > 0) {
+         if ($("#add-task-form .suggesstion").length > 0) {
+             $("#add-task-form .suggesstion").remove();
+         }
+         $("#task-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
+         return false;
+     };
+
      if (todoerstr == "") {
          if ($("#add-task-form .suggesstion").length > 0) {
              $("#add-task-form .suggesstion").remove();
