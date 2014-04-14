@@ -357,6 +357,7 @@
      var detail = $("#task-desc-textarea").val();
      var deadline = $("#task-deadline-input").val();
      var starttime = $("#task-starttime-input").val();
+     var status = $("#task-status-select").val();
 
      var projectid = window.projectid;
      var taskid = $(e.target).data("taskid");
@@ -403,6 +404,7 @@
              starttime: starttime,
              priority: priority,
              type: group,
+             status: status,
              todoer: todoerstr
          }).then(function(resp) {
              var target = "";

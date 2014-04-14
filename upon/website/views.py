@@ -179,12 +179,12 @@ def addTask(request):
             priority = request.POST.get("priority","2")
             type = request.POST.get("type","0")
             todoers = request.POST.get("todoer",'')
+            status = request.POST.get("status",0)
         except:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         if projectid and name:
             #new task
             project = Project.objects.get(id=projectid)
-            status="0"
             if starttime == "":
                 starttime = None
             if deadline == "":
@@ -203,7 +203,6 @@ def addTask(request):
                     )
             else:
                 #no test
-                status = "0"
                 task = Task.objects.get(id=taskid)
                 if checkUserAndTask(request.user,task):
                     task.name = name
