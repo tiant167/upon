@@ -73,6 +73,8 @@
 
              //set task title
              $('.taskname').text(data.name);
+             //set task data-taskid
+             $('#updatetask-modal #addtask-submit-btn').attr("data-taskid", data.id);
              //when update the task , set task title
              $('#updatetask-title-input').val(data.name);
 
@@ -441,6 +443,7 @@
          });
      } else {
          //update
+         var title = $("#updatetask-title-input").val();
          $.post("/addtask/", {
              taskid: taskid,
              projectid: projectid,
@@ -453,7 +456,26 @@
              status: status,
              todoer: todoerstr
          }).then(function(resp) {
-
+             var target = "";
+             switch (group) {
+                 case "0":
+                     whichweek = "#futureTask .panel-body";
+                     break;
+                 case "1":
+                     whichweek = "#nextWeekTask .panel-body";
+                     break;
+                 case "2":
+                     whichweek = "#currentWeekTask .panel-body";
+                     break;
+             }
+             $(whichweek).html(resp);
+             $('.finishbox').iCheck({
+                 checkboxClass: 'icheckbox_square-blue',
+                 radioClass: 'iradio_square-blue',
+                 increaseArea: '20%' // optional
+             });
+             $("#updatetask-modal").modal('hide');
+             console.log(resp);
          });
      }
 
