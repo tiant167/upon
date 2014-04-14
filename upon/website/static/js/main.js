@@ -276,6 +276,8 @@
      $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
+     //if input not valid
+     $("#updatetask-modal .suggesstion").remove();
      $("#updatetask-modal").modal('show');
  });
  $(".addteambtn").click(function() {
@@ -459,6 +461,38 @@
              todoerstr = "";
          } else {
              todoerstr = todoer.join(",");
+         }
+         //if title or todoer is null ,suggesstion
+         if (title == "") {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
+             return false;
+         };
+         if (status > 0) {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
+             return false;
+         };
+
+         if (todoerstr == "") {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-todoer-select").parent().append("<div class='suggesstion'>*指派人不能为空</div>");
+             return false;
+         }
+         if (starttime != "" && deadline != "") {
+             if (starttime > deadline) {
+                 if ($("#update-task-form .suggesstion").length > 0) {
+                     $("#update-task-form .suggesstion").remove();
+                 }
+                 $("#updatetask-starttime-input").parent().append("<div class='suggesstion'>*任务开始日期不能大于截至日期</div>");
+                 return false;
+             }
          }
          $.post("/addtask/", {
              taskid: taskid,
