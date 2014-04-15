@@ -16,6 +16,7 @@
     <!--ichecker-->
     <link href="{{STATIC_URL}}css/blue.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/yellow.css" rel="stylesheet">
+    <link rel='stylesheet' href='{{STATIC_URL}}autocomplete/styles.css' >
     <link rel='stylesheet' href='{{STATIC_URL}}css/main.css' >
   </head>
 
@@ -62,39 +63,42 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="newteamModalLabel">新建团队</h4>
-      </div>
-      <div class="modal-body">
+    </div>
+    <div class="modal-body">
         <form class="form-horizontal" role="form">
           <div class="form-group">
             <label class="col-sm-2 control-label">团队名称</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="tasktitle" placeholder="起一个响亮的名字是成功的一半">
-            </div>
+              <input type="text" class="form-control" id="teamtitle" placeholder="起一个响亮的名字是成功的一半">
           </div>
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label">添加成员</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="tasktitle" placeholder="输入新成员的邮箱地址">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label">成员</label>
-            <div class="col-sm-10">
-              <p class="form-control-static">杜肖-email@example.com</p>
-              <p class="form-control-static">是一个-email@example.com</p>
-              <p class="form-control-static">傻X-email@example.com</p>
-            </div>
-          </div>
-      </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">创建</button>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">添加成员</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+            <input type="text" class="form-control"  placeholder="输入邮箱进行搜索" id="create-memberinput">
+            <span class="input-group-btn">
+                <button class="btn btn-default create-addmember" type="button">添加</button>
+            </span>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">成员</label>
+        <div class="col-sm-10 memberbox">
+          <p class="form-control-static teammember" data-userid="{{user.id}}">{{user.username}} - {{user.email}}<span class="glyphicon glyphicon-trash"></span></p>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+  </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary" id="addmember">创建</button>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
@@ -141,8 +145,46 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+
+    //global varible
+    userid="{{user.id}}"
+    username = "{{user.email}}"
+    projectid = "{{currentProject.id}}"
+    teamid = "{{currentTeam.id}}"
+    </script>
+  
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}autocomplete/jquery.autocomplete.js"></script>
     <script src="{{STATIC_URL}}js/icheck.js"></script>
     <script src="{{STATIC_URL}}js/Chart.min.js"></script>
     <script src="{{STATIC_URL}}js/main.js"></script>
