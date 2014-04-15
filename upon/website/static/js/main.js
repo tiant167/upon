@@ -565,6 +565,9 @@
              taskid: taskid
          }).then(function(resp) {
              $("#confirm-task-panel #task" + taskid).remove();
+             if ($("#confirm-task-panel .panel-body").children().length == 0) {
+                 $("#confirm-task-panel .panel-body").append("<span>您还没有需要确认的任务哦~</span>");
+             };
              $.get("/gettask/" + window.projectid + "/2/").then(function(resp) {
                  $("#currentWeekTask .panel-body").html(resp);
                  $('.finishbox').iCheck({
