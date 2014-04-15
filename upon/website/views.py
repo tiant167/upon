@@ -270,6 +270,30 @@ def addTeam(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@login_required
+def updateTeam(request):
+    if request.method == "POST":
+        teamid = request.POST.get("teamid",False)
+        member = request.POST.get("member",False)
+        if teamid and member:
+            try:
+                team = Team.objects.get(id=teamid)
+                memberList = member.split(",")
+                if len(memberList) > 0 and request.user in team.member.all():
+                    team.member.clear()
+                else:
+                    return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+                for uid in memberList:
+                    user = User.objects.get(id=uid)
+                    team.member.add(user)
+                team.save()
+            except ObjectDoesNotExist:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+            return HttpResponse(json.dumps({'error_code':'0','teamid':team.id}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
 @login_required
 def deleteTask(request):
