@@ -257,6 +257,7 @@ def addTeam(request):
         member = request.POST.get("member",False)
         if teamName and member:
             team = Team.objects.create(name=teamName)
+            Project.objects.create(name=u"默认项目",team=team)
             memberList = member.split(",")
             try:
                 for uid in memberList:
