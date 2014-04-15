@@ -217,7 +217,7 @@
       </div>
       <div id="collapseOne" class="panel-collapse collapse in">
           <div class="panel-body">
-            <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+            <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn' data-type='currentWeekTask'>添加</button>
             {%if  currentWeekTasks.Critical or   currentWeekTasks.Severe or  currentWeekTasks.Major or  currentWeekTasks.Minor or currentWeekTasks.Finished%}
             {%if currentWeekTasks.Critical%}
             <h5 class='Critical'>Critical</h5>
@@ -281,7 +281,7 @@
             {%endfor%}
             {%endif%}
             {%else%}
-            <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</div>
+            <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn' data-type='currentWeekTask'>添加</a>一个吧</div>
             {%endif%}
         </div>
     </div>
@@ -296,7 +296,7 @@
 </div>
 <div id="collapseTwo" class="panel-collapse collapse nocheckpanel">
   <div class="panel-body">
-    <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+    <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn' data-type='nextWeekTask'>添加</button>
     {%if  nextWeekTasks.Critical or   nextWeekTasks.Severe or  nextWeekTasks.Major or  nextWeekTasks.Minor%}
     {%if nextWeekTasks.Critical%}
     <h5 class='Critical'>Critical</h5>
@@ -347,7 +347,7 @@
     {%endfor%}
     {%endif%}
     {%else%}
-    <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</div>
+    <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn' data-type='nextWeekTask'>添加</a>一个吧</div>
     {%endif%}
 </div>
 </div>
@@ -362,7 +362,7 @@
 </div>
 <div id="collapseThree" class="panel-collapse collapse nocheckpanel">
   <div class="panel-body">
-    <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn'>添加</button>
+    <input type='input' class='form-control addtask'><button class='btn btn-s btn-info addtaskbtn' data-type='futureTask'>添加</button>
     {%if  futureTasks.Critical or   futureTasks.Severe or  futureTasks.Major or  futureTasks.Minor%}
     {%if futureTasks.Critical%}
     <h5 class='Critical'>Critical</h5>
@@ -413,7 +413,7 @@
     {%endfor%}
     {%endif%}
     {%else%}
-    <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn'>添加</a>一个吧</div>
+    <div class="notask">还没有任务哦，赶紧<a href="#" class='addtaskbtn' data-type='futureTask'>添加</a>一个吧</div>
     {%endif%}
 </div>
 </div>

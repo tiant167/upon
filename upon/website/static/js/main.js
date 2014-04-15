@@ -245,14 +245,24 @@
      $("#deletetask-modal").modal('show');
  });
 
- $(document).on("click", ".addtaskbtn", function() {
+ $(document).on("click", ".addtaskbtn", function(e) {
 
      //init the add task modal
-     $('#task-title-input').val("");
+     $('#task-title-input').val(e.target.previousElementSibling.value);
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
-     $("#task-group-select option[value='2']").attr("selected", true);
+     switch ($(e.target).data("type")) {
+         case "currentWeekTask":
+             $("#task-group-select option[value='2']").attr("selected", true);
+             break;
+         case "nextWeekTask":
+             $("#task-group-select option[value='1']").attr("selected", true);
+             break;
+         case "futureTask":
+             $("#task-group-select option[value='0']").attr("selected", true);
+             break;
+     }
      $("#task-priority-select option[value='2']").attr("selected", true);
      $('#task-todoer-select').selectedIndex = -1;
 
@@ -428,13 +438,6 @@
                  $("#update-task-form .suggesstion").remove();
              }
              $("#updatetask-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
-             return false;
-         };
-         if (status > 0) {
-             if ($("#update-task-form .suggesstion").length > 0) {
-                 $("#update-task-form .suggesstion").remove();
-             }
-             $("#updatetask-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
              return false;
          };
 
@@ -654,7 +657,7 @@
              name: teamname,
              member: teamid
          }).then(function(resp) {
-             window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+             window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
              console.log(resp);
          });
      } else {
@@ -679,7 +682,7 @@
          teamid: teamid,
          member: memberid
      }).then(function(resp) {
-         window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+         window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
      });
  });
 
