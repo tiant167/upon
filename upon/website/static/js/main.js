@@ -79,7 +79,11 @@
              $("#updatetask-status-select option[value='" + data.status + "']").attr("selected", true);
 
              //set deadline
-             $('.detaildeadline').children().text(data.deadline);
+             if (data.deadline == null) {
+                 $('.detaildeadline').empty();
+             } else {
+                 $('.detaildeadline').html("截止时间：<b>" + data.deadline + "</b>");
+             }
              //when update task
              if (data.deadline != "") {
                  $('#updatetask-deadline-input').val(data.deadline);
@@ -248,7 +252,7 @@
  $(document).on("click", ".addtaskbtn", function(e) {
 
      //init the add task modal
-     $('#task-title-input').val(e.target.previousElementSibling.value);
+     $('#task-title-input').val($(e.target).parent().parent().find("input").val());
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
