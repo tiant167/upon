@@ -474,6 +474,18 @@ def searchPerson(request):
     result = User.objects.filter(username__contains=keywords)
     return HttpResponse(json.dumps({'suggestions':[{'value':item.username+' - '+item.email,'data':item.id} for item in result]}))
 
+def updatePersonalInfo(request):
+    if request.method=="POST":
+        username = request.POST.get("username",False)
+        if username:
+            request.user.email = username
+            request.user.save()
+            return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+        
 ########################helper function##########################
 def fetchTaskListHelper(project,type):
     tasks = Task.objects.filter(Q(project=project) & Q(type=type) & (Q(status=0) | Q(status=2)))

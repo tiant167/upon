@@ -265,10 +265,6 @@
      $("#updatetask-modal").modal('show');
  });
 
-
- $(".modifypersoninfobtn").click(function() {
-     $("#modifypersoninfo-modal").modal('show');
- });
  $(".signoutbtn").click(function() {
      $("#signout-modal").modal('show');
  });

@@ -109,3 +109,19 @@ $(".update-addmember").click(function() {
     }
     $("#update-memberinput").val("");
 });
+
+//personal info
+$(".modifypersoninfobtn").click(function() {
+    $("#modifypersoninfo-modal").modal('show');
+});
+
+$("#updatePersonalInfo").click(function() {
+    var username = $("#nametitle").val();
+    if (username != "") {
+        $.post("/updatepersonalinfo/", {
+            username: username
+        }).then(function(resp) {
+            window.location.reload();
+        });
+    }
+});
