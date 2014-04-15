@@ -702,3 +702,13 @@
      $("#memberbox-modal").modal("show")
  });
  $('.bigphoto').tooltip('hide');
+
+ $(document).on("click", ".glyphicon-share-alt", function() {
+     var taskid = $(this).prev().find("a").data("taskid");
+     $.post("/reverttask/", {
+         taskid: taskid
+     }).then(function(resp) {
+         $(this).parent().remove();
+         window.location.reload();
+     });
+ });
