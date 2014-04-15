@@ -26,7 +26,27 @@ $("#project-list > a").click(function() {
         $("#newproject-modal").modal('show');
     }
 });
+$("#add-project-submitbtn").click(function() {
+    var title = $("#newproject-modal input").val();
+    var teamid = window.teamid;
+    if (title == "") {
+        //GZW
+        if ($("#newproject-modal .suggesstion").length > 0) {
+            $("#newproject-modal .suggesstion").remove();
+        }
+        $("#newproject-modal input").parent().append("<div class='suggesstion'>*项目名称不能为空</div>");
+    } else {
+        $.post('/addproject/', {
+            projectname: title,
+            teamid: teamid
+        }).then(function(resp) {
+            var data = eval('(' + resp + ')');
+            window.location.href = "/" + window.teamid + "/" + data.projectid + "/";
+            console.log(resp);
 
+        });
+    }
+});
 
 //add Team 
 $(".addteambtn").click(function() {
