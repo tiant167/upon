@@ -251,6 +251,27 @@ def addProject(request):
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
 @login_required
+def addTeam(request):
+    if request.method == "POST":
+        teamName = request.POST.get("name",False)
+        member = request.POST.get("member",False)
+        if teamName and member:
+            team = Team.objects.create(name=teamName)
+            memberList = member.split(",")
+            try:
+                for uid in memberList:
+                    user = User.objects.get(id=uid)
+                    team.member.add(user)
+            except ObjectDoesNotExist:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+            return HttpResponse(json.dumps({'error_code':'0','teamid':team.id}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
+
+@login_required
 def deleteTask(request):
     if request.method == "POST":
         taskid = request.POST.get("taskid",False)
