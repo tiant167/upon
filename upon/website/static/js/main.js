@@ -635,3 +635,73 @@
      });
  }
  setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次
+
+ //update team
+ $('#update-memberinput').autocomplete({
+     serviceUrl: '/searchperson/',
+     onSelect: function(suggestion) {
+         $(".update-addmember").data("userid", suggestion.data);
+     }
+ });
+
+ $(".update-addmember").click(function() {
+     var userid = $(".update-addmember").data("userid");
+     var username = $("#update-memberinput").val();
+     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
+     if ($("#manageteam-modal .suggesstion").length > 0) {
+         $("#manageteam-modal .suggesstion").remove();
+     }
+     if ($("#manageteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
+         $("#manageteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     } else {
+         $("#update-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
+     }
+     $("#update-memberinput").val("");
+ });
+
+ $(document).on("click", "#addmember", function() {
+     var teamname = $("#teamtitle").val();
+     var teamid = "";
+     var teamhtml = $(".teammember");
+     var teamarray = new Array(teamhtml.length);
+     $.each($('.teammember'), function(i, item) {
+         teamarray[i] = $(item).data("userid");
+     });
+     teamid = teamarray.join(",");
+     if (teamname != "") {
+         $.post("/addteam/", {
+             name: teamname,
+             member: teamid
+         }).then(function(resp) {
+             window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+             console.log(resp);
+         });
+     } else {
+         if ($("#newteam-modal .suggesstion").length > 0) {
+             $("#newteam-modal .suggesstion").remove();
+         }
+         $("#teamtitle").parent().append("<div class='suggesstion'>*团队名称不能为空</div>");
+         return false;
+     }
+ });
+
+ $(document).on("click", "#manageteam", function() {
+     var teamid = window.teamid;
+     var memberid = "";
+     var teamhtml = $("#manageteam-modal .teammember");
+     var teamarray = new Array(teamhtml.length);
+     $.each($('#manageteam-modal .teammember'), function(i, item) {
+         teamarray[i] = $(item).data("userid");
+     });
+     memberid = teamarray.join(",");
+     $.post("/updateteam/", {
+         teamid: teamid,
+         member: memberid
+     }).then(function(resp) {
+         window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+     });
+ });
+
+ $(document).on("click", "#manageteam-modal .glyphicon-trash", function() {
+     $(this).parent().remove();
+ });
