@@ -281,6 +281,7 @@
      $("#updatetask-modal").modal('show');
  });
  $(".addteambtn").click(function() {
+     $("#newteam-modal .suggesstion").remove();
      $("#newteam-modal").modal('show');
  });
  $(".addprojectbtn").click(function() {
@@ -684,6 +685,10 @@
      var userid = $(".create-addmember").data("userid");
      var username = $("#create-memberinput").val();
      //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-     $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     if ($("#newteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
+         $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     } else {
+         $("#create-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
+     }
      $("#create-memberinput").val("");
  });
