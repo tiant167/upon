@@ -86,7 +86,7 @@ def main(request,teamid,projectid):
         if request.user not in currentProject.team.member.all():
             currentProject = projectList[0]
 
-    taskList = Task.objects.filter(Q(project=currentProject) & Q(status=0) | Q(status=2)).exclude(type=3) #except rubbishbin task
+    taskList = Task.objects.filter(Q(project=currentProject) & (Q(status=0) | Q(status=2))).exclude(type=3) #except rubbishbin task
     taskField = TaskField(taskList)
     taskField.judgePriority()
 
@@ -476,7 +476,7 @@ def searchPerson(request):
 
 ########################helper function##########################
 def fetchTaskListHelper(project,type):
-    tasks = Task.objects.filter(Q(project=project) & Q(type=type) & Q(status=0) | Q(status=2))
+    tasks = Task.objects.filter(Q(project=project) & Q(type=type) & (Q(status=0) | Q(status=2)))
     taskList = {'type':type,'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
     for task  in tasks:
         if task.type == 2 and task.status == 2:
