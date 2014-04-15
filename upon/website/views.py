@@ -299,6 +299,28 @@ def updateTeam(request):
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
 @login_required
+def revertTask(request):
+    if request.method == "POST":
+        taskid = request.POST.get("taskid",False)
+        if taskid:
+            try:
+                task = Task.objects.get(id=taskid)
+            except ObjectDoesNotExist:
+                return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+            if checkUserAndTask(request.user, task):
+                if task.type == 3:
+                    task.type = 2
+                task.status = 0
+                task.save()
+                return HttpResponse(json.dumps({'error_code':'0'}))
+            else:
+                return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
+        else:
+            return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+    else:
+        return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
+
+@login_required
 def deleteTask(request):
     if request.method == "POST":
         taskid = request.POST.get("taskid",False)
