@@ -276,9 +276,12 @@
      $("#task-modal").modal('show');
  });
  $(".changebtn").click(function() {
+     //if input not valid
+     $("#updatetask-modal .suggesstion").remove();
      $("#updatetask-modal").modal('show');
  });
  $(".addteambtn").click(function() {
+     $("#newteam-modal .suggesstion").remove();
      $("#newteam-modal").modal('show');
  });
  $(".addprojectbtn").click(function() {
@@ -460,6 +463,38 @@
          } else {
              todoerstr = todoer.join(",");
          }
+         //if title or todoer is null ,suggesstion
+         if (title == "") {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-title-input").parent().append("<div class='suggesstion'>*任务名称不能为空</div>");
+             return false;
+         };
+         if (status > 0) {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-status-select").parent().append("<div class='suggesstion'>*新建任务只能为'待完成'，不能为'" + $("#task-status-select").find("option:selected").text() + "'</div>");
+             return false;
+         };
+
+         if (todoerstr == "") {
+             if ($("#update-task-form .suggesstion").length > 0) {
+                 $("#update-task-form .suggesstion").remove();
+             }
+             $("#updatetask-todoer-select").parent().append("<div class='suggesstion'>*指派人不能为空</div>");
+             return false;
+         }
+         if (starttime != "" && deadline != "") {
+             if (starttime > deadline) {
+                 if ($("#update-task-form .suggesstion").length > 0) {
+                     $("#update-task-form .suggesstion").remove();
+                 }
+                 $("#updatetask-starttime-input").parent().append("<div class='suggesstion'>*任务开始日期不能大于截至日期</div>");
+                 return false;
+             }
+         }
          $.post("/addtask/", {
              taskid: taskid,
              projectid: projectid,
@@ -490,13 +525,13 @@
                  radioClass: 'iradio_square-blue',
                  increaseArea: '20%' // optional
              });
+             //update task finish then fresh
+             var freshtask = "#task" + taskid + " a";
+             $(freshtask).click();
              $("#updatetask-modal").modal('hide');
              console.log(resp);
          });
      }
-     //update task finish then fresh
-     var freshtask = "#task" + taskid + " a";
-     $(freshtask).click();
 
  });
 
@@ -650,6 +685,10 @@
      var userid = $(".create-addmember").data("userid");
      var username = $("#create-memberinput").val();
      //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-     $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     if ($("#newteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
+         $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
+     } else {
+         $("#create-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
+     }
      $("#create-memberinput").val("");
  });
