@@ -729,5 +729,11 @@
          }).then(function(resp) {
              console.log(resp);
          });
+     } else {
+         if ($("#newteam-modal .suggesstion").length > 0) {
+             $("#newteam-modal .suggesstion").remove();
+         }
+         $("#teamtitle").parent().append("<div class='suggesstion'>*团队名称不能为空</div>");
+         return false;
      }
  });
