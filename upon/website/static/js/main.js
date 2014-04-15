@@ -701,3 +701,11 @@
  $(document).on("click", "#manageteam-modal .glyphicon-trash", function() {
      $(this).parent().remove();
  });
+
+ $("#delete-project-btn").click(function() {
+     $.post("/deleteproject/", {
+         projectid: window.projectid
+     }).then(function(resp) {
+         window.location.reload();
+     });
+ })
