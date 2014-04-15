@@ -29,5 +29,6 @@ urlpatterns = patterns('',
     url(r'^getconfirmnum/(?P<projectid>\d+)/$',views.fetchConfirmNum),
     url(r'^searchperson/$',views.searchPerson),
     url(r'^updatepersonalinfo/$',views.updatePersonalInfo),
+    url(r'^reverttask/$',views.revertTask),
 
 )

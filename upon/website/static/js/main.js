@@ -284,47 +284,6 @@
      $("#deleteproject-modal div.modal-body span b").text(projectname);
      $("#deleteproject-modal").modal("show");
  });
- // //diagram
- // var finishdata = {
- //     labels: ["January", "February", "March", "April", "May", "June", "July"],
- //     datasets: [{
- //         fillColor: "rgba(220,220,220,0.5)",
- //         strokeColor: "rgba(220,220,220,1)",
- //         pointColor: "rgba(220,220,220,1)",
- //         pointStrokeColor: "#fff",
- //         data: [65, 59, 90, 81, 56, 55, 40]
- //     }, {
- //         fillColor: "rgba(151,187,205,0.5)",
- //         strokeColor: "rgba(151,187,205,1)",
- //         pointColor: "rgba(151,187,205,1)",
- //         pointStrokeColor: "#fff",
- //         data: [28, 48, 40, 19, 96, 27, 100]
- //     }]
- // };
- // var ctx = document.getElementById("newandfinish").getContext("2d");
- // var myNewChart = new Chart(ctx).Line(finishdata);
-
- // var workdata = [{
- //         value: 30,
- //         color: "#F7464A"
- //     }, {
- //         value: 50,
- //         color: "#E2EAE9"
- //     }, {
- //         value: 100,
- //         color: "#D4CCC5"
- //     }, {
- //         value: 40,
- //         color: "#949FB1"
- //     }, {
- //         value: 120,
- //         color: "#4D5360"
- //     }
-
- // ];
-
- // var workctx = document.getElementById("workcontrast").getContext("2d");
- // var workChart = new Chart(workctx).Doughnut(workdata);
 
  $(document).on("click", "#addtask-submit-btn", function(e) {
      var taskid = $(e.target).data("taskid");
@@ -696,7 +655,7 @@
      }).then(function(resp) {
          window.location.reload();
      });
- })
+ });
 
  $("#memberpop").click(function() {
      $("#memberbox-modal").modal("show")

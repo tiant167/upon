@@ -77,8 +77,30 @@
                     <li><a href="#" class="addteambtn">创建团队</a></li>
                 </ul>
             </div>
+
+            {%if currentTeam.member.all.length > 3%}
+            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{currentTeam.member.0.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{currentTeam.member.0.email}}"/>
+            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{currentTeam.member.1.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{currentTeam.member.1.email}}"/>
+            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{currentTeam.member.2.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{currentTeam.member.2.email}}"/>
+            <a href="#" id="memberpop" style="font-size: 20px">...</a>
+            {%else%}
+            {%for member in currentTeam.member.all%}
+            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{member.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{member.email}}"/>
+            {%endfor%}
+            {%endif%}
+
+
             <h4>项目</h4>
             <div id='project-list' class="list-group">
+                {%for project in projects%}
+                {%if project.id == currentProject.id%}
+                <a href="/{{currentTeam.id}}/{{project.id}}" class="list-group-item active">
+                  {{project.name}}<span class='glyphicon glyphicon-chevron-right'></span>
+              </a>
+              {%else%}
+              <a href="/{{currentTeam.id}}/{{project.id}}" class="list-group-item">{{project.name}}</a>
+              {%endif%}
+              {%endfor%}
               <a href="#" class="list-group-item"><span class='glyphicon glyphicon-plus-sign'></span>创建项目</a>
           </div>
       </section>
@@ -232,6 +254,23 @@
     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
     <button type="button" class="btn btn-primary" id="updatePersonalInfo">确定</button>
 </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="memberbox-modal" tabindex="-1" role="dialog" aria-labelledby="signoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="signoutModalLabel">团队成员</h4>
+    </div>
+    <div class="modal-body">
+        {%for member in currentTeam.member.all%}
+      <img class="img-thumbnail bigphoto todoer" src="/avatar/{{member.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{member.email}}"/>
+      {%endfor%}
+  </div>
+  
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
