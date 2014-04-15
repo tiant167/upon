@@ -25,13 +25,6 @@ $('#create-memberinput').autocomplete({
     //$(".memberbox").append('<p class="form-control-static teammember" data-userid="' + suggestion.data + '">' + suggestion.value + '<span class="glyphicon glyphicon-trash"></span></p>');
 });
 
-$('#update-memberinput').autocomplete({
-    serviceUrl: '/searchperson/',
-    onSelect: function(suggestion) {
-        $(".update-addmember").data("userid", suggestion.data);
-    }
-});
-
 $(".create-addmember").click(function() {
     var userid = $(".create-addmember").data("userid");
     var username = $("#create-memberinput").val();
@@ -45,22 +38,6 @@ $(".create-addmember").click(function() {
         $("#create-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
     }
     $("#create-memberinput").val("");
-});
-
-
-$(".update-addmember").click(function() {
-    var userid = $(".update-addmember").data("userid");
-    var username = $("#update-memberinput").val();
-    //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-    if ($("#manageteam-modal .suggesstion").length > 0) {
-        $("#manageteam-modal .suggesstion").remove();
-    }
-    if ($("#manageteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
-        $("#manageteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
-    } else {
-        $("#update-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
-    }
-    $("#update-memberinput").val("");
 });
 
 $(document).on("click", "#addmember", function() {
