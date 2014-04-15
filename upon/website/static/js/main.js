@@ -745,3 +745,24 @@
          return false;
      }
  });
+
+ $(document).on("click", "#manageteam", function() {
+     var teamid = window.teamid;
+     var memberid = "";
+     var teamhtml = $("#manageteam-modal .teammember");
+     var teamarray = new Array(teamhtml.length);
+     $.each($('#manageteam-modal .teammember'), function(i, item) {
+         teamarray[i] = $(item).data("userid");
+     });
+     memberid = teamarray.join(",");
+     $.post("/updateteam/", {
+         teamid: teamid,
+         member: memberid
+     }).then(function(resp) {
+         window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+     });
+ });
+
+ $(document).on("click", "#manageteam-modal .glyphicon-trash", function() {
+     $(this).parent().remove();
+ });
