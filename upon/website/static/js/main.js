@@ -295,6 +295,7 @@
      $("#signout-modal").modal('show');
  });
  $(".manageteambtn").click(function() {
+     $("#manageteam-modal .suggesstion").remove();
      $("#manageteam-modal").modal('show');
  });
  $(".deleteprojectbtn").click(function() {
@@ -705,6 +706,9 @@
      var userid = $(".update-addmember").data("userid");
      var username = $("#update-memberinput").val();
      //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
+     if ($("#manageteam-modal .suggesstion").length > 0) {
+         $("#manageteam-modal .suggesstion").remove();
+     }
      if ($("#manageteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
          $("#manageteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
      } else {
