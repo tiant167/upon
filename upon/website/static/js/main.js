@@ -252,7 +252,17 @@
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
-     $("#task-group-select option[value='2']").attr("selected", true);
+     switch ($(e.target).data("type")) {
+         case "currentWeekTask":
+             $("#task-group-select option[value='2']").attr("selected", true);
+             break;
+         case "nextWeekTask":
+             $("#task-group-select option[value='1']").attr("selected", true);
+             break;
+         case "futureTask":
+             $("#task-group-select option[value='0']").attr("selected", true);
+             break;
+     }
      $("#task-priority-select option[value='2']").attr("selected", true);
      $('#task-todoer-select').selectedIndex = -1;
 
