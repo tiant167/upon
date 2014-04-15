@@ -1,19 +1,3 @@
- //ichecker
-
- $(document).ready(function() {
-     $('.finishbox').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square-blue',
-         increaseArea: '20%' // optional
-     });
-     $('.confirmbox').iCheck({
-         checkboxClass: 'icheckbox_square-yellow',
-         radioClass: 'iradio_square-yellow',
-         increaseArea: '20%' // optional
-     });
-
- });
-
  $('#rightcolumn .close').click(function() {
      $('#stat').collapse('show');
      $('#taskinfo').collapse('hide');
@@ -280,10 +264,7 @@
      $("#updatetask-modal .suggesstion").remove();
      $("#updatetask-modal").modal('show');
  });
- $(".addteambtn").click(function() {
-     $("#newteam-modal .suggesstion").remove();
-     $("#newteam-modal").modal('show');
- });
+
  $(".addprojectbtn").click(function() {
      $("#newproject-modal .suggesstion").remove();
      $("#newproject-modal").modal('show');
@@ -674,36 +655,13 @@
  }
  setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次
 
- $('#create-memberinput').autocomplete({
-     serviceUrl: '/searchperson/',
-     onSelect: function(suggestion) {
-         $(".create-addmember").data("userid", suggestion.data);
-     }
-     //$(".memberbox").append('<p class="form-control-static teammember" data-userid="' + suggestion.data + '">' + suggestion.value + '<span class="glyphicon glyphicon-trash"></span></p>');
- });
-
+ //update team
  $('#update-memberinput').autocomplete({
      serviceUrl: '/searchperson/',
      onSelect: function(suggestion) {
          $(".update-addmember").data("userid", suggestion.data);
      }
  });
-
- $(".create-addmember").click(function() {
-     var userid = $(".create-addmember").data("userid");
-     var username = $("#create-memberinput").val();
-     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-     if ($("#newteam-modal .suggesstion").length > 0) {
-         $("#newteam-modal .suggesstion").remove();
-     }
-     if ($("#newteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
-         $("#newteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
-     } else {
-         $("#create-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
-     }
-     $("#create-memberinput").val("");
- });
-
 
  $(".update-addmember").click(function() {
      var userid = $(".update-addmember").data("userid");
