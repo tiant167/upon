@@ -679,7 +679,7 @@
          teamid: teamid,
          member: memberid
      }).then(function(resp) {
-         window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+         window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
      });
  });
 
