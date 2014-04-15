@@ -74,6 +74,8 @@ def main(request,teamid,projectid):
             currentTeam = teamList[0]
 
     projectList = Project.objects.filter(team=currentTeam)
+    if len(projectList) == 0:
+        return render(request,"upon/noproject.html",{'currentTeam':currentTeam,'teams':teamList})
     if projectid == None:
         currentProject = projectList[0]
     else:

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!--ichecker-->
+    <link href="{{STATIC_URL}}css/blue.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/yellow.css" rel="stylesheet">
+    <link rel='stylesheet' href='{{STATIC_URL}}autocomplete/styles.css' >
+    <link rel='stylesheet' href='{{STATIC_URL}}css/main.css' >
+  </head>
+
+  <body>
+    <header>
+        <div class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Upon团队管理</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id='headernav'>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">团队管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="addteambtn">创建团队</a></li>
+                  <li><a href="#" class="manageteambtn">管理团队成员</a></li>
+              </ul>
+          </li>
+          <li><a href="#" class="addprojectbtn">创建项目</a></li>
+
+              <li class="pull-right" id="banner-icon">
+                <a href="#" class="modifypersoninfobtn"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="/logout/"><span class="glyphicon glyphicon-log-out"></span></a>
+            </li>
+             <li class="dropdown pull-right" id="personal-info">
+                <a href="#"><img src="/avatar/{{user.id}}/" class="smallphoto">{{user.email}}</a>
+            </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </header>
+    <nav id='leftcolumn'>
+
+       <!--  <section>
+                <img src='{{STATIC_URL}}image/head.png' alt='个人头像' class='img-thumbnail bigphoto'>
+                <a href="#" class='username'>{{user.email}}</a>
+            </section> -->
+            <section>
+                <!-- <span>团队</span> -->
+                <h4>我的团队</h4>
+                <div class="btn-group">
+                  <button type="button" id='teamselect' class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    {{currentTeam.name}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {%for team in teams%}
+                    <li><a href="/{{team.id}}/">{{team.name}}</a></li>
+                    {%endfor%}
+                    <li class="divider"></li>
+                    <li><a href="#" class="addteambtn">创建团队</a></li>
+                </ul>
+            </div>
+            <h4>项目</h4>
+            <div id='project-list' class="list-group">
+              <a href="#" class="list-group-item"><span class='glyphicon glyphicon-plus-sign'></span>创建项目</a>
+          </div>
+      </section>
+    </nav>
+   <article id='middlecolumn'>
+      <div id="p-tBtnAbove" style="width:200px;margin-left: 280px;">团队 <b>{{currentTeam.name}}</b> 还没有创建任何项目</div>
+      <div id="p-tBtn"><a href="#" class="addprojectbtn"><button type="button" class="btn btn-primary btn-lg" id="btn-creatTeam">创建项目</button></a>
+    </article>
+
+
+<div class="modal fade" id="newteam-modal" tabindex="-1" role="dialog" aria-labelledby="newteamModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newteamModalLabel">新建团队</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">团队名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="teamtitle" placeholder="起一个响亮的名字是成功的一半">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">添加成员</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+            <input type="text" class="form-control"  placeholder="输入邮箱进行搜索" id="create-memberinput">
+            <span class="input-group-btn">
+                <button class="btn btn-default create-addmember" type="button">添加</button>
+            </span>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">成员</label>
+        <div class="col-sm-10 memberbox">
+          <p class="form-control-static teammember" data-userid="{{user.id}}">{{user.username}} - {{user.email}}<span class="glyphicon glyphicon-trash"></span></p>
+      </div>
+  </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary" id="addmember">创建</button>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="newproject-modal" tabindex="-1" role="dialog" aria-labelledby="newprojectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newprojectModalLabel">新建项目</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">项目名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="起一个响亮的名字是成功的一半">
+          </div>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary" id="add-project-submitbtn">创建</button>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="manageteam-modal" tabindex="-1" role="dialog" aria-labelledby="manageteamModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="manageteamModalLabel">管理团队</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">团队名称</label>
+                <p class=" col-sm-10 form-control-static">{{currentTeam.name}}</p>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">添加成员</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control"  placeholder="输入邮箱进行搜索" id="update-memberinput">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default update-addmember" type="button">添加</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">成员</label>
+                <div class="col-sm-10 memberbox">
+                    {%for item in currentTeam.member.all%}
+                  <p class="form-control-static teammember" data-userid="{{item.id}}">{{item.username}} - {{item.email}}<span class="glyphicon glyphicon-trash"></span></p>
+                  {%endfor%}
+              </div>
+          </div>
+
+      </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary">确定</button>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modifypersoninfo-modal" tabindex="-1" role="dialog" aria-labelledby="modifypersoninfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="modifypersoninfoModalLabel">个人信息修改</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">用户名ID</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="nametitle" placeholder="起一个响亮的名字是成功的一半">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="emailtitle" placeholder="输入个人邮箱">
+            </div>
+          </div>
+      
+      <div class="form-group">
+            <label class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="phonetitle" placeholder="输入手机号码">
+            </div>
+          </div>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+
+    //global varible
+    userid="{{user.id}}"
+    username = "{{user.email}}"
+    projectid = "{{currentProject.id}}"
+    teamid = "{{currentTeam.id}}"
+    </script>
+  
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}autocomplete/jquery.autocomplete.js"></script>
+    <script src="{{STATIC_URL}}js/icheck.js"></script>
+    <script src="{{STATIC_URL}}js/Chart.min.js"></script>
+    <script src="{{STATIC_URL}}js/common.js"></script>
+  </body>
+  </html>

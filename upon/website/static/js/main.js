@@ -265,38 +265,19 @@
      $("#updatetask-modal").modal('show');
  });
 
- $(".addprojectbtn").click(function() {
-     $("#newproject-modal .suggesstion").remove();
-     $("#newproject-modal").modal('show');
- });
+
  $(".modifypersoninfobtn").click(function() {
      $("#modifypersoninfo-modal").modal('show');
  });
  $(".signoutbtn").click(function() {
      $("#signout-modal").modal('show');
  });
- $(".manageteambtn").click(function() {
-     $("#manageteam-modal .suggesstion").remove();
-     $("#manageteam-modal").modal('show');
- });
+
  $(".deleteprojectbtn").click(function() {
      var projectname = $("#project-list a.active").text();
      $("#deleteproject-modal div.modal-body span b").text(projectname);
      $("#deleteproject-modal").modal("show");
  });
-
- $("#project-list > a").click(function() {
-     var all = $(this).parent().children().length - 1;
-     var parrent = $(this).index();
-     if (parrent < all) {
-         $(this).parent().children(":lt(" + all + ")").removeClass("active").children().remove();
-         $(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
-     } else {
-         $("#newproject-modal").modal('show');
-     }
- });
-
-
  //diagram
  var finishdata = {
      labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -654,26 +635,3 @@
      });
  }
  setInterval('freshConfirmNum()', 3000); //指定1秒刷新一次
-
- //update team
- $('#update-memberinput').autocomplete({
-     serviceUrl: '/searchperson/',
-     onSelect: function(suggestion) {
-         $(".update-addmember").data("userid", suggestion.data);
-     }
- });
-
- $(".update-addmember").click(function() {
-     var userid = $(".update-addmember").data("userid");
-     var username = $("#update-memberinput").val();
-     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-     if ($("#manageteam-modal .suggesstion").length > 0) {
-         $("#manageteam-modal .suggesstion").remove();
-     }
-     if ($("#manageteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
-         $("#manageteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
-     } else {
-         $("#update-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
-     }
-     $("#update-memberinput").val("");
- });
