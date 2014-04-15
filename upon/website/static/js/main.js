@@ -252,7 +252,7 @@
  $(document).on("click", ".addtaskbtn", function(e) {
 
      //init the add task modal
-     $('#task-title-input').val(e.target.previousElementSibling.value);
+     $('#task-title-input').val($(e.target).parent().parent().find("input").val());
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
