@@ -245,10 +245,10 @@
      $("#deletetask-modal").modal('show');
  });
 
- $(document).on("click", ".addtaskbtn", function() {
+ $(document).on("click", ".addtaskbtn", function(e) {
 
      //init the add task modal
-     $('#task-title-input').val("");
+     $('#task-title-input').val(e.target.previousElementSibling.value);
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
