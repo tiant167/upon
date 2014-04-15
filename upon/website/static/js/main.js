@@ -692,3 +692,22 @@
      }
      $("#create-memberinput").val("");
  });
+
+ $(document).on("click", "#addmember", function() {
+     var teamname = $("#teamtitle").val();
+     var teamid = "";
+     var teamhtml = $(".teammember");
+     var teamarray = new Array(teamhtml.length);
+     $.each($('.teammember'), function(i, item) {
+         teamarray[i] = $(item).data("userid");
+     });
+     teamid = teamarray.join(",");
+     if (teamname != "") {
+         $.post("/addteam/", {
+             name: teamname,
+             member: teamid
+         }).then(function(resp) {
+             console.log(resp);
+         });
+     }
+ });
