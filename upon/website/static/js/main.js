@@ -700,6 +700,7 @@
      $("#create-memberinput").val("");
  });
 
+
  $(".update-addmember").click(function() {
      var userid = $(".update-addmember").data("userid");
      var username = $("#update-memberinput").val();
@@ -710,4 +711,23 @@
          $("#update-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
      }
      $("#update-memberinput").val("");
+ });
+
+ $(document).on("click", "#addmember", function() {
+     var teamname = $("#teamtitle").val();
+     var teamid = "";
+     var teamhtml = $(".teammember");
+     var teamarray = new Array(teamhtml.length);
+     $.each($('.teammember'), function(i, item) {
+         teamarray[i] = $(item).data("userid");
+     });
+     teamid = teamarray.join(",");
+     if (teamname != "") {
+         $.post("/addteam/", {
+             name: teamname,
+             member: teamid
+         }).then(function(resp) {
+             console.log(resp);
+         });
+     }
  });
