@@ -145,3 +145,9 @@ $("#updatePersonalInfo").click(function() {
         });
     }
 });
+
+// member box
+$("#memberpop").click(function() {
+    $("#memberbox-modal").modal("show");
+});
+$('.bigphoto').tooltip('hide');

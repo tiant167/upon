@@ -697,8 +697,3 @@
          window.location.reload();
      });
  })
-
- $("#memberpop").click(function() {
-     $("#memberbox-modal").modal("show")
- });
- $('.bigphoto').tooltip('hide');
