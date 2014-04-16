@@ -94,9 +94,11 @@
              }
 
              //when update task set the type
+             $("#updatetask-group-select").val(data.type);
              $("#updatetask-group-select option[value='" + data.type + "']").attr("selected", true);
 
              //when update task set the priority
+             $("#updatetask-priority-select").val(data.priority);
              $("#updatetask-priority-select option[value='" + data.priority + "']").attr("selected", true);
 
              //when update task set the todoer
