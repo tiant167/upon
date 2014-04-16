@@ -256,14 +256,21 @@
      $('#task-desc-textarea').val("");
      $('#task-deadline-input').val("");
      $('#task-starttime-input').val("");
+     //init task-group-select
+     $("#task-group-select option[value='0']").attr("selected", false);
+     $("#task-group-select option[value='1']").attr("selected", false);
+     $("#task-group-select option[value='2']").attr("selected", false);
      switch ($(e.target).data("type")) {
          case "currentWeekTask":
+             $("#task-group-select").val("2");
              $("#task-group-select option[value='2']").attr("selected", true);
              break;
          case "nextWeekTask":
+             $("#task-group-select").val("1");
              $("#task-group-select option[value='1']").attr("selected", true);
              break;
          case "futureTask":
+             $("#task-group-select").val("0");
              $("#task-group-select option[value='0']").attr("selected", true);
              break;
      }
