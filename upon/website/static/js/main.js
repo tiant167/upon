@@ -140,7 +140,7 @@
              <img src='/static/image/head.png' class='smallphoto'>\
              <span class='comment-content'>" + content + "</span></div>";
              $('#commentfield').append(comments);
-             $('#comment-content').val() = "";
+             $('#comment-content').val("");
              console.log(resp);
          });
      }
