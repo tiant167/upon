@@ -377,7 +377,16 @@
                      whichweek = "#currentWeekTask .panel-body";
                      break;
              }
+
              $(whichweek).html(resp);
+             var parrentdate = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
+             if (new Date(deadline).getFullYear() == new Date(parrentdate).getFullYear()) {
+                 if (new Date(deadline).getMonth() == new Date(parrentdate).getMonth()) {
+                     if (new Date(deadline).getDate() - new Date(parrentdate).getDate() == 1) {
+                         $(whichweek).find(".deadline").attr("style", "color:red");
+                     }
+                 };
+             };
              $('.finishbox').iCheck({
                  checkboxClass: 'icheckbox_square-blue',
                  radioClass: 'iradio_square-blue',
