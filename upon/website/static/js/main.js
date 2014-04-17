@@ -383,6 +383,12 @@
                  radioClass: 'iradio_square-blue',
                  increaseArea: '20%' // optional
              });
+
+             var parrentdate = new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate();
+             if(new Date(parrentdate) - new Date(deadline) == 86400000) {
+                $(resp).find(".deadline").addClass("style='color:red'");
+             }
+
              $("#task-modal").modal('hide');
              console.log(resp);
          });
