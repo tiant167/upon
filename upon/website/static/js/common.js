@@ -23,7 +23,7 @@ $(document).ready(function() {
 });
 
 //add Project
-$(".addprojectbtn").click(function() {
+$(document).on("click", ".addprojectbtn", function() {
     $("#newproject-modal .suggesstion").remove();
     $("#newproject-modal").modal('show');
 });
@@ -34,6 +34,7 @@ $("#project-list > a").click(function() {
         $(this).parent().children(":lt(" + all + ")").removeClass("active").children().remove();
         $(this).addClass("active").append('<span class="glyphicon glyphicon-chevron-right"></span>');
     } else {
+        $("#newproject-modal .suggesstion").remove();
         $("#newproject-modal").modal('show');
     }
 });
