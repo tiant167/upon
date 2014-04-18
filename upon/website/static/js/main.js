@@ -467,6 +467,18 @@
                      break;
              }
              $(whichweek).html(resp);
+             var parrentdate = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
+             $(whichweek).find('.deadline').each(function(i, item){
+                 var deadline = $(item).text();
+                 if (new Date(deadline).getFullYear() == new Date(parrentdate).getFullYear()) {
+                     if (new Date(deadline).getMonth() == new Date(parrentdate).getMonth()) {
+                         if (new Date(deadline).getDate() - new Date(parrentdate).getDate() == 1) {
+                             $(item).attr('style', 'color:red');
+                         }
+                     };
+                 };   
+             });
+             
              $('.finishbox').iCheck({
                  checkboxClass: 'icheckbox_square-blue',
                  radioClass: 'iradio_square-blue',
