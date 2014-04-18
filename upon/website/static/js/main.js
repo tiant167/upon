@@ -478,7 +478,7 @@
                      };
                  };   
              });
-             
+
              $('.finishbox').iCheck({
                  checkboxClass: 'icheckbox_square-blue',
                  radioClass: 'iradio_square-blue',
@@ -518,8 +518,9 @@
              $(deletetaskid).remove();
          }
          $("#deletetask-modal").modal('hide');
-         $('#stat').collapse('show');
-         $('#taskinfo').collapse('hide');
+         //$('#stat').collapse('show');
+         //$('#taskinfo').collapse('hide');
+         $('#taskinfo').removeClass("in").addClass("collapse");
          //window.location.reload(); //重新刷新页面
          console.log(resp);
          //delete
