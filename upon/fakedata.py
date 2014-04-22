@@ -10,11 +10,16 @@ user1 = User.objects.create_user(username=u"123@qq.com",email=u"杜肖请吃饭"
 user2 = User.objects.create_user(username=u"321@qq.com",email=u"Mike",password=u"321")
 Avatar.objects.create(user=user1,avatar="image/avatar/pole.jpg")
 Avatar.objects.create(user=user2,avatar="image/avatar/green.jpg")
-team1.member.add(user1)
-team2.member.add(user1)
-team1.member.add(user2)
-team2.member.add(user2)
+# team1.member.add(user1)
+# team2.member.add(user1)
+# team1.member.add(user2)
+# team2.member.add(user2)
 
+#ORM Redis
+team1.member.append(user1)
+team2.member.append(user1)
+team1.member.append(user2)
+team2.member.append(user2)
 
 project1 = Project.objects.create(name=u"广告模块",team=team1)
 project2 = Project.objects.create(name=u"推荐位模块",team=team1)
@@ -24,7 +29,8 @@ project4 = Project.objects.create(name=u"论坛开发",team=team2)
 project5 = Project.objects.create(name=u"管理后台开发",team=team2)
 
 task1 = Task.objects.create(name=u"广告模块第一广告位黑盒测试",project=project1,detail=u"针对第一广告位进行黑盒测试，保证各个逻辑分支准确无误",starter=user1,type=2,status=0)
-task1.todoer.add(user1)
+# task1.todoer.add(user1)
+task1.todoer.append(user1)
 task2 = Task.objects.create(name=u"广告随机性测试",project=project1,detail=u"随机性是否达标",starter=user1,type=2,status=0,priority=2)
 task2.todoer.add(user1)
 task3 = Task.objects.create(name=u"投放精准度测试",project=project1,detail=u"精准度测试",starter=user1,type=2,status=0,priority=2)
@@ -37,3 +43,4 @@ task6 = Task.objects.create(name=u"与渣浪洽谈合作",project=project1,detai
 task6.todoer.add(user2)
 task7 = Task.objects.create(name=u"收购人人网",project=project1,detail=u"收购人人网",starter=user1,type=2,status=0,priority=0)
 task7.todoer.add(user1)
+
