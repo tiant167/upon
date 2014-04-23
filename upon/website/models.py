@@ -4,7 +4,7 @@
 from redisco import models
 # Create your models here.
 class UserInfo(models.Model):
-    userid = models.IntegerField()
+    id=models.Attribute()
     username = models.Attribute()
     email = models.Attribute()
 
@@ -16,7 +16,7 @@ class Project(models.Model):
     name = models.Attribute(required=True)
     team = models.ReferenceField(Team)
 
-class Task(models.Model):
+class Task(models.Model):   
     name = models.Attribute(required=True)
     project = models.ReferenceField(Project)
     detail = models.Attribute()
