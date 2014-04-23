@@ -18,19 +18,19 @@
              //set priority
              var priority = 0;
              switch (data.priority) {
-                 case 0:
+                 case '0':
                      priority = "Critical";
                      $('.label').removeClass().addClass('label label-danger');
                      break;
-                 case 1:
+                 case '1':
                      priority = "Severe";
                      $('.label').removeClass().addClass('label label-warning');
                      break;
-                 case 2:
+                 case '2':
                      priority = "Major";
                      $('.label').removeClass().addClass('label label-primary');
                      break;
-                 case 3:
+                 case '3':
                      priority = "Minor";
                      $('.label').removeClass().addClass('label label-info');
                      break;
@@ -380,7 +380,7 @@
 
              $(whichweek).html(resp);
              var parrentdate = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
-             $(whichweek).find('.deadline').each(function(i, item){
+             $(whichweek).find('.deadline').each(function(i, item) {
                  var deadline = $(item).text();
                  if (new Date(deadline).getFullYear() == new Date(parrentdate).getFullYear()) {
                      if (new Date(deadline).getMonth() == new Date(parrentdate).getMonth()) {
@@ -388,7 +388,7 @@
                              $(item).attr('style', 'color:red');
                          }
                      };
-                 };   
+                 };
              });
 
              $('.finishbox').iCheck({
@@ -468,7 +468,7 @@
              }
              $(whichweek).html(resp);
              var parrentdate = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
-             $(whichweek).find('.deadline').each(function(i, item){
+             $(whichweek).find('.deadline').each(function(i, item) {
                  var deadline = $(item).text();
                  if (new Date(deadline).getFullYear() == new Date(parrentdate).getFullYear()) {
                      if (new Date(deadline).getMonth() == new Date(parrentdate).getMonth()) {
@@ -476,7 +476,7 @@
                              $(item).attr('style', 'color:red');
                          }
                      };
-                 };   
+                 };
              });
 
              $('.finishbox').iCheck({

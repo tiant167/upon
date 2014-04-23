@@ -8,8 +8,8 @@ team1.save()
 team2 = Team(id='2',name=u"论坛开发团队")
 team2.save()
 
-user1 = User.objects.create_user(username=u"123@162.com",email=u"杜肖请吃饭",password=u"123")
-user2 = User.objects.create_user(username=u"321@162.com",email=u"Mike",password=u"321")
+user1 = User.objects.create_user(username=u"123@baidu.com",email=u"杜肖请吃饭",password=u"123")
+user2 = User.objects.create_user(username=u"321@baidu.com",email=u"Mike",password=u"321")
 
 user1 = UserInfo(id=str(user1.id),username=user1.email,email=user1.username)
 user1.save()
@@ -45,33 +45,33 @@ project4.save()
 project5 = Project(name=u"管理后台开发",team=team2)
 project5.save()
 
-task1 = Task(name=u"广告模块第一广告位黑盒测试",project=project1,detail=u"针对第一广告位进行黑盒测试，保证各个逻辑分支准确无误",starter=user1,type=2,status=0)
+task1 = Task(name=u"广告模块第一广告位黑盒测试",project=project1,detail=u"针对第一广告位进行黑盒测试，保证各个逻辑分支准确无误",starter=user1,type='2',status='0')
 task1.todoer.append(user1)
 task1.save()
 
-task2 = Task(name=u"广告随机性测试",project=project1,detail=u"随机性是否达标",starter=user1,type=2,status=0,priority=2)
+task2 = Task(name=u"广告随机性测试",project=project1,detail=u"随机性是否达标",starter=user1,type='2',status='0',priority='2')
 task2.todoer.append(user1)
 task2.save()
 
-task3 = Task(name=u"投放精准度测试",project=project1,detail=u"精准度测试",starter=user1,type=2,status=0,priority=2)
+task3 = Task(name=u"投放精准度测试",project=project1,detail=u"精准度测试",starter=user1,type='2',status='0',priority='2')
 task3.todoer.append(user2)
 task3.save()
 
-task4 = Task(name=u"完善文档",project=project1,detail=u"初步完成各个测试文档",starter=user1,type=2,status=0,priority=3)
+task4 = Task(name=u"完善文档",project=project1,detail=u"初步完成各个测试文档",starter=user1,type='2',status='0',priority='3')
 task4.todoer.append(user1)
 task4.save()
 
-task5 = Task(name=u"面试一个候选人",project=project1,detail=u"宁缺毋滥",starter=user1,type=2,status=0,priority=3)
+task5 = Task(name=u"面试一个候选人",project=project1,detail=u"宁缺毋滥",starter=user1,type='2',status='0',priority='3')
 task5.todoer.append(user2)
 task5.save()
 
-task6 = Task(name=u"与渣浪洽谈合作",project=project1,detail=u"渣浪怎么样？有没有合作必要",starter=user1,type=2,status=0,priority=1)
+task6 = Task(name=u"与渣浪洽谈合作",project=project1,detail=u"渣浪怎么样？有没有合作必要",starter=user1,type='2',status='0',priority='1')
 task6.todoer.append(user2)
 task6.save()
 
-task7 = Task(name=u"收购人人网",project=project1,detail=u"收购人人网",starter=user1,type=2,status=0,priority=0)
+task7 = Task(name=u"收购人人网",project=project1,detail=u"收购人人网",starter=user1,type='2',status='0',priority='0')
 task7.todoer.append(user1)
 task7.save()
 
-comment1 = Comment(author=user1,content=u"good thing",task=task7)
+comment1 = Comment(author=user2,content=u"good thing",task=task7)
 comment1.save()

@@ -4,7 +4,7 @@
 <h5 class='Critical'>Critical</h5>
 {%for task in taskList.Critical%}
 <div class='task' id="task{{task.id}}">
-    {%if task.type == 2%}
+    {%if task.type == '2'%}
     <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
     {%endif%}
     <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
@@ -19,7 +19,7 @@
 <h5 class='Severe'>Severe</h5>
 {%for task in taskList.Severe%}
 <div class='task' id="task{{task.id}}">
-    {%if task.type == 2%}
+    {%if task.type == '2'%}
     <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
     {%endif%}
     <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
@@ -34,7 +34,7 @@
 <h5 class="Major">Major</h5>
 {%for task in taskList.Major%}
 <div class='task' id="task{{task.id}}">
-    {%if task.type == 2%}
+    {%if task.type == '2'%}
     <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
     {%endif%}
     <span class='tasktitle' ><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
@@ -49,7 +49,7 @@
 <h5 class="Minor">Minor</h5>
 {%for task in taskList.Minor%}
 <div class='task' id="task{{task.id}}">
-    {%if task.type == 2%}
+    {%if task.type == '2'%}
     <input type='checkbox' class='finishbox' data-taskid="{{task.id}}"/>
     {%endif%}
     <span class='tasktitle'><a href='#'  data-taskid={{task.id}}>{{task.name}}</a></span>
