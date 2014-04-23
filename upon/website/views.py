@@ -90,8 +90,15 @@ def main(request,teamid,projectid):
         if user not in currentProject.team.member:
             currentProject = projectList[0]
 
-    taskList = Task.objects.filter(project_id=currentProject.id).exclude(status=1).exclude(status=3).exclude(type=3) #except rubbishbin task
-    taskField = TaskField(taskList)
+    taskList = Task.objects.filter(project_id=currentProject.id).exclude(type='3') #except rubbishbin task
+    finalTaskList = []
+    for tmpTask in taskList:
+        if tmpTask.status == '1' or tmpTask == '3':
+            continue
+        else:
+            finalTaskList.append(tmpTask)
+
+    taskField = TaskField(finalTaskList)
     taskField.judgePriority()
 
     return render(request,'upon/main.html',{
@@ -216,8 +223,8 @@ def addTask(request):
                     task.priority = priority
                     task.type = type
                     task.status = status
-                    task.todoer.clear()
-                    
+                    # task.todoer.clear()
+                    del task.todoer[:]
                 else:
                     return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             
@@ -293,7 +300,8 @@ def updateTeam(request):
                 memberList = member.split(",")
                 user = UserInfo.objects.get_by_id(request.user.id)
                 if len(memberList) > 0 and user in team.member:
-                    team.member.clear()
+                    # team.member.clear()
+                    del team.member[:]
                 else:
                     return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
                 for uid in memberList:
@@ -380,7 +388,7 @@ def fetchMyTask(request,projectid):
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
         if user in project.team.member:
-            taskList = Task.objects.filter(project_id=project.id,todoer=user,status=0).exclude(type=3)
+            taskList = Task.objects.filter(project_id=project.id,todoer=user,status='0').exclude(type='3')
             taskField = TaskField(taskList)
             taskField.judgePriority()
             resultList = {
@@ -402,7 +410,7 @@ def fetchConfirmTask(request,projectid):
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
         if user in project.team.member:
-            taskList = Task.objects.filter(project_id=project.id,starter_id=user.id,status=2)
+            taskList = Task.objects.filter(project_id=project.id,starter_id=user.id,status='2')
             return render(request,"upon/confirm.html",{'taskList':taskList})
         else:
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
@@ -531,9 +539,15 @@ def updatePersonalInfo(request):
         
 ########################helper function##########################
 def fetchTaskListHelper(project,type):
-    tasks = Task.objects.filter(project_id=project.id,type=type).exclude(status=1).exclude(status=3)
+    tasks = Task.objects.filter(project_id=project.id,type=type)
+    finalTaskList = []
+    for tmpTask in tasks:
+        if tmpTask.status == '1' or tmpTask.status == '3':
+            continue;
+        else:
+            finalTaskList.append(tmpTask)
     taskList = {'type':type,'Critical':[],'Severe':[],'Major':[],'Minor':[],'Finished':[]}
-    for task  in tasks:
+    for task  in finalTaskList:
         if task.type == '2' and task.status == '2':
             taskList['Finished'].append(task)
             continue
