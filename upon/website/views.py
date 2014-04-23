@@ -528,9 +528,10 @@ def updatePersonalInfo(request):
         if username:
             request.user.email = username
             request.user.save()
-            userinfo = UserInfo.objects.get_by_id(request.user.id)
-            userInfo.username = username
-            userinfo.save()
+            # 明天解
+            # userinfo = UserInfo.objects.get_by_id(request.user.id)
+            # userinfo.username = username
+            # userinfo.save()
             return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
