@@ -2,13 +2,15 @@
 # from django.db import models
 #change ORM with redis
 from redisco import models
-
-from django.contrib.auth.models import User
 # Create your models here.
+class UserInfo(models.Model):
+    userid = models.IntegerField()
+    username = models.Attribute()
+    email = models.Attribute()
 
 class Team(models.Model):
     name = models.Attribute(required=True)
-    member = models.ListField(User)
+    member = models.ListField(UserInfo)
 
 class Project(models.Model):
     name = models.Attribute(required=True)
@@ -16,10 +18,10 @@ class Project(models.Model):
 
 class Task(models.Model):
     name = models.Attribute(required=True)
-    project = models.ReferenceField(Team)
+    project = models.ReferenceField(Project)
     detail = models.Attribute()
-    starter = models.ReferenceField(User)
-    todoer = models.ListField(User)
+    starter = models.ReferenceField(UserInfo)
+    todoer = models.ListField(UserInfo)
     deadline = models.DateField()
     starttime = models.DateField()
     priority = models.IntegerField(default=2) #优先级 0-Critical 1-Severe 2-Major   3-Minor
@@ -28,17 +30,17 @@ class Task(models.Model):
     createtime = models.DateField(auto_now_add=True)
 
 class Log(models.Model):
-    author = models.ReferenceField(User)
+    author = models.ReferenceField(UserInfo)
     action = models.Attribute()
     createtime = models.DateField(auto_now_add=True)
     task = models.ReferenceField(Task)
 
 class Comment(models.Model):
-    author = models.ReferenceField(User)
+    author = models.ReferenceField(UserInfo)
     content = models.Attribute()
     createtime = models.DateField(auto_now_add=True)
     task = models.ReferenceField(Task)
 
 class Avatar(models.Model):
-    user = models.ReferenceField(User)
+    user = models.ReferenceField(UserInfo)
     avatar = models.Attribute()
