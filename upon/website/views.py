@@ -7,7 +7,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 import json,datetime
 from website.models import *
-from django.db.models import Q
 # Create your views here.
 
 #attention to all
@@ -100,10 +99,13 @@ def main(request,teamid,projectid):
 
     taskField = TaskField(finalTaskList)
     taskField.judgePriority()
-
+    members = []
+    for memberid in currentTeam.member:
+        members.append({"username":UserInfo.objects.get_by_id(memberid).username,"id":memberid})
     return render(request,'upon/main.html',{
         'user':request.user,
         'teams':teamList,
+        'members':members,
         'projects':projectList,
         'currentTeam':currentTeam,
         'currentProject':currentProject,
@@ -135,12 +137,18 @@ def getTaskDetail(request,taskid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'500'}))
         if checkUserAndTask(user,taskDetail):
-            todoerids = ([{'userid':item.id,'username':item.username} for item in taskDetail.todoer])
+            todoerids = []
+            for item in taskDetail.todoer:
+                tmpUser = UserInfo.objetcs.get_by_id(item)
+                todoerids.append({'userid':tmpUser.id,'username':tmpUser.username})
             # Comment.objects.create(author=request.user,content=u"这个本周五之前给我答复",task=taskDetail)
             comments = Comment.objects.filter(task_id=taskDetail.id)
             commentsList = []
             if comments:
-                commentsList = ([{'commentid':item.id,'authorid':item.author.id,'authorName':item.author.username,'content':item.content,'createtime':trasferDatetimeToString(item.createtime)} for item in comments])       
+                for item in comments:
+                    authorid = item.author_id
+                    author = UserInfo.objects.get_by_id(authorid)
+                    commentsList.append({'commentid':item.id,'authorid':author.id,'authorName':author.username,'content':item.content,'createtime':trasferDatetimeToString(item.createtime)})
             result = {
                 'error_code':'0',
                 'id':taskDetail.id,
@@ -231,7 +239,7 @@ def addTask(request):
             if todoers:
                 todoers = todoers.split(',')
                 for todoer in todoers:
-                    task.todoer.append(UserInfo.objects.get_by_id(todoer))
+                    task.todoer.append(todoer)
             feedback = task.save()
             if feedback:   
                 if type != '3':
@@ -278,8 +286,7 @@ def addTeam(request):
             memberList = member.split(",")
             try:
                 for uid in memberList:
-                    user = UserInfo.objects.get_by_id(uid)
-                    team.member.append(user)
+                    team.member.append(uid)
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             team.save()
@@ -305,8 +312,7 @@ def updateTeam(request):
                 else:
                     return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
                 for uid in memberList:
-                    user = UserIndo.objects.get_by_id(uid)
-                    team.member.append(user)
+                    team.member.append(uid)
                 team.save()
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
@@ -369,7 +375,7 @@ def deleteProject(request):
                 project = Project.objects.get_by_id(projectid)
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-            if request.user in project.team.member:
+            if request.user.id in project.team.member:
                 project.delete()
                 return HttpResponse(json.dumps({'error_code':'0'}))
             else:
@@ -387,7 +393,7 @@ def fetchMyTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
-        if user in project.team.member:
+        if user.id in project.team.member:
             taskList = Task.objects.filter(project_id=project.id,todoer=user,status='0').exclude(type='3')
             taskField = TaskField(taskList)
             taskField.judgePriority()
