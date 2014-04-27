@@ -73,7 +73,7 @@ def main(request,teamid,projectid):
             currentTeam = Team.objects.get_by_id(teamid)
         except ObjectDoesNotExist:
             currentTeam = teamList[0]
-        if user  not in currentTeam.member:
+        if user.id  not in currentTeam.member:
             currentTeam = teamList[0]
 
     projectList = Project.objects.filter(team_id=currentTeam.id)
@@ -382,7 +382,7 @@ def deleteProject(request):
                 project = Project.objects.get_by_id(projectid)
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-            if request.user.id in project.team.member:
+            if str(request.user.id) in project.team.member:
                 project.delete()
                 return HttpResponse(json.dumps({'error_code':'0'}))
             else:
@@ -541,10 +541,9 @@ def updatePersonalInfo(request):
         if username:
             request.user.email = username
             request.user.save()
-            # 明天解
-            # userinfo = UserInfo.objects.get_by_id(request.user.id)
-            # userinfo.username = username
-            # userinfo.save()
+            userinfo = UserInfo.objects.get_by_id(request.user.id)
+            userinfo.username = username
+            userinfo.save()
             return HttpResponse(json.dumps({'error_code':'0','error_message':'success'}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
