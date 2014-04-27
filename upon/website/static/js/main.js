@@ -112,10 +112,10 @@
              //set comments
              $('#commentfield').empty();
              $.each(data.comments, function(i, item) {
-                 var innerhtml = $("<div class='comment'><img class='smallphoto' src='/avatar/"+item.authorid+"/'><span class='comment-content'>" + item.content + "</span></div>");
+                 var innerhtml = $("<div class='comment'><img class='smallphoto' src='/avatar/"+item.authorid+"/'><span class='comment-content' style='margin:0 5px'>" + item.content + "</span></div>");
                  $('#commentfield').append(innerhtml);
                  if (window.userid == item.authorid) {
-                     $('.comment').addClass('mycomment');
+                     $('.comment').last().addClass('mycomment');
                  }
              });
 
@@ -140,7 +140,7 @@
              //append a comment to the comment box
              var comments = "<div class='comment mycomment'>\
              <img src='/avatar/"+window.userid+"/' class='smallphoto'>\
-             <span class='comment-content'>" + content + "</span></div>";
+             <span class='comment-content' style='margin:0 5px'>" + content + "</span></div>";
              $('#commentfield').append(comments);
              $('#comment-content').val("");
              console.log(resp);
