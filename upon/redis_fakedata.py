@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 from django.contrib.auth.models import User
 
 from website.models import *
@@ -8,8 +7,8 @@ team1.save()
 team2 = Team(id='2',name=u"论坛开发团队")
 team2.save()
 
-user1 = User.objects.create_user(username=u"123@888.com",email=u"杜肖请吃饭",password=u"123")
-user2 = User.objects.create_user(username=u"321@333.com",email=u"Mike",password=u"321")
+user1 = User.objects.create_user(username=u"123@999.com",email=u"杜肖请吃饭",password=u"123")
+user2 = User.objects.create_user(username=u"321@999.com",email=u"Mike",password=u"321")
 
 user1 = UserInfo(id=str(user1.id),username=user1.email,email=user1.username)
 user1.save()

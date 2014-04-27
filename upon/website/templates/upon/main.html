@@ -105,8 +105,8 @@
             <img class="img-thumbnail bigphoto todoer" src="/avatar/{{members.2.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{members.2.username}}"/>
             <a href="#" id="memberpop" style="font-size: 20px">...</a>
             {%else%}
-            {%for member in members%}
-            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{member.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{member.username}}"/>
+            {%for tmpUser in members%}
+            <img class="img-thumbnail bigphoto todoer" src="/avatar/{{tmpUser.id}}/" data-toggle='tooltip' data-placement='bottom' data-original-title="{{tmpUser.username}}"/>
             {%endfor%}
             {%endif%}
 

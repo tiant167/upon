@@ -61,7 +61,7 @@ def logout(request):
 @login_required
 def main(request,teamid,projectid):
     user = UserInfo.objects.get_by_id(request.user.id)
-    teamList =  Team.objects.filter(member=user)
+    teamList =  Team.objects.filter(member=user.id)
     if not teamList:
         # 这个是没有team的时候渲染的页面，现在还冒得
         # return render(request,'upon/noteam.html')
@@ -86,7 +86,7 @@ def main(request,teamid,projectid):
             currentProject = Project.objects.get_by_id(projectid)
         except ObjectDoesNotExist:
             currentProject = projectList[0]
-        if user not in currentProject.team.member:
+        if user.id not in currentProject.team.member:
             currentProject = projectList[0]
 
     taskList = Task.objects.filter(project_id=currentProject.id).exclude(type='3') #except rubbishbin task
@@ -101,7 +101,9 @@ def main(request,teamid,projectid):
     taskField.judgePriority()
     members = []
     for memberid in currentTeam.member:
-        members.append({"username":UserInfo.objects.get_by_id(memberid).username,"id":memberid})
+        tmpUser = UserInfo.objects.get_by_id(memberid)
+        members.append({u"username":tmpUser.username,u"email":tmpUser.email,u"id":memberid})
+
     return render(request,'upon/main.html',{
         'user':request.user,
         'teams':teamList,
@@ -112,7 +114,6 @@ def main(request,teamid,projectid):
         'currentWeekTasks':taskField.currentWeekTask,
         'nextWeekTasks':taskField.nextWeekTask,
         'futureTasks':taskField.futureTask,
-        'members':currentTeam.member,
         })
 
 @login_required
@@ -139,7 +140,7 @@ def getTaskDetail(request,taskid):
         if checkUserAndTask(user,taskDetail):
             todoerids = []
             for item in taskDetail.todoer:
-                tmpUser = UserInfo.objetcs.get_by_id(item)
+                tmpUser = UserInfo.objects.get_by_id(item)
                 todoerids.append({'userid':tmpUser.id,'username':tmpUser.username})
             # Comment.objects.create(author=request.user,content=u"这个本周五之前给我答复",task=taskDetail)
             comments = Comment.objects.filter(task_id=taskDetail.id)
@@ -210,6 +211,11 @@ def addTask(request):
             user = UserInfo.objects.get_by_id(request.user.id)
             if deadline == "":
                 deadline = None
+            else:
+                timeList = deadline.split("-") 
+                deadline = datetime.datetime(int(timeList[0]),int(timeList[1]),int(timeList[2]))
+                if deadline < datetime.datetime.today():
+                    deadline = datetime.datetime.today()
             if taskid =="0":
                 task = Task(
                     project=project,
@@ -239,8 +245,9 @@ def addTask(request):
             if todoers:
                 todoers = todoers.split(',')
                 for todoer in todoers:
-                    task.todoer.append(todoer)
+                    task.todoer.append(str(todoer))
             feedback = task.save()
+
             if feedback:   
                 if type != '3':
                     taskList = fetchTaskListHelper(project,type)
@@ -286,7 +293,7 @@ def addTeam(request):
             memberList = member.split(",")
             try:
                 for uid in memberList:
-                    team.member.append(uid)
+                    team.member.append(str(uid))
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
             team.save()
@@ -306,13 +313,13 @@ def updateTeam(request):
                 team = Team.objects.get_by_id(teamid)
                 memberList = member.split(",")
                 user = UserInfo.objects.get_by_id(request.user.id)
-                if len(memberList) > 0 and user in team.member:
+                if len(memberList) > 0 and user.id in team.member:
                     # team.member.clear()
                     del team.member[:]
                 else:
                     return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
                 for uid in memberList:
-                    team.member.append(uid)
+                    team.member.append(str(uid))
                 team.save()
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
@@ -394,7 +401,7 @@ def fetchMyTask(request,projectid):
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
         if user.id in project.team.member:
-            taskList = Task.objects.filter(project_id=project.id,todoer=user,status='0').exclude(type='3')
+            taskList = Task.objects.filter(project_id=project.id,todoer=user.id,status='0').exclude(type='3')
             taskField = TaskField(taskList)
             taskField.judgePriority()
             resultList = {
@@ -415,7 +422,7 @@ def fetchConfirmTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
-        if user in project.team.member:
+        if user.id in project.team.member:
             taskList = Task.objects.filter(project_id=project.id,starter_id=user.id,status='2')
             return render(request,"upon/confirm.html",{'taskList':taskList})
         else:
@@ -431,7 +438,7 @@ def fetchRubbishTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
-        if user in project.team.member:
+        if user.id in project.team.member:
             taskList = Task.objects.filter(project_id=project.id,status='1')
             thisWeekList = []
             otherWeekList = []
@@ -454,7 +461,7 @@ def fetchCompletedTask(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
-        if user in project.team.member:
+        if user.id in project.team.member:
             taskList = Task.objects.filter(project_id=project.id,status='3')
             thisWeekList = []
             otherWeekList = []
@@ -505,7 +512,7 @@ def fetchConfirmNum(request,projectid):
         except ObjectDoesNotExist:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
         user = UserInfo.objects.get_by_id(request.user.id)
-        if user in project.team.member:
+        if user.id in project.team.member:
             taskList = Task.objects.filter(project_id=project.id,starter_id=user.id,status='2')
             return HttpResponse(json.dumps({'error_code':'0','confirm':len(taskList)}))
         else:
@@ -571,7 +578,7 @@ def fetchTaskListHelper(project,type):
     
 
 def checkUserAndTask(user,task):
-    if user in task.project.team.member:
+    if user.id in task.project.team.member:
         return True
     else:
         return False
