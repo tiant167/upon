@@ -41,7 +41,7 @@ def register(request):
                     email = request.POST['username']
                     user = User.objects.create_user(username=username,email=email,password=password1)
                     user.save()
-                    userInfo = UserInfo(id=user.id,username=user.email,email=user.username)
+                    userInfo = UserInfo(id=str(user.id),username=user.email,email=user.username)
                     userInfo.save()
                     avatarsrc = request.POST.get('avatar','image/avatar/red.jpg') 
                     avatar = Avatar(user=userInfo,avatar=avatarsrc)
