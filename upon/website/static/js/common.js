@@ -76,6 +76,9 @@ $('#create-memberinput').autocomplete({
 $(".create-addmember").click(function() {
     var userid = $(".create-addmember").data("userid");
     var username = $("#create-memberinput").val();
+    if (userid == null) {
+        return false;
+    };
     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
     if ($("#newteam-modal .suggesstion").length > 0) {
         $("#newteam-modal .suggesstion").remove();
