@@ -39,6 +39,8 @@ def register(request):
                     errors.append('两次密码不一致，请重新输入~')
                 else:
                     email = request.POST['username']
+                    if len(email.decode('utf-8')) > 10:
+                        email = email.decode('utf-8')[0:10].encode('utf-8')
                     user = User.objects.create_user(username=username,email=email,password=password1)
                     user.save()
                     userInfo = UserInfo(id=str(user.id),username=user.email,email=user.username)
@@ -100,7 +102,10 @@ def main(request,teamid,projectid):
     taskField = TaskField(finalTaskList)
     taskField.judgePriority()
     members = []
+
     for memberid in currentTeam.member:
+        if memberid == '':
+            continue
         tmpUser = UserInfo.objects.get_by_id(memberid)
         members.append({u"username":tmpUser.username,u"email":tmpUser.email,u"id":memberid})
 
@@ -286,18 +291,19 @@ def addTeam(request):
         teamName = request.POST.get("name",False)
         member = request.POST.get("member",False)
         if teamName and member:
-            team = Team(name=teamName)
-            team.save()
-            project = Project(name=u"默认项目",team=team)
-            project.save()
+            newTeam = Team(name=teamName)
+            # team.save()
             memberList = member.split(",")
             try:
                 for uid in memberList:
-                    team.member.append(str(uid))
+                    newTeam.member.append(str(uid))
             except ObjectDoesNotExist:
                 return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
-            team.save()
-            return HttpResponse(json.dumps({'error_code':'0','teamid':team.id}))
+            newTeam.save()
+            project = Project(name=u"默认项目",team=newTeam)
+            project.save()
+            # raise AssertionError(team)
+            return HttpResponse(json.dumps({'error_code':'0','teamid':newTeam.id}))
         else:
             return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     else:
@@ -539,6 +545,8 @@ def updatePersonalInfo(request):
     if request.method=="POST":
         username = request.POST.get("username",False)
         if username:
+            if len(username.decode('utf-8')) > 10:
+                username = username.decode('utf-8')[0:10].encode('utf-8')
             request.user.email = username
             request.user.save()
             userinfo = UserInfo.objects.get_by_id(request.user.id)

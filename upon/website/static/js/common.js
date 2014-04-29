@@ -10,7 +10,7 @@ $(document).ready(function() {
         increaseArea: '20%' // optional
     });
     var parrentdate = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
-    $('.task').find('.deadline').each(function(i, item){
+    $('.task').find('.deadline').each(function(i, item) {
         var deadline = $(item).text();
         if (new Date(deadline).getFullYear() == new Date(parrentdate).getFullYear()) {
             if (new Date(deadline).getMonth() == new Date(parrentdate).getMonth()) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
                     $(item).attr('style', 'color:red');
                 }
             };
-        };   
+        };
     });
 });
 
@@ -91,9 +91,9 @@ $(".create-addmember").click(function() {
 $(document).on("click", "#addmember", function() {
     var teamname = $("#teamtitle").val();
     var teamid = "";
-    var teamhtml = $(".teammember");
+    var teamhtml = $("#newteam-modal .teammember");
     var teamarray = new Array(teamhtml.length);
-    $.each($('.teammember'), function(i, item) {
+    $.each($('#newteam-modal .teammember'), function(i, item) {
         teamarray[i] = $(item).data("userid");
     });
     teamid = teamarray.join(",");
@@ -102,7 +102,7 @@ $(document).on("click", "#addmember", function() {
             name: teamname,
             member: teamid
         }).then(function(resp) {
-            window.location.href = "http://localhost:8080/" + eval('(' + resp + ')').teamid + "/";
+            window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
             console.log(resp);
         });
     } else {

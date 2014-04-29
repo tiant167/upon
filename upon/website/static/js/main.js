@@ -112,7 +112,7 @@
              //set comments
              $('#commentfield').empty();
              $.each(data.comments, function(i, item) {
-                 var innerhtml = $("<div class='comment'><img class='smallphoto' src='/avatar/"+item.authorid+"/'><span class='comment-content' style='margin:0 5px'>" + item.content + "</span></div>");
+                 var innerhtml = $("<div class='comment'><img class='smallphoto' src='/avatar/" + item.authorid + "/'><span class='comment-content' style='margin:0 5px'>" + item.content + "</span></div>");
                  $('#commentfield').append(innerhtml);
                  if (window.userid == item.authorid) {
                      $('.comment').last().addClass('mycomment');
@@ -138,8 +138,9 @@
              content: content
          }).then(function(resp) {
              //append a comment to the comment box
+             content = html_encode(content)
              var comments = "<div class='comment mycomment'>\
-             <img src='/avatar/"+window.userid+"/' class='smallphoto'>\
+             <img src='/avatar/" + window.userid + "/' class='smallphoto'>\
              <span class='comment-content' style='margin:0 5px'>" + content + "</span></div>";
              $('#commentfield').append(comments);
              $('#comment-content').val("");
@@ -149,6 +150,31 @@
 
  });
 
+ function html_encode(str) {
+     var s = "";
+     if (str.length == 0) return "";
+     s = str.replace(/&/g, "&gt;");
+     s = s.replace(/</g, "&lt;");
+     s = s.replace(/>/g, "&gt;");
+     s = s.replace(/ /g, "&nbsp;");
+     s = s.replace(/\'/g, "&#39;");
+     s = s.replace(/\"/g, "&quot;");
+     s = s.replace(/\n/g, "<br>");
+     return s;
+ }
+
+ function html_decode(str) {
+     var s = "";
+     if (str.length == 0) return "";
+     s = str.replace(/&gt;/g, "&");
+     s = s.replace(/&lt;/g, "<");
+     s = s.replace(/&gt;/g, ">");
+     s = s.replace(/&nbsp;/g, " ");
+     s = s.replace(/&#39;/g, "\'");
+     s = s.replace(/&quot;/g, "\"");
+     s = s.replace(/<br>/g, "\n");
+     return s;
+ }
  $('#teamtask a').click(function() {
      $('#personal-task-panel').css('display', 'none');
      $('#confirm-task-panel').css('display', 'none');
@@ -539,6 +565,11 @@
              if ($(elem).parent().parent().parent().parent().attr("id") == "mytaskcollapse") {
                  // my task
                  $("#personal-task-panel #task" + taskid).remove();
+                 if ($("#personal-task-panel .task").length == 0) {
+                     //您还没有任务哦~
+                     $("#personal-task-panel .panel-body").html('<span>您还没有任务哦~</span>');
+                 }
+
                  //bug  本周任务也需要重新载入！
                  //我的任务和待确认的任务都是点击刷新的，所以不会出现一致性问题
                  //只有在我的任务和待确认里面勾掉任务的时候， 本周任务才会出现一致性问题
@@ -626,52 +657,19 @@
      }
  });
 
- $(".update-addmember").click(function() {
-     var userid = $(".update-addmember").data("userid");
-     var username = $("#update-memberinput").val();
-     //GZW 帮我写下 判断哪个userid是否已经被添加在memberbox里了
-     if ($("#manageteam-modal .suggesstion").length > 0) {
-         $("#manageteam-modal .suggesstion").remove();
-     }
-     if ($("#manageteam-modal .teammember[data-userid=" + userid + "]").length == 0) {
-         $("#manageteam-modal .memberbox").append('<p class="form-control-static teammember" data-userid="' + userid + '">' + username + '<span class="glyphicon glyphicon-trash"></span></p>');
-     } else {
-         $("#update-memberinput").parent().after("<div class='suggesstion'>*该成员已经添加过</div>");
-     }
-     $("#update-memberinput").val("");
- });
-
- $(document).on("click", "#addmember", function() {
-     var teamname = $("#teamtitle").val();
-     var teamid = "";
-     var teamhtml = $(".teammember");
-     var teamarray = new Array(teamhtml.length);
-     $.each($('.teammember'), function(i, item) {
-         teamarray[i] = $(item).data("userid");
-     });
-     teamid = teamarray.join(",");
-     if (teamname != "") {
-         $.post("/addteam/", {
-             name: teamname,
-             member: teamid
-         }).then(function(resp) {
-             window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
-             console.log(resp);
-         });
-     } else {
-         if ($("#newteam-modal .suggesstion").length > 0) {
-             $("#newteam-modal .suggesstion").remove();
-         }
-         $("#teamtitle").parent().append("<div class='suggesstion'>*团队名称不能为空</div>");
-         return false;
-     }
- });
 
  $(document).on("click", "#manageteam", function() {
      var teamid = window.teamid;
      var memberid = "";
      var teamhtml = $("#manageteam-modal .teammember");
      var teamarray = new Array(teamhtml.length);
+     if (teamarray.length <= 0) {
+         if ($("#manageteam-modal .suggesstion").length > 0) {
+             $("#manageteam-modal .suggesstion").remove();
+         }
+         $("#update-memberinput").parent().after("<div class='suggesstion'>*没有成员了哦！</div>");
+         return;
+     }
      $.each($('#manageteam-modal .teammember'), function(i, item) {
          teamarray[i] = $(item).data("userid");
      });
@@ -680,7 +678,13 @@
          teamid: teamid,
          member: memberid
      }).then(function(resp) {
-         window.location.href = "/" + eval('(' + resp + ')').teamid + "/";
+         teamid = eval('(' + resp + ')').teamid
+         if (teamid) {
+             window.location.href = "/" + teamid + "/";
+         } else {
+             window.location.href = "/";
+         }
+
      });
  });
 
