@@ -707,6 +707,12 @@
 
  $(document).on("click", ".glyphicon-share-alt", function() {
      var taskid = $(this).prev().find("a").data("taskid");
+     $("#revert-modal").attr("data-taskid",taskid)
+     $("#revert-modal").modal('show');
+ });
+
+ $(document).on("click", "#revert-modal .confirm-btn", function() {
+     var taskid = $("#revert-modal").data("taskid");
      $.post("/reverttask/", {
          taskid: taskid
      }).then(function(resp) {
