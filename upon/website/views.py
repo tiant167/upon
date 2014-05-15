@@ -7,10 +7,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 import json,datetime
 from website.models import *
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 #attention to all
 #django的user里面username是unique的，email不是。与我们正好相反，所以现在username存的是邮箱地址，email存的是用户名
+@csrf_exempt
 def login(request):
     errors = []
     if request.method == 'POST':
@@ -25,6 +27,7 @@ def login(request):
             errors.append('邮箱或密码错误')
     return render(request,'upon/login.html',{'errors':errors,})
 
+@csrf_exempt
 def register(request):
     errors = []
     if request.method == 'POST':
@@ -60,6 +63,7 @@ def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/login")
 
+@csrf_exempt
 @login_required
 def main(request,teamid,projectid):
     user = UserInfo.objects.get_by_id(request.user.id)
@@ -120,7 +124,7 @@ def main(request,teamid,projectid):
         'nextWeekTasks':taskField.nextWeekTask,
         'futureTasks':taskField.futureTask,
         })
-
+@csrf_exempt
 @login_required
 def noteam(request):
     user = UserInfo.objects.get_by_id(request.user.id)
@@ -131,7 +135,7 @@ def noteam(request):
         return render(request,'upon/noteam.html',{
             'user':request.user,
             })
-
+@csrf_exempt
 @login_required
 def getTaskDetail(request,taskid):
     #what needs to do ?
@@ -173,6 +177,7 @@ def getTaskDetail(request,taskid):
             return HttpResponse(json.dumps(result))
     return HttpResponse(json.dumps({'error_code':'500'}))
 
+@csrf_exempt
 @login_required
 def addComment(request):
     if request.method == "POST":
@@ -195,6 +200,7 @@ def addComment(request):
                 return HttpResponse(json.dumps({'error_code':'503','error_message':'not your belongings'}))
     return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def addTask(request):
     if request.method == "POST":
@@ -266,6 +272,7 @@ def addTask(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def addProject(request):
     if request.method == "POST":
@@ -285,6 +292,7 @@ def addProject(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def addTeam(request):
     if request.method == "POST":
@@ -309,6 +317,7 @@ def addTeam(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def updateTeam(request):
     if request.method == "POST":
@@ -335,6 +344,7 @@ def updateTeam(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def revertTask(request):
     if request.method == "POST":
@@ -358,6 +368,7 @@ def revertTask(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def deleteTask(request):
     if request.method == "POST":
@@ -379,6 +390,7 @@ def deleteTask(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def deleteProject(request):
     if request.method == "POST":
@@ -398,6 +410,7 @@ def deleteProject(request):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
+@csrf_exempt
 @login_required
 def fetchMyTask(request,projectid):
     if projectid:
@@ -420,6 +433,7 @@ def fetchMyTask(request,projectid):
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
+@csrf_exempt
 @login_required
 def fetchConfirmTask(request,projectid):
     if projectid:
@@ -436,6 +450,7 @@ def fetchConfirmTask(request,projectid):
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
+@csrf_exempt
 @login_required
 def fetchRubbishTask(request,projectid):
     if projectid:
@@ -459,6 +474,7 @@ def fetchRubbishTask(request,projectid):
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
+@csrf_exempt
 @login_required
 def fetchCompletedTask(request,projectid):
     if projectid:
@@ -482,6 +498,7 @@ def fetchCompletedTask(request,projectid):
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
 
+@csrf_exempt
 @login_required
 def changeTaskStatus(request,status):
     if request.method == "POST":
@@ -500,7 +517,7 @@ def changeTaskStatus(request,status):
     else:
         return HttpResponse(json.dumps({'error_code':'500','error_message':'wrong method'}))
 
-
+@csrf_exempt
 @login_required
 def fetchTaskList(request,projectid,type):
     #week 2-current week  1-next week  0-future
@@ -510,7 +527,8 @@ def fetchTaskList(request,projectid,type):
     except ObjectDoesNotExist:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
     return render(request,"upon/ajax-tasklist.html",{'taskList':taskList})
-    
+  
+@csrf_exempt  
 def fetchConfirmNum(request,projectid):
     if projectid:
         try:
@@ -525,6 +543,7 @@ def fetchConfirmNum(request,projectid):
             return HttpResponse(json.dumps({'error_code':'502','error_message':'not your belongings'}))
     else:
         return HttpResponse(json.dumps({'error_code':'501','error_message':'wrong arguments'}))
+@csrf_exempt
 def fetchAvatar(request,userid):
     try:
         user = User.objects.get(id=userid)
@@ -536,11 +555,13 @@ def fetchAvatar(request,userid):
     f = open('./website/static/'+avatar, "rb")
     return HttpResponse(f.read(), mimetype="image/jpeg")
 
+@csrf_exempt
 def searchPerson(request):
     keywords = request.GET.get('query','')
     result = User.objects.filter(username__contains=keywords)
     return HttpResponse(json.dumps({'suggestions':[{'value':item.username+' - '+item.email,'data':item.id} for item in result]}))
 
+@csrf_exempt
 def updatePersonalInfo(request):
     if request.method=="POST":
         username = request.POST.get("username",False)
